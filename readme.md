@@ -36,7 +36,7 @@ LLM 生成带引用的回答
 | 二 | 实现文档加载 | `src/loaders.py` | 已完成并验收 |
 | 三 | 实现文本切分 | `src/splitter.py` | 已完成并验收 |
 | 四 | 建立向量索引 | `src/config.py` / `src/embeddings.py` / `src/vector_store.py` / `src/indexer.py` / `ingest.py` | 已完成并验收 |
-| 五 | 实现并验证检索 | `retriever.py` | 未开始 |
+| 五 | 实现并验证检索 | `src/retriever.py` | 已完成并验收 |
 | 六 | 实现答案生成 | `generator.py` / `rag.py` / `chat.py` | 未开始 |
 | 七 | 增加简单界面 | `app.py`（Streamlit） | 未开始 |
 
@@ -110,7 +110,8 @@ rag-one/
 │   ├── splitter.py           # 阶段三：文本切分（已完成）
 │   ├── embeddings.py         # 阶段四：Embedding 调用（已完成）
 │   ├── vector_store.py       # 阶段四：ChromaDB 封装（已完成）
-│   └── indexer.py            # 阶段四：索引构建（已完成）
+│   ├── indexer.py            # 阶段四：索引构建（已完成）
+│   └── retriever.py          # 阶段五：Top-K 检索（已完成）
 ├── ingest.py                 # 阶段四：索引入口（已完成）
 ├── .env.example              # 环境变量模板（.env 含密钥，被 git 忽略）
 ├── RAG-MVP学习规划.md         # 总规划：目标、技术栈、七阶段验收清单
@@ -264,6 +265,44 @@ chunk 数: 10
 - 分批对齐：把批大小临时改成 2 强制拆请求，同文本跨请求余弦 = 1.0，不同文本余弦 ≈ 0.58；
 - 全量重建闭环：reset 后 count = 0 → `build_index()` 重建后回到 10 条，数据可按 id 取回。
 
+### 阶段五：Top-K 检索 `src/retriever.py`（已完成并验收）
+
+**流程**：`问题 → embed_query → Chroma query(Top-K) → 结构化结果`；本阶段不接 LLM，先只验证检索质量。
+
+**接口**：
+
+```python
+hits = retrieve(question, top_k=5)   # 默认 DEFAULT_TOP_K=5，可传参覆盖
+# hits: [{"rank", "id", "score", "distance", "source", "page", "text"}, ...]
+```
+
+**关键实现点**：
+
+- `collection.query(query_embeddings=[向量], n_results=top_k, include=[...])`：返回的每一列都是"外层 = 查询数、内层 = K 条"的嵌套列表，一次问一个问题时统一取 `[0]` 解包；
+- 距离换相似度：`score = 1 - distance`（余弦距离越小越像）；展示用 score、排序沿用 Chroma 的距离升序；
+- 与索引写入完全对称：写入是四平行列表（ids/embeddings/texts/metadatas），查询读出 ids/documents/metadatas/distances 仍是平行列表，`zip` 按位对齐；
+- md 文档的 metadata 无 `page` 键 → 用 `meta.get("page")`，`format_hits` 按有无页码生成"文件名 / 文件名 第 N 页"两种展示；
+- `format_hits` 为纯函数（不查库、只排版），阶段六可直接复用。
+
+**运行效果**（`python -X utf8 -m src.retriever`）：
+
+```text
+问题：普通员工去上海出差，酒店每晚含税最高可以报销多少？
+
+Rank 1 | score≈0.6852 | 06-travel-policy.md
+  chunk: 06-travel-policy.md:chunk-0
+  内容: ...（完整 chunk 原文）
+```
+
+**验收结果**：20/20 断言通过 + 25 题检索评估：
+
+- 结构：7 字段齐全、rank 连续、score == 1 - distance、距离单调不减、id 与 source 对应；
+- top_k 参数化：3 / 1 / 20 三档（20 超库存时截断为全部 10 条，不报错）；
+- 语义：q01 原文与同义改写（"出差住酒店一晚最多能报多少钱"）Rank1 均为 06-travel-policy.md；
+- **25 题 Recall@5：来源级 31/31 = 100%**（题级严格全中 24/24；q24 无期望来源不参与统计），远超 ≥80% 目标；
+- 切分参数对比（临时把 CHUNK_SIZE 800→400 重建索引，测完自动恢复）：细切后来源级召回率反而降至 29/31 = 93.5%，且 q01 的 Rank1 从 06-travel 变为 10-faq——当前短文手册下维持 800/150；
+- 边界观察：库外问题（"公司食堂每天几点开饭？"）也返回 5 条（top1 分数 ≈ 0.6410）——**检索器不会拒答，只会给"相对最像的"**；分数绝对值不足以区分"有依据/无依据"，拒答要靠阶段六的生成 Prompt 兜底。
+
 ---
 
 ## 关键参数
@@ -275,7 +314,7 @@ chunk 数: 10
 | EMBEDDING_MODEL | BAAI/bge-m3 | `.env`（默认值在 `src/config.py`） | Embedding 模型（硅基流动），输出 1024 维 |
 | EMBED_BATCH_SIZE | 32 | `src/config.py` | 单次 Embedding 请求的最大文本条数 |
 | COLLECTION_NAME | rag_mvp_docs | `src/config.py` | Chroma 集合名（3~512 字符、首尾字母数字） |
-| top_k | 5（计划） | `src/retriever.py` | 检索返回条数，阶段五使用 |
+| top_k | 5 | `src/retriever.py` | 检索返回条数（DEFAULT_TOP_K），可传参覆盖 |
 
 ---
 
@@ -292,12 +331,13 @@ chunk 数: 10
 9. **建集合参数只在“真正新建”时生效**：改距离度量等建表参数必须“先删后建”（`reset_collection`），对已存在的集合改代码无效。
 10. **本机裸 `python` 不是项目环境**：默认解析到系统 Python 3.13（无项目依赖），运行一律用 `rag-one` 环境（激活或全路径）。
 11. **服务端向量有微小跨请求抖动**：同一文本两次请求可能有 ≤0.002 的浮点差异（多数为 0），而不同文本差异约 0.1 / 余弦 ≈ 0.58——比较向量时阈值取 0.01 量级，勿用 1e-4。
+12. **切分粒度不是越细越好（有对比数据）**：同一知识库把 CHUNK_SIZE 从 800 降到 400（重叠同 150），chunk 数 10 → 32，25 题的来源级 Recall@5 反而从 100% 降到 93.5%，且 q01 首位命中从《差旅制度》变成《FAQ》。当前手册均为 800 字符内短文，"每篇整切"最优，维持 800/150。
 
 ---
 
 ## 下一步
 
-- 阶段五（待启动）：实现 `src/retriever.py`——问题向量化 + Top-K 检索，输出排名 / 距离 / 来源 / 完整 chunk，先只验证检索不接 LLM；用 25 题评估集人工检查 Recall@5。
+- 阶段六（待启动）：实现答案生成——`src/generator.py`（Prompt 组装 + LLM 调用）与 `src/rag.py`（串联检索 → 生成），要求回答带引用、资料不足时明确拒答。
 
 ---
 
