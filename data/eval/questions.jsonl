@@ -1,0 +1,25 @@
+{"id":"q01","question":"普通员工去上海出差，酒店每晚含税最高可以报销多少？","expected_answer":"700 元。","expected_sources":["06-travel-policy.md"],"type":"direct"}
+{"id":"q02","question":"部门总监去成都出差的住宿标准是多少？","expected_answer":"每间夜含税最高 850 元。","expected_sources":["06-travel-policy.md"],"type":"table"}
+{"id":"q03","question":"出差返回后多少天内要提交报销？","expected_answer":"返程之日起 15 个自然日内。","expected_sources":["06-travel-policy.md"],"type":"confusable"}
+{"id":"q04","question":"购买办公用品后 25 天还能正常提交报销吗？","expected_answer":"通常可以，日常费用应在发生之日起 30 个自然日内提交，但还要满足跨年度结账等要求。","expected_sources":["05-expense-policy.md"],"type":"reasoning"}
+{"id":"q05","question":"一笔 6000 元的日常费用需要谁审批？","expected_answer":"需要直属经理、部门负责人和财务负责人审批。","expected_sources":["05-expense-policy.md"],"type":"direct"}
+{"id":"q06","question":"同一项采购能否拆成两笔来降低审批等级？","expected_answer":"不能。制度明确禁止为降低审批等级拆分同一项采购。","expected_sources":["05-expense-policy.md"],"type":"direct"}
+{"id":"q07","question":"连续请两天病假一定要医疗证明吗？","expected_answer":"通常不需要；连续病假达到三个工作日或以上才需要医疗机构证明。","expected_sources":["04-leave-policy.md"],"type":"confusable"}
+{"id":"q08","question":"连续休四天年假要提前多久申请？","expected_answer":"至少提前十个工作日。","expected_sources":["04-leave-policy.md"],"type":"direct"}
+{"id":"q09","question":"员工周一周二休年假，周三生病，可以直接把原申请延长吗？","expected_answer":"不能直接混在原申请中，应当为周三单独申请病假，并联系经理处理。","expected_sources":["04-leave-policy.md"],"type":"reasoning"}
+{"id":"q10","question":"正式员工一周最多可以远程办公几天？","expected_answer":"经直属经理同意，每周最多两天。","expected_sources":["07-remote-work.md"],"type":"direct"}
+{"id":"q11","question":"试用期员工是否也能每周远程办公两天？","expected_answer":"不能。试用期员工每次都要经理批准，并且每周最多一天。","expected_sources":["02-onboarding.md","07-remote-work.md"],"type":"multi_source"}
+{"id":"q12","question":"上周没有远程办公，这周能申请四天吗？","expected_answer":"不能，远程办公天数不能跨周累计；正式员工每周最多两天。","expected_sources":["07-remote-work.md","10-faq.md"],"type":"multi_source"}
+{"id":"q13","question":"从另一个城市连续远程工作六个工作日，需要哪些批准？","expected_answer":"需要直属经理、人力资源和信息安全部门的书面批准。","expected_sources":["07-remote-work.md"],"type":"direct"}
+{"id":"q14","question":"新员工需要在多久内开启多因素认证？","expected_answer":"领取电脑后的 24 小时内。","expected_sources":["02-onboarding.md"],"type":"direct"}
+{"id":"q15","question":"信息安全基础课程考试多少分算通过？","expected_answer":"80 分。","expected_sources":["02-onboarding.md"],"type":"direct"}
+{"id":"q16","question":"公司电脑丢失应该只提交 IT 工单吗？","expected_answer":"不应该。设备丢失属于安全事件，必须立即联系信息安全团队；紧急情况还要拨打 6110。","expected_sources":["08-information-security.md","09-it-support.md"],"type":"multi_source"}
+{"id":"q17","question":"收到索要验证码的邮件但没有点击，该怎么办？","expected_answer":"不要回复、点击或下载，应使用邮件客户端的“报告钓鱼”功能。","expected_sources":["08-information-security.md","10-faq.md"],"type":"multi_source"}
+{"id":"q18","question":"P1 IT 故障承诺多久解决？","expected_answer":"手册只规定目标为 30 分钟内响应，不承诺在 30 分钟内解决。","expected_sources":["09-it-support.md"],"type":"trap"}
+{"id":"q19","question":"公司电脑用了四年后是否一定自动换新？","expected_answer":"不一定。四年时只是评估更新需求，由 IT 根据设备状况决定维修或更换。","expected_sources":["09-it-support.md"],"type":"trap"}
+{"id":"q20","question":"外出拜访客户会占用每周远程办公天数吗？","expected_answer":"不会，外勤不属于远程办公。","expected_sources":["03-attendance.md"],"type":"confusable"}
+{"id":"q21","question":"考勤记录错了，应在多久内申请更正？","expected_answer":"三个工作日内。","expected_sources":["03-attendance.md"],"type":"direct"}
+{"id":"q22","question":"公司每个月提供多少健身补贴？","expected_answer":"现有资料没有规定健身补贴金额，应向人力资源部门确认。","expected_sources":["10-faq.md"],"type":"unanswerable"}
+{"id":"q23","question":"杭州办公室的员工婚假统一是几天？","expected_answer":"资料没有给出固定天数，应根据工作地点适用规定向人力资源部门确认。","expected_sources":["04-leave-policy.md","10-faq.md"],"type":"unanswerable"}
+{"id":"q24","question":"公司食堂午餐多少钱？","expected_answer":"现有资料没有提供公司食堂或午餐价格信息。","expected_sources":[],"type":"unanswerable"}
+{"id":"q25","question":"客户数据可以保存在私人网盘吗？","expected_answer":"不可以，客户资料和工作文件不得保存在私人网盘，应使用公司批准的系统。","expected_sources":["01-company-overview.md","07-remote-work.md","09-it-support.md"],"type":"multi_source"}

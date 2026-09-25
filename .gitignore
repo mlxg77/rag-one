@@ -1,0 +1,12 @@
+# 虚拟环境
+.venv/
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+
+# 环境变量（含 API Key，绝不提交）
+.env
+
+# 向量库持久化产物（可由文档重建）
+storage/chroma/

@@ -1,0 +1,14 @@
+# Config loading
+python-dotenv
+
+# LLM / Embedding calls (OpenAI-compatible SDK, works with SiliconFlow)
+openai
+
+# Vector database
+chromadb
+
+# PDF parsing
+pymupdf
+
+# Testing
+pytest
