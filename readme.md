@@ -35,7 +35,7 @@ LLM 生成带引用的回答
 | 一 | 准备知识库和测试问题 | `data/raw/` 10 篇手册 + `data/eval/questions.jsonl` 25 题 | 已完成并验收 |
 | 二 | 实现文档加载 | `src/loaders.py` | 已完成并验收 |
 | 三 | 实现文本切分 | `src/splitter.py` | 已完成并验收 |
-| 四 | 建立向量索引 | `config.py` / `embeddings.py` / `vector_store.py` / `indexer.py` / `ingest.py` | 未开始 |
+| 四 | 建立向量索引 | `src/config.py` / `src/embeddings.py` / `src/vector_store.py` / `src/indexer.py` / `ingest.py` | 已完成并验收 |
 | 五 | 实现并验证检索 | `retriever.py` | 未开始 |
 | 六 | 实现答案生成 | `generator.py` / `rag.py` / `chat.py` | 未开始 |
 | 七 | 增加简单界面 | `app.py`（Streamlit） | 未开始 |
@@ -68,19 +68,28 @@ pip install -r requirements.txt
 
 ### 运行规范（本机必读）
 
-1. **所有脚本必须加 `-X utf8` 运行**。本机中文 Windows 默认 GBK 编码，不加会导致中文输出乱码甚至丢输出：
+1. **一律用 `rag-one` 环境的 Python 运行**。本机裸 `python` 指向系统 Python 3.13（不含项目依赖，`import chromadb` 会失败）：
+
+   ```powershell
+   conda activate rag-one
+   python -X utf8 ingest.py
+   # 或不激活，直接用全路径
+   E:\Anaconda_envs\envs\rag-one\python.exe -X utf8 ingest.py
+   ```
+
+2. **所有脚本必须加 `-X utf8` 运行**。本机中文 Windows 默认 GBK 编码，不加会导致中文输出乱码甚至丢输出：
 
    ```powershell
    python -X utf8 src/loaders.py
    ```
 
-2. **`src` 包内模块用 `-m` 从项目根运行**（包内导入写 `src.xxx` 全路径）：
+3. **`src` 包内模块用 `-m` 从项目根运行**（包内导入写 `src.xxx` 全路径）：
 
    ```powershell
    python -X utf8 -m src.splitter
    ```
 
-3. **不要使用 `conda run`**。conda 24.5.0 在本机中文环境下捕获中文输出会崩溃（UnicodeEncodeError）或吞掉输出；直接激活环境或用环境内 python 全路径运行。
+4. **不要使用 `conda run`**。conda 24.5.0 在本机中文环境下捕获中文输出会崩溃（UnicodeEncodeError）或吞掉输出；直接激活环境或用环境内 python 全路径运行。
 
 ---
 
@@ -92,10 +101,18 @@ rag-one/
 │   ├── raw/                  # 10 篇制度手册（知识库）
 │   ├── eval/questions.jsonl  # 25 题评估集（JSONL，一行一题）
 │   └── README.md             # 数据集说明
+├── storage/
+│   └── chroma/               # ChromaDB 持久化索引（git 忽略，可用 ingest.py 重建）
 ├── src/
 │   ├── __init__.py
+│   ├── config.py             # 阶段四：集中配置读取（已完成）
 │   ├── loaders.py            # 阶段二：文档加载（已完成）
-│   └── splitter.py           # 阶段三：文本切分（已完成）
+│   ├── splitter.py           # 阶段三：文本切分（已完成）
+│   ├── embeddings.py         # 阶段四：Embedding 调用（已完成）
+│   ├── vector_store.py       # 阶段四：ChromaDB 封装（已完成）
+│   └── indexer.py            # 阶段四：索引构建（已完成）
+├── ingest.py                 # 阶段四：索引入口（已完成）
+├── .env.example              # 环境变量模板（.env 含密钥，被 git 忽略）
 ├── RAG-MVP学习规划.md         # 总规划：目标、技术栈、七阶段验收清单
 ├── readme.md                 # 本文件
 ├── requirements.txt          # 纯 ASCII 英文注释（见"踩坑记录"）
@@ -210,6 +227,43 @@ chunk 数量: 10
 - 边界输入：空文本 / 纯空白 → 0 块，短文本原样 1 块；
 - `summarize`：正常输出 chunk 数量与平均长度，空列表不报错。
 
+### 阶段四：建立向量索引（已完成并验收）
+
+**流程**：`加载 → 切分 → 向量化 → 写入 ChromaDB`；入口命令（全量重建）：
+
+```powershell
+python -X utf8 ingest.py
+```
+
+**新增文件与职责**：
+
+- `src/config.py`：集中从 `.env` 读取 API 配置（Key / Base URL / 模型名）与路径（`data/raw`、`storage/chroma`）、集合名、批大小；`require_api_key()` 延迟报错，纯本地逻辑不受影响；
+- `src/embeddings.py`：硅基流动 Embedding 调用（OpenAI 兼容协议）；`embed_texts` 自动分批并按返回 `index` 对齐顺序，`embed_query` 供检索阶段使用；
+- `src/vector_store.py`：ChromaDB 封装——`PersistentClient` 本地持久化、集合用余弦距离、`upsert` 按 id 写入、`reset_collection` 先删后建（全量重建）；
+- `src/indexer.py`：`build_index()` 串起全流程；metadata 附带 chunk 内容 MD5（`content_hash`，为将来增量索引用）；
+- `ingest.py`：命令行入口，输出文档数 / chunk 数 / 集合向量数。
+
+**关键配置**：`EMBEDDING_MODEL=BAAI/bge-m3`（输出 1024 维向量）、`COLLECTION_NAME=rag_mvp_docs`、`EMBED_BATCH_SIZE=32`；距离为**余弦距离**，换算关系 `相似度 = 1 - 距离`。
+
+运行效果（连跑两遍，幂等，第二遍不产生重复数据）：
+
+```text
+=== 建立索引：...\data\raw -> ...\storage\chroma ===
+文档数: 10
+chunk 数: 10
+集合内向量数: 10
+索引已持久化到 storage/chroma，重启后仍然存在。
+```
+
+**验收结果**：23/23 断言通过，覆盖：
+
+- 持久化：新进程直接读到 10 条向量，`chroma.sqlite3` 已落盘，集合名与余弦距离配置正确；
+- 数据完整性：id 集合与切分结果完全一致、原文一致、`source / chunk_index / content_hash(MD5)` 正确、向量全部为 1024 维；
+- 距离语义：用自己的向量自查询 top1 = 自己且距离 ≈ 0，距离随排名单调不减；
+- 语义 smoke test：查询"普通员工去上海出差，酒店住宿每晚最高报销多少？"→《差旅制度》Rank 1（距离 0.2993），前 3 名均为报销相关文档；
+- 分批对齐：把批大小临时改成 2 强制拆请求，同文本跨请求余弦 = 1.0，不同文本余弦 ≈ 0.58；
+- 全量重建闭环：reset 后 count = 0 → `build_index()` 重建后回到 10 条，数据可按 id 取回。
+
 ---
 
 ## 关键参数
@@ -218,6 +272,9 @@ chunk 数量: 10
 |---|---|---|---|
 | CHUNK_SIZE | 800 | `src/splitter.py` | 目标块大小（字符）。太小上下文不完整，太大检索不精确 |
 | CHUNK_OVERLAP | 150 | `src/splitter.py` | 相邻块重叠字符数。太小跨边界信息丢失，太大重复与存储成本增加 |
+| EMBEDDING_MODEL | BAAI/bge-m3 | `.env`（默认值在 `src/config.py`） | Embedding 模型（硅基流动），输出 1024 维 |
+| EMBED_BATCH_SIZE | 32 | `src/config.py` | 单次 Embedding 请求的最大文本条数 |
+| COLLECTION_NAME | rag_mvp_docs | `src/config.py` | Chroma 集合名（3~512 字符、首尾字母数字） |
 | top_k | 5（计划） | `src/retriever.py` | 检索返回条数，阶段五使用 |
 
 ---
@@ -227,15 +284,20 @@ chunk 数量: 10
 1. **环境选 conda 而非 .venv**：用户主动要求用 conda 专用环境 `rag-one` 做隔离，`.venv` 已删除；全项目统一单一环境。
 2. **`requirements.txt` 必须保持纯 ASCII 英文注释**：文件含 UTF-8 中文注释时，pip 在本机以 GBK 读取会抛 `UnicodeDecodeError`，改为英文注释后解决。
 3. **运行一律加 `-X utf8`**：曾出现"脚本正常退出但无任何输出"，排查后确认是中文 Windows 的 GBK 编码链问题（非代码问题）；同时发现 `conda run` 会因 GBK 崩溃，故弃用。
-4. **模型服务选硅基流动**（阶段四接入）：一个 API Key 同时覆盖 LLM 与 Embedding（BAAI/bge-m3），接口兼容 OpenAI 协议。
+4. **模型服务选硅基流动**：一个 API Key 同时覆盖 LLM 与 Embedding（BAAI/bge-m3），接口兼容 OpenAI 协议（Embedding 已于阶段四接入）。
 5. **评估集用 JSONL 而非规划中的 json 数组**：一行一题，便于后续追加与流式读取；来源字段用 `expected_sources` 数组支持多来源题。
 6. **第一版明确不做**：LangChain / LangGraph、Agent、多轮对话、扫描版 PDF OCR、Reranker、混合检索等（详见规划文档第 3.2 节）。
+7. **Chroma 集合名有硬性约束**：3~512 字符、只含字母/数字/`._-`，且首尾必须是字母或数字——过短的名字（如 `t`）直接报错，故集合名定为 `rag_mvp_docs`。
+8. **向量一律外部传入，关闭 Chroma 内置向量函数**：建集合时 `embedding_function=None`（默认会挂一个本地 ONNX 小模型）；忘传 embedding 时 Chroma 会显式报错，而不是静默算错。
+9. **建集合参数只在“真正新建”时生效**：改距离度量等建表参数必须“先删后建”（`reset_collection`），对已存在的集合改代码无效。
+10. **本机裸 `python` 不是项目环境**：默认解析到系统 Python 3.13（无项目依赖），运行一律用 `rag-one` 环境（激活或全路径）。
+11. **服务端向量有微小跨请求抖动**：同一文本两次请求可能有 ≤0.002 的浮点差异（多数为 0），而不同文本差异约 0.1 / 余弦 ≈ 0.58——比较向量时阈值取 0.01 量级，勿用 1e-4。
 
 ---
 
 ## 下一步
 
-- 阶段四（待启动）：配置 `.env`（`OPENAI_API_KEY` / `OPENAI_BASE_URL`），实现 `config.py` → `embeddings.py` → `vector_store.py` → `indexer.py` → `ingest.py`，跑通"一条命令建立索引"。
+- 阶段五（待启动）：实现 `src/retriever.py`——问题向量化 + Top-K 检索，输出排名 / 距离 / 来源 / 完整 chunk，先只验证检索不接 LLM；用 25 题评估集人工检查 Recall@5。
 
 ---
 
