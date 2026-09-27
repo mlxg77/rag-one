@@ -7,7 +7,7 @@
 - regression：严格引用准确率 79.3%（23/29），引用块级支持率 86.1%（62/72）。
 - 主要错误：模型把 Top-5 中“主题相关但未直接用于结论”的块一起标入。
 
-历史数据来自 `docs/reports/v2-evaluation.md`，不使用新 Prompt 回填 C0。
+历史数据来自 `docs/reports/v2.0.md`，不使用新 Prompt 回填 C0。
 
 ## C1：最少直接引用
 
@@ -22,9 +22,22 @@
 
 同时增加结构校验：引用编号去重、越界编号、拒答却附引用。结构校验不能替代人工“支持性”判定。
 
-## 验收状态
+## 实际验收状态
 
-C1 代码和离线测试已完成；真实 regression 端到端运行、人工引用判定和 holdout 一次验收尚未运行。原因是这些操作会将语料发送到 `.env` 配置的第三方 LLM/Rerank 服务，需要明确数据出站授权。
+C1 代码和离线测试已完成。32 题 regression 端到端运行启动后被中断，没有形成有效的完整验收结论。冻结候选 `800/150 + hybrid_rerank + C1` 随后按项目决定直接执行了一次 15 题 holdout。
+
+Holdout 自动结果：
+
+- Any-hit Recall@5：100%；
+- Evidence-group Recall@5：100%；
+- Complete-evidence@5：100%；
+- 非法引用编号答案：0；
+- 拒答却附编号答案：0；
+- Rerank fallback：0。
+
+人工严格答案检查为 10/15（66.7%）。h05、h06、h08 在完整证据已召回时错误拒答；h09、h15 的关键信息不完整。这说明 C1 减少了结构性引用错误，但拒答约束过于保守，不能据此宣称引用与整体生成质量达到 90%。
+
+本轮没有填写完整的逐引用语义支持性 review 表，因此不能从“非法编号为 0”推导“严格引用准确率为 100%”。
 
 原始 E2E JSON 生成后，使用以下命令生成人工判定模板并汇总预先约定的五项指标：
 
@@ -34,4 +47,4 @@ python -m evaluation.review_e2e <result.json> --init <review.jsonl>
 python -m evaluation.review_e2e <result.json> --review <review.jsonl> --out <summary.json>
 ```
 
-如果 C1 在 regression 与 holdout 上均达到严格引用准确率和引用块级精确率 90%，不继续叠加 C2/C3；否则按规划一次只改变一个主要变量，并保留全部原始答案。
+该 Holdout 已消费，不能作为下一轮 Prompt 调优集。若继续优化 C1，应使用 regression 或新增开发题，并在冻结新候选后建立新的盲测集。

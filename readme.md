@@ -19,11 +19,13 @@ v2.5 的工程改造已经落地，目前状态是“工程候选版”，不是
 | regression 32 题、holdout 15 题、证据组与稳定证据锚点 | 已完成 |
 | 复现元数据、状态校验、异常响应和失败注入测试 | 已完成 |
 | 离线测试 | 113 个通过 |
-| chunk 参数离线 BM25 预检 | 已完成，800/150 暂为候选 |
-| 四模式真实 chunk 实验、C1 引用实验、holdout 最终验收 | 待明确授权第三方 API 数据出站后运行 |
+| chunk 参数离线 BM25 预检 | 已完成，工程配置冻结为 800/150 |
+| 五组 chunk 的真实四模式实验 | 按项目决策取消，不宣称 800/150 为全局最优 |
+| C1 regression 完整验收 | 运行中断，未形成有效结论 |
+| holdout 一次性终验 | 已完成；检索 100%，严格答案完整率 66.7%，生成质量未通过 |
 | 学习者书面/口头验收 | 待学习者本人完成 |
 
-v2.0 历史 E4 结果为 Recall@5 100%、答案正确率 100%、严格引用准确率 79.3%。因此 v2.0 是“功能与实验链路完成”，不是“引用质量达到 90%”。v2.5 不会通过降低口径把未完成项写成达标。
+v2.0 历史 E4 结果为 Recall@5 100%、答案正确率 100%、严格引用准确率 79.3%。v2.5 Holdout 证明检索层可以完整召回证据，但生成端存在错误拒答和多事实遗漏，因此同样不会通过降低口径把未达标项写成通过。
 
 ## 安装与最短运行路径
 
@@ -56,13 +58,13 @@ python -m evaluation.evaluate_e2e --mode hybrid_rerank --dataset data/eval/regre
 
 - [项目目录职责](docs/project-structure.md)
 - [v2.5 学习规划](docs/plans/RAG-v2.5学习规划.md)
-- [v2.5 起点问题清单](docs/reports/v2.5-start.md)
+- [v1.0 版本报告](docs/reports/v1.0.md)
+- [v2.0 版本报告](docs/reports/v2.0.md)
 - [v2.5 实施报告](docs/reports/v2.5.md)
 - [chunk 实验记录](docs/experiments/chunk-v2.5.md)
 - [引用实验记录](docs/experiments/citation-v2.5.md)
 - [RAG 调优手册](docs/notes/RAG调优手册.md)
-- [学习验收单](docs/notes/v2.5-learning-check.md)
-- [v2.0 历史评估](docs/reports/v2-evaluation.md)
+- [v2.5 学习验收](docs/reports/v2.5.md)
 
 ## 已知限制
 
@@ -70,4 +72,5 @@ python -m evaluation.evaluate_e2e --mode hybrid_rerank --dataset data/eval/regre
 - Reranker 失败时应用默认回退到融合结果；严格实验可关闭回退。
 - 引用编号范围可以自动检查，但“引用是否真正支持结论”仍需人工判定。
 - 当前 active index 是本机运行状态，不提交仓库；克隆后必须自行重建。
-- v2.5 真实质量门槛尚未完成，不能把本分支标记为完整发布版。
+- v2.5 Holdout 已消费，严格答案完整率 66.7%；不能用该组题调参后重复宣称独立终验通过。
+- v2.5 生成质量和学习者验收未通过，不能把本分支标记为完整发布版。
