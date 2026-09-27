@@ -30,6 +30,8 @@ LLM 生成带引用的回答
 
 ## 当前进度
 
+### v1.0 · RAG-MVP（已完成）
+
 | 阶段 | 内容 | 产出 | 状态 |
 |---|---|---|---|
 | 一 | 准备知识库和测试问题 | `data/raw/` 10 篇手册 + `data/eval/questions.jsonl` 25 题 | 已完成并验收 |
@@ -40,12 +42,16 @@ LLM 生成带引用的回答
 | 六 | 实现答案生成 | `src/generator.py` / `src/rag.py` | 已完成并验收 |
 | 七 | 增加简单界面 | `app.py`（Streamlit） | 已完成并验收 |
 
-**v2.0（进行中）**：在 v1.0 基础上学习“召回与排序”——BM25、RRF 融合、Reranker；规划见 `RAG-v2.0学习规划.md`（共 7 个阶段）。
+### v2.0 · 召回与排序（进行中）
+
+在 v1.0 基础上学习“召回与排序”——BM25、RRF 融合、Reranker；规划见 `RAG-v2.0学习规划.md`（共 7 个阶段）。
 
 | 阶段 | 内容 | 状态 |
 |---|---|---|
 | 一 | 冻结现有语料并完善评估标注 | 已完成并验收 |
-| 二 ~ 七 | 基线评估 / BM25 / RRF 融合 / Reranker / 对照实验 / 工程化 | 未开始 |
+| 二 | 建立 v1.0 可重复评估基线 | 已完成并验收 |
+| 三 | 实现 BM25 检索 | 已完成并验收 |
+| 四 ~ 七 | RRF 融合 / Reranker / 对照实验 / 工程化 | 未开始 |
 
 ---
 
@@ -116,10 +122,15 @@ rag-one/
 │   ├── eval/
 │   │   ├── questions.jsonl   # 32 题评估集（含 relevant_chunk_ids chunk 级标注）
 │   │   ├── corpus-version.md # v2.0 语料版本快照（指纹 / 切分参数 / chunk 统计）
+│   │   ├── baseline-v1.json  # v1.0 向量检索基线（机器可读；防覆盖，各实验的对照基准）
+│   │   ├── baseline-v1.md    # 基线的人类可读报告（分题型统计 + 未命中清单 + 逐题明细）
+│   │   ├── run-bm25.json     # v2.0 阶段三：BM25 评估结果（机器可读，与基线同口径可对照）
+│   │   ├── run-bm25.md       # BM25 评估的人类可读报告
 │   │   └── eval-report.md    # 人工评估表（v2.0：32 题逐题走查记录）
 │   └── README.md             # 数据集说明
 ├── storage/
-│   └── chroma/               # ChromaDB 持久化索引（git 忽略，可用 ingest.py 重建；当前 111 条 = v2.0 语料）
+│   ├── chroma/               # ChromaDB 持久化索引（git 忽略，可用 ingest.py 重建；当前 111 条 = v2.0 语料）
+│   └── bm25/                 # BM25 关键词索引（git 忽略，可用 ingest_bm25.py 重建；当前 111 块 / 1515 词项）
 ├── src/
 │   ├── __init__.py
 │   ├── config.py             # 阶段四：集中配置读取（已完成）
@@ -130,9 +141,17 @@ rag-one/
 │   ├── indexer.py            # 阶段四：索引构建（已完成）
 │   ├── retriever.py          # 阶段五：Top-K 检索（已完成）
 │   ├── generator.py          # 阶段六：Prompt 与答案生成（已完成）
-│   └── rag.py                # 阶段六：检索→生成主流程（已完成）
+│   ├── rag.py                # 阶段六：检索→生成主流程（已完成）
+│   └── bm25_store.py         # v2.0 阶段三：BM25 关键词检索（已完成）
 ├── ingest.py                 # 阶段四：索引入口（已完成）
+├── ingest_bm25.py            # v2.0 阶段三：BM25 索引入口（已完成）
 ├── app.py                    # 阶段七：Streamlit 界面（已完成）
+├── evaluation/               # v2.0：离线检索评估（正式包）
+│   ├── __init__.py
+│   ├── metrics.py            # 指标纯函数：HitRank / Recall@K / RR@K / 百分位
+│   └── evaluate_retrieval.py # 评估 CLI：一条命令跑完全部题目 → JSON + Markdown
+├── tests/
+│   └── test_bm25.py          # v2.0 阶段三：BM25 单元测试（pytest，6 用例）
 ├── tools/
 │   └── freeze_corpus.py      # v2.0：语料冻结脚本（生成 data/eval/corpus-version.md）
 ├── .env.example              # 环境变量模板（.env 含密钥，被 git 忽略）
@@ -140,14 +159,16 @@ rag-one/
 ├── RAG-v2.0学习规划.md        # v2.0 规划：冻结语料、BM25 / RRF / Reranker 与对照实验
 ├── readme.md                 # 本文件
 ├── requirements.txt          # 纯 ASCII 英文注释（见"踩坑记录"）
-└── .gitignore                # 忽略 .venv/ __pycache__/ .env storage/chroma/
+└── .gitignore                # 忽略 .venv/ __pycache__/ .env storage/chroma/ storage/bm25/
 ```
 
 ---
 
 ## 工作记录
 
-### 阶段一：知识库与评估集（已完成并验收）
+### v1.0 · RAG-MVP（已完成）
+
+#### 阶段一：知识库与评估集（已完成并验收）
 
 > v2.0 注：以下为 v1.0 当时的语料状态；v2.0 阶段一已将语料更新为 9 篇扩写版 Markdown + `10-faq.pdf`（原 `10-faq.md` 删除），现状以 `data/eval/corpus-version.md` 为准。
 
@@ -180,7 +201,7 @@ rag-one/
 
 遗留建议项（用户决定暂不处理）：q22/q23 拒答题的"有依据型 / 无依据型"标签可细分；文档总量约 13 页，低于规划建议的 20~100 页。
 
-### 阶段二：文档加载 `src/loaders.py`（已完成并验收）
+#### 阶段二：文档加载 `src/loaders.py`（已完成并验收）
 
 分工策略：`load_file` 按扩展名分发到 `load_txt` / `load_md` / `load_pdf`，统一输出同一种记录结构：
 
@@ -211,7 +232,7 @@ rag-one/
 
 **验收结果**：17/17 边界断言通过，覆盖正常 txt、空文件、纯空白、GBK 编码文件、损坏 PDF、含空页的真实 2 页 PDF、未知扩展名、目录批量加载。
 
-### 阶段三：文本切分 `src/splitter.py`（已完成并验收）
+#### 阶段三：文本切分 `src/splitter.py`（已完成并验收）
 
 切分参数：
 
@@ -253,7 +274,7 @@ chunk 数量: 10
 - 边界输入：空文本 / 纯空白 → 0 块，短文本原样 1 块；
 - `summarize`：正常输出 chunk 数量与平均长度，空列表不报错。
 
-### 阶段四：建立向量索引（已完成并验收）
+#### 阶段四：建立向量索引（已完成并验收）
 
 **流程**：`加载 → 切分 → 向量化 → 写入 ChromaDB`；入口命令（全量重建）：
 
@@ -290,7 +311,7 @@ chunk 数: 10
 - 分批对齐：把批大小临时改成 2 强制拆请求，同文本跨请求余弦 = 1.0，不同文本余弦 ≈ 0.58；
 - 全量重建闭环：reset 后 count = 0 → `build_index()` 重建后回到 10 条，数据可按 id 取回。
 
-### 阶段五：Top-K 检索 `src/retriever.py`（已完成并验收）
+#### 阶段五：Top-K 检索 `src/retriever.py`（已完成并验收）
 
 **流程**：`问题 → embed_query → Chroma query(Top-K) → 结构化结果`；本阶段不接 LLM，先只验证检索质量。
 
@@ -328,7 +349,7 @@ Rank 1 | score≈0.6852 | 06-travel-policy.md
 - 切分参数对比（临时把 CHUNK_SIZE 800→400 重建索引）：细切后来源级召回率反而降至 29/31 = 93.5%，且 q01 的 Rank1 从 06-travel 变为 10-faq——当时结论维持 800/150，完整对比与后续复跑见「调优实验 T1」；
 - 边界观察：库外问题（"公司食堂每天几点开饭？"）也返回 5 条（top1 分数 ≈ 0.6410）——**检索器不会拒答，只会给"相对最像的"**；分数绝对值不足以区分"有依据/无依据"，拒答要靠阶段六的生成 Prompt 兜底。
 
-### 阶段六：答案生成 `src/generator.py` + `src/rag.py`（已完成并验收）
+#### 阶段六：答案生成 `src/generator.py` + `src/rag.py`（已完成并验收）
 
 **流程**：`问题 → retrieve → build_prompt（编号 [1]..[K]）→ chat.completions → 带引用的回答`。
 
@@ -364,7 +385,7 @@ result = ask(question, top_k=5)
 - q24 拒答题："根据现有资料无法确定"正确触发；检索仍正常返回 5 条（拒答靠 Prompt，而非检索端）；
 - 已知观察：拒答时模型仍会附带"使用的资料编号"一行，第一版接受。
 
-### 阶段七：Streamlit 界面 `app.py`（已完成并验收）
+#### 阶段七：Streamlit 界面 `app.py`（已完成并验收）
 
 **流程**：`浏览器交互 → app.py（页面只调用 RAG 模块）→ 上传 / 重建 / 提问 / 展示`；页面不写核心逻辑，全部通过 `build_index()` 和 `ask()` 两个既有接口驱动。
 
@@ -391,7 +412,7 @@ E:\Anaconda_envs\envs\rag-one\python.exe -X utf8 -m streamlit run app.py
 - **页面错误不损坏索引（验收清单 4）**：向页面注入"ask 抛异常 / build_index 抛异常"两个故意失败 → 页面显示 `st.error` 提示而非崩溃，库均保持 10 条；
 - 上传 → 保存路径补验：AppTest 模拟上传测试文件 → 点"保存到知识库"提示"已保存"、文件真实写入 `data/raw/`（测后已删除，知识库恢复 10 篇）。
 
-### 收尾：MVP 完成定义核对（规划第 9 节，10/10 达成）
+#### 收尾：MVP 完成定义核对（规划第 9 节，10/10 达成）
 
 | # | 完成定义 | 核对证据 |
 |---|---|---|
@@ -406,9 +427,11 @@ E:\Anaconda_envs\envs\rag-one\python.exe -X utf8 -m streamlit run app.py
 | 9 | README 记录关键参数及其作用 | 本文件"关键参数"（8 项） |
 | 10 | 核心流程不依赖 LangChain 或 LangGraph | 全部模块手写，无框架依赖（阶段二~七） |
 
-### v2.0 阶段一：冻结语料与评估标注（已完成并验收）
+### v2.0 · 召回与排序（进行中）
 
-**目标**（v2.0 规划第 5 节）：把更新后的资料冻结为固定实验语料，评估集扩充到 ≥30 题并补到 chunk 级，为 BM25 / 融合 / 重排的对照实验建立共同基准。
+#### 阶段一：冻结语料与评估标注（已完成并验收）
+
+**目标**（v2.0 规划第 5 节）：把更新后的语料（9 篇扩写版 Markdown + `10-faq.pdf`）冻结为固定实验语料，评估集扩充到 ≥30 题并补到 chunk 级，为 BM25 / 融合 / 重排的对照实验建立共同基准。
 
 **语料冻结**：新增 `tools/freeze_corpus.py`（运行 `python -X utf8 -m tools.freeze_corpus` 复查），逐文件记录字节数与 SHA256 前 16 位指纹，连同切分参数与实际统计生成 `data/eval/corpus-version.md`——v2.0 全部实验共用的语料版本快照，冻结期内不得新增、重写或替换 `data/raw/` 文件：
 
@@ -423,6 +446,8 @@ E:\Anaconda_envs\envs\rag-one\python.exe -X utf8 -m streamlit run app.py
 direct 9 / keyword 5 / multi_source 5 / confusable 4 / unanswerable 3 / reasoning 2 / trap 2 / table 1 / semantic 1
 ```
 
+配套文档同步：`data/README.md` 与 `data/eval/eval-report.md` 随语料更新同步（32 题、对齐源码切分参数、目标改为 v2.0 阶段六口径），并修正 `questions.jsonl` 中 4 处旧文件名引用（`10-faq.md` → `10-faq.pdf`）。
+
 **chunk 级标注**：31 道可答题标注 `relevant_chunk_ids`（共 103 个“题 × 块”对）；q24（食堂午餐）为空——语料零命中，与拒答答案一致。口径：排除各文档高频复用的模板扩写段（“执行要点 / 常见误区”等），只标含支撑答案的具体陈述的块。
 
 **索引重建**：`python -X utf8 ingest.py` 全量重建（此前库内仍是 v1.0 时期的 10 条旧索引）：
@@ -433,23 +458,123 @@ chunk 数: 111
 集合内向量数: 111
 ```
 
-**验收结果**：总验收脚本 384/384 断言通过，覆盖规划“阶段一验收清单”8 项：
+**验收结果**：临时总验收脚本（独立重算、跑完即删）384/384 断言通过，覆盖规划“阶段一验收清单”8 项：
 
 - 语料：10 份文件可加载，指纹与 `corpus-version.md` 逐一独立重算一致；
 - 切分：111 块、平均 717.7 字符、每篇分布吻合；
 - 库对齐：库内 id 集合 == 切分结果，111 条文本 / `content_hash` / metadata / 1024 维向量逐条一致；
 - 评估集：32 题 id 连续唯一；31 题有来源、31 题有 chunk 标注（均 ≥ 20 要求）；题型含关键词 / 语义 / 多片段 / 拒答四类；
-- 检索 smoke：9 类题型各抽 1 题实测，相关块均进入 Top-5（如 q26 [keyword] Rank1 = `09-it-support.md:chunk-2`，2/2 命中）。
+- 检索 smoke：9 类题型各抽 1 题实测（top_k=5），相关块均进入 Top-5：
+
+```text
+q01 [direct]        Rank1=06-travel-policy.md:chunk-5  | 相关命中 3/4
+q02 [table]         Rank1=10-faq.pdf:page-3:chunk-1   | 相关命中 3/3
+q03 [confusable]    Rank1=05-expense-policy.md:chunk-0 | 相关命中 3/4
+q04 [reasoning]     Rank1=05-expense-policy.md:chunk-0 | 相关命中 2/4
+q11 [multi_source]  Rank1=07-remote-work.md:chunk-0    | 相关命中 4/6
+q18 [trap]          Rank1=09-it-support.md:chunk-0     | 相关命中 4/5
+q22 [unanswerable]  Rank1=10-faq.pdf:page-1:chunk-0    | 相关命中 1/2
+q26 [keyword]       Rank1=09-it-support.md:chunk-2     | 相关命中 2/2
+q32 [semantic]      Rank1=10-faq.pdf:page-1:chunk-0    | 相关命中 2/2
+```
+
+> 注：“相关命中 X/Y” = 该题 `relevant_chunk_ids` 中进入 Top-5 的数量 / 标注总数；q03 的 Rank1 落在费用报销制度（30 天口径）而非差旅制度（15 天）——confusable 题预期的干扰现象，记为阶段二基线的观察点。
 
 遗留决定：9 题的 `relevant_chunk_ids` 包含 `expected_sources` 之外的来源（FAQ 等冗余覆盖，方向均为“多”）；经复核，`expected_sources` **维持不变**——其语义是“必须命中的来源”，chunk 级公平性由 `relevant_chunk_ids` 保证。
+
+#### 阶段二：v1.0 向量检索基线（已完成并验收）
+
+**目标**（v2.0 规划第 5 节）：在改动检索方案之前，先用当前纯向量链路跑完全部 32 题并锁存结果，作为 BM25 / 融合 / 重排各实验的共同对照。只评估检索，不调用 LLM——生成模型的随机性会掩盖检索问题。
+
+**实现**：新增 `evaluation/` 正式包（与 `src/` 同级、含 `__init__.py`）：
+
+- `evaluation/metrics.py`：指标纯函数（`hit_rank` / `recall_at_k` / `reciprocal_rank` / `relevant_hit_count` / `percentile`），不读文件、不碰网络——后续各检索模式共用同一套公式；
+- `evaluation/evaluate_retrieval.py`：评估 CLI，一条命令跑完全部题目并产出两个文件（JSON 机器可读 + Markdown 人类可读）：
+
+```powershell
+python -X utf8 -m evaluation.evaluate_retrieval
+```
+
+**评估口径**（先定死，避免阶段间漂移）：
+
+- 直接调用生产链路 `src.retriever.retrieve()`，零侵入评估真实链路；
+- **题级 Recall**：前 K 命中中含任一相关块记 1，对 31 道有标注题求平均；另记块级覆盖（Top-10 命中块数 / 标注总数）作辅助诊断；
+- 检索深度取 `top_k=10`，一次检索同时得到 Recall@5 / Recall@10 与 MRR@10（前 5 是前 10 的前缀）；
+- 延迟 = 单题端到端（含查询向量化网络时间），统计全部 32 题（拒答题也真实占用时间）；
+- 拒答题（q24）只记录命中内容，不参与 Recall / MRR 统计；
+- **防覆盖**：输出文件已存在时直接拒绝运行（`--force` 显式放行）——基线只允许诞生一次，后续实验用各自命名另存（如 `--out data/eval/run-bm25.json`）。
+
+**基线结果**（`data/eval/baseline-v1.json` + `baseline-v1.md`，运行元信息见 JSON `run` 段）：
+
+| 指标 | 值 |
+|---|---|
+| Recall@5 | 96.8%（30/31） |
+| Recall@10 | 100.0% |
+| MRR@10 | 0.838 |
+| 相关块覆盖（Top-10） | 84.8% |
+| 延迟 P50 / P95 | 198 / 574 ms |
+
+分题型：confusable 75.0%（唯一未命中 q20，命中排名 7），其余 8 类均 100%。q20（“外出拜访客户是否占用远程办公天数”）记为本基线观察点，作为后续 BM25 / RRF / Reranker 的对照优化对象。
+
+**验收结果**：临时脚本（独立重算，不复用 `evaluation.metrics`，跑完即删）375/375 断言通过——逐题 5 项指标与 4 项汇总指标和 JSON 全吻合；防覆盖实测（重跑被拒绝、基线文件时间戳不变）；LLM 零调用核查（评估链路无任何生成接口引用）。
+
+**稳定性复跑**（验收清单第 5 条）：换路径重跑全量 32 题，200 项对比指标全一致；3 处差异（q01 / q05 / q15）全部落在 **Top-8~10 近乎并列的块**之间（分数差 < 0.001，score 最大抖动 0.0009），根因是 embedding 服务端浮点抖动——Top-7 以内定序 100% 稳定。「重复运行结果稳定」的本项目口径：**指标级稳定，末位并列块不承诺逐位一致**（已并入决策记录第 11 条）。
+
+#### 阶段三：实现 BM25 检索（已完成并验收）
+
+**目标**（v2.0 规划第 5 节）：手写中文关键词检索链路（chunk → jieba 分词 → 倒排索引 → BM25 Top-N），与向量检索并列作为第二路召回；在冻结语料与同一 32 题评估集上与向量基线对照。
+
+**实现**：三个新文件 + 评估 CLI 扩展（复用 `loaders + splitter` 产出 chunk，与向量索引天然同 id）：
+
+- `src/bm25_store.py`：BM25 核心——`tokenize`（jieba 精确分词：去空白 / 丢纯标点 / 英文小写）、`build_index`（纯函数：chunks + postings 倒排表 + avgdl）、`save_index` / `load_index`（纯 JSON，`lru_cache` 进程内只解析一次）、`search`（查询词去重 → 按倒排累加 → 分数降序 + 同分按 chunk id 升序兜底）；
+- `ingest_bm25.py`：BM25 索引入口；
+- `tests/test_bm25.py`：首个留在仓库的 pytest（6 用例：空查询 / 未登录词 / 重复词等价 / 同分 tie-break / Top-K 边界 / 结果结构与排序）；
+- `evaluation/evaluate_retrieval.py`：`--mode` 增加 `bm25` 分支（`retrieve_by_mode` 分发），评估口径与基线逐条一致。
+
+**打分公式**（第一版经典默认值）：
+
+```text
+score(q,d) = Σ IDF(t) · tf·(k1+1) / (tf + k1·(1-b + b·dl/avgdl))
+IDF(t) = ln(1 + (N-df+0.5)/(df+0.5))      # Lucene 变体，恒为正、无负分
+k1 = 1.5（词频饱和）  b = 0.75（长度归一化）
+```
+
+**运行方式**：
+
+```powershell
+python -X utf8 ingest_bm25.py                  # 重建（10 篇 → 111 块 / 1515 词项 / 平均 326.3 tokens）
+python -X utf8 -m src.bm25_store                # 演示检索
+python -X utf8 -m pytest tests/test_bm25.py -v  # 单元测试（6 用例）
+python -X utf8 -m evaluation.evaluate_retrieval --mode bm25 --out data/eval/run-bm25.json
+```
+
+**BM25 结果**（`data/eval/run-bm25.json` + `run-bm25.md`）：
+
+| 指标 | BM25 | 向量基线 | 差值 |
+|---|---:|---:|---:|
+| Recall@5 | 100.0% | 96.8% | +3.2pp |
+| Recall@10 | 100.0% | 100.0% | — |
+| MRR@10 | 0.888 | 0.838 | +0.050 |
+| 相关块覆盖（Top-10） | 93.3% | 84.8% | +8.5pp |
+| 延迟 P50 / P95 | 0 / 1 ms | 198 / 574 ms | 纯内存，无网络调用 |
+
+**对照分析**（逐题与分题型完整数据见 run-bm25.md）：
+
+- 向量基线唯一短板 **q20 修复：首个相关块 rank 7 → 3**；direct 类 9 题全部 rank 1（MRR 0.778 → 1.000）；
+- BM25 弱项符合预期：**q32 语义题 rank 2 → 5**（“台风 / 地铁停运”无词面匹配，靠泛词进 Top-5）；multi_source MRR 0.867 → 0.800；
+- 干扰模式：`10-faq.pdf:page-1:chunk-0`（FAQ 汇总块，主题词堆叠）在 BM25 中霸榜；各文档模板扩写段（chunk-9 系列）成批涌入 Top-10——词面重复敏感是 BM25 的固有偏差；
+- 两路互补：共同命中相关块 81 个，向量独有检出 2 个、BM25 独有检出 11 个——RRF 融合的输入已就位；
+- 延迟口径：P50/P95 为稳态值；首题含 jieba 词典一次性加载（843ms），会把 avg 拉到 26.5ms。
+
+**验收结果**：临时脚本（独立重算，跑完即删）两组全绿——512/512（索引侧：id 三方对齐 / tokens 与 postings 全表重算 / 打分公式独立复算 / 可重建性 / 边界）+ 252/252（产物侧：逐题指标重算 / 与函数级结果交叉一致 / 语料指纹十文件复核）；pytest 6/6。验收中发现并处理三件事：评估 CLI 的 `--mode` 校验未放开 bm25（按讲义补齐）、`.gitignore` 缺 `storage/bm25/`（已补，索引不提交）、`03-attendance.md` 在基线生成后被改动 1 行导致 Chroma 与当前语料不同步（恢复提交版 + 重建 BM25 后三方对齐，详见决策 17）。
 
 ---
 
 ## 附录
 
-> 与七个开发阶段平行的独立记录线，内部分两条子线，性质不同、分开归档：
+> 与各版本（v1.0 / v2.0）开发阶段平行的独立记录线，内部分两条子线，性质不同、分开归档：
 >
-> - **调优实验**（编号 T1、T2……）：凡「改一个参数 → 重建索引 → 用 25 题评估集对比效果」的对比实验。本板块保留“为什么是这个值”的完整证据链；「关键参数」表只反映当前生效值。
+> - **调优实验**（编号 T1、T2……）：凡「改一个参数 → 重建索引 → 用固定评估集对比效果」的对比实验（T1 时为 25 题，v2.0 起为 32 题）。本板块保留“为什么是这个值”的完整证据链；「关键参数」表只反映当前生效值。
 > - **知识笔记**（不占 T 编号、非实验）：开发中实测沉淀的 API / 协议结构知识。
 
 ### 调优实验
@@ -550,6 +675,8 @@ python -X utf8 -m src.retriever
 | EMBED_BATCH_SIZE | 32 | `src/config.py` | 单次 Embedding 请求的最大文本条数 |
 | COLLECTION_NAME | rag_mvp_docs | `src/config.py` | Chroma 集合名（3~512 字符、首尾字母数字） |
 | top_k | 5 | `src/retriever.py` | 检索返回条数（DEFAULT_TOP_K），可传参覆盖 |
+| BM25_K1 | 1.5 | `src/bm25_store.py` | BM25 词频饱和参数；属打分参数不写入索引，调参无需重建 |
+| BM25_B | 0.75 | `src/bm25_store.py` | BM25 长度归一化强度（0 不归一化 / 1 完全归一化） |
 | LLM_MODEL | Qwen/Qwen3-8B | `.env`（默认值在 `src/config.py`） | 生成模型（硅基流动），调用时关闭思考模式 |
 | LLM_TEMPERATURE | 0.2 | `src/generator.py` | 生成随机性；低温保证答案稳定、评估可复现 |
 
@@ -567,20 +694,22 @@ python -X utf8 -m src.retriever
 8. **向量一律外部传入，关闭 Chroma 内置向量函数**：建集合时 `embedding_function=None`（默认会挂一个本地 ONNX 小模型）；忘传 embedding 时 Chroma 会显式报错，而不是静默算错。
 9. **建集合参数只在“真正新建”时生效**：改距离度量等建表参数必须“先删后建”（`reset_collection`），对已存在的集合改代码无效。
 10. **本机裸 `python` 不是项目环境**：默认解析到系统 Python 3.13（无项目依赖），运行一律用 `rag-one` 环境（激活或全路径）。
-11. **服务端向量有微小跨请求抖动**：同一文本两次请求可能有 ≤0.002 的浮点差异（多数为 0），而不同文本差异约 0.1 / 余弦 ≈ 0.58——比较向量时阈值取 0.01 量级，勿用 1e-4。
+11. **服务端向量有微小跨请求抖动**：同一文本两次请求可能有 ≤0.002 的浮点差异（多数为 0），而不同文本差异约 0.1 / 余弦 ≈ 0.58——比较向量时阈值取 0.01 量级，勿用 1e-4。该抖动的检索侧可见效果：Top-8~10 近乎并列（分数差 < 0.001）的块顺序可能翻转（v2.0 阶段二复跑实测 q01/q05/q15），Top-7 以内与全部指标不受影响——重复评估的“稳定”以指标级为口径。
 12. **切分粒度不是越细越好（有对比数据，详见调优实验 T1）**：同一知识库把 CHUNK_SIZE 从 800 降到 400（重叠同 150），chunk 数 10 → 32，25 题的来源级 Recall@5 反而从 100% 降到 93.5%，且 q01 首位命中从《差旅制度》变成《FAQ》。当前手册均为 800 字符内短文，"每篇整切"最优，维持 800/150。
 13. **Qwen3-8B 默认开启思考模式（生成时必须关闭）**：不传 `extra_body={"enable_thinking": False}` 时，一次最小问答耗时约 14.7s、completion 399 token（其中思考链 397）；关闭后 0.5s、1 token。RAG 照资料答题用不到思考链，`generator.py` 已默认关闭（返回结构详见附录知识笔记）。
 14. **界面启动走 `python -m streamlit`**：streamlit 装好后可执行文件在环境的 `Scripts\` 目录（不在 PATH），直接敲 `streamlit run` 会提示无法识别命令；统一用 `python -X utf8 -m streamlit run app.py` 启动界面。
 15. **语料扩写段是刻意保留的干扰项（v2.0）**：9 篇 Markdown 各自追加的模板化“扩展使用说明”段（规则说明 / 执行要点 / 常见误区等）跨文档高度相似，是混合检索实验的 hard negative 与“多副本”观察点，不是数据事故；chunk 级标注对这类段落从严判定（仅含支撑答案的具体陈述才标）。
+16. **BM25 手写实现而非引库（v2.0 阶段三）**：规划允许 `rank-bm25` 或手写，选择手写——公式透明、零新增依赖、分词与并列兜底可控（同分按 chunk id 升序）。IDF 取 Lucene 变体 `ln(1+(N-df+0.5)/(df+0.5))`，恒为正、无负分（避免高 df 词把总分压低）；索引只持久化“可重建数据”（原文 + 分词 + 倒排 + avgdl），k1/b 属打分参数不写入索引——后续调参实验无需重建。
+17. **语料冻结是字节级纪律（v2.0 阶段三验收实测）**：`03-attendance.md` 在基线生成之后被改动 1 行（`---` 分隔线被删，18489 → 18486 字节），造成 Chroma 索引（旧文本）与当前语料 / BM25 索引（新文本）在 2 个块上不一致、`corpus-version.md` 指纹过时——已恢复提交版并重建 BM25 闭环。两条配套教训：① 用 git 恢复文件不能直接 `git checkout`（本机 autocrlf 会 LF→CRLF 改变字节），须用 `git show` 取 blob 原始字节写入，指纹才与 corpus-version.md 一致；② 验收必须做「索引 × 切分 × 语料指纹」三方对齐，任何一处漂移都会让指标对照失去公平性。
 
 ---
 
 ## 下一步
 
-- v1.0 七个阶段已全部完成（MVP 完成定义 10/10，见“工作记录 → 收尾”）。
+- v1.0 七个阶段已全部完成（MVP 完成定义 10/10，见“工作记录 → v1.0 → 收尾”）。
 - **v2.0 进行中**（规划见 `RAG-v2.0学习规划.md`）：
-  - 阶段一“冻结语料与评估标注”已完成并验收（见“工作记录 → v2.0 阶段一”）；
-  - 下一环节：阶段二“建立 v1.0 可重复评估基线”——一条命令跑完全部 32 题的纯向量检索评估（不调用 LLM），产出机器可读 JSON + 人类可读报告，保存为不可被覆盖的 v1.0 基线；
+  - 阶段一“冻结语料与评估标注”、阶段二“建立 v1.0 可重复评估基线”、阶段三“实现 BM25 检索”已完成并验收（见“工作记录 → v2.0”）；
+  - 下一环节：阶段四“实现 RRF 融合”——把向量与 BM25 两路排名做倒数排名融合，在同一评估集上与两条单路对照；
   - 人工评估表 `data/eval/eval-report.md` 已同步为 32 题 v2.0 版（目标以 v2.0 规划第 5 节阶段六为准），待阶段六端到端时逐题填写。
 
 ---

@@ -1,0 +1,2533 @@
+{
+  "run": {
+    "name": "baseline-v1",
+    "mode": "vector",
+    "top_k": 10,
+    "recall_ks": [
+      5,
+      10
+    ],
+    "mrr_k": 10,
+    "collection": "rag_mvp_docs",
+    "chunk_count": 111,
+    "embedding_model": "BAAI/bge-m3",
+    "question_count": 32,
+    "created_at": "2026-09-27T16:01:27"
+  },
+  "summary": {
+    "scored_count": 31,
+    "recall_at_5": 0.9677,
+    "recall_at_10": 1.0,
+    "mrr_at_10": 0.8379,
+    "avg_relevant_coverage": 0.8484,
+    "latency_ms": {
+      "avg": 230.7,
+      "p50": 198,
+      "p95": 574
+    }
+  },
+  "questions": [
+    {
+      "question_id": "q01",
+      "question": "普通员工去上海出差，酒店每晚含税最高可以报销多少？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "06-travel-policy.md:chunk-0",
+        "06-travel-policy.md:chunk-4",
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-3:chunk-0"
+      ],
+      "latency_ms": 737,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "06-travel-policy.md:chunk-5",
+          "source": "06-travel-policy.md",
+          "score": 0.6889
+        },
+        {
+          "rank": 2,
+          "chunk_id": "10-faq.pdf:page-3:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.6819
+        },
+        {
+          "rank": 3,
+          "chunk_id": "06-travel-policy.md:chunk-0",
+          "source": "06-travel-policy.md",
+          "score": 0.6809
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.6609
+        },
+        {
+          "rank": 5,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.6285
+        },
+        {
+          "rank": 6,
+          "chunk_id": "05-expense-policy.md:chunk-1",
+          "source": "05-expense-policy.md",
+          "score": 0.6165
+        },
+        {
+          "rank": 7,
+          "chunk_id": "06-travel-policy.md:chunk-4",
+          "source": "06-travel-policy.md",
+          "score": 0.5796
+        },
+        {
+          "rank": 8,
+          "chunk_id": "06-travel-policy.md:chunk-7",
+          "source": "06-travel-policy.md",
+          "score": 0.5717
+        },
+        {
+          "rank": 9,
+          "chunk_id": "04-leave-policy.md:chunk-10",
+          "source": "04-leave-policy.md",
+          "score": 0.5646
+        },
+        {
+          "rank": 10,
+          "chunk_id": "05-expense-policy.md:chunk-10",
+          "source": "05-expense-policy.md",
+          "score": 0.5646
+        }
+      ],
+      "hit_rank": 2,
+      "relevant_hit_count": 4,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 0.5
+    },
+    {
+      "question_id": "q02",
+      "question": "部门总监去成都出差的住宿标准是多少？",
+      "type": "table",
+      "relevant_chunk_ids": [
+        "06-travel-policy.md:chunk-0",
+        "06-travel-policy.md:chunk-5",
+        "10-faq.pdf:page-3:chunk-1"
+      ],
+      "latency_ms": 159,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "10-faq.pdf:page-3:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.7053
+        },
+        {
+          "rank": 2,
+          "chunk_id": "06-travel-policy.md:chunk-5",
+          "source": "06-travel-policy.md",
+          "score": 0.6896
+        },
+        {
+          "rank": 3,
+          "chunk_id": "06-travel-policy.md:chunk-0",
+          "source": "06-travel-policy.md",
+          "score": 0.6761
+        },
+        {
+          "rank": 4,
+          "chunk_id": "06-travel-policy.md:chunk-4",
+          "source": "06-travel-policy.md",
+          "score": 0.6001
+        },
+        {
+          "rank": 5,
+          "chunk_id": "01-company-overview.md:chunk-4",
+          "source": "01-company-overview.md",
+          "score": 0.5751
+        },
+        {
+          "rank": 6,
+          "chunk_id": "10-faq.pdf:page-3:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.5556
+        },
+        {
+          "rank": 7,
+          "chunk_id": "06-travel-policy.md:chunk-1",
+          "source": "06-travel-policy.md",
+          "score": 0.5469
+        },
+        {
+          "rank": 8,
+          "chunk_id": "06-travel-policy.md:chunk-6",
+          "source": "06-travel-policy.md",
+          "score": 0.5458
+        },
+        {
+          "rank": 9,
+          "chunk_id": "05-expense-policy.md:chunk-1",
+          "source": "05-expense-policy.md",
+          "score": 0.5451
+        },
+        {
+          "rank": 10,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.5374
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 3,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q03",
+      "question": "出差返回后多少天内要提交报销？",
+      "type": "confusable",
+      "relevant_chunk_ids": [
+        "06-travel-policy.md:chunk-0",
+        "06-travel-policy.md:chunk-7",
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-3:chunk-0"
+      ],
+      "latency_ms": 182,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.7271
+        },
+        {
+          "rank": 2,
+          "chunk_id": "06-travel-policy.md:chunk-7",
+          "source": "06-travel-policy.md",
+          "score": 0.718
+        },
+        {
+          "rank": 3,
+          "chunk_id": "06-travel-policy.md:chunk-0",
+          "source": "06-travel-policy.md",
+          "score": 0.704
+        },
+        {
+          "rank": 4,
+          "chunk_id": "05-expense-policy.md:chunk-1",
+          "source": "05-expense-policy.md",
+          "score": 0.7017
+        },
+        {
+          "rank": 5,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.6988
+        },
+        {
+          "rank": 6,
+          "chunk_id": "10-faq.pdf:page-5:chunk-2",
+          "source": "10-faq.pdf",
+          "score": 0.6805
+        },
+        {
+          "rank": 7,
+          "chunk_id": "06-travel-policy.md:chunk-1",
+          "source": "06-travel-policy.md",
+          "score": 0.6765
+        },
+        {
+          "rank": 8,
+          "chunk_id": "10-faq.pdf:page-3:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.6748
+        },
+        {
+          "rank": 9,
+          "chunk_id": "05-expense-policy.md:chunk-7",
+          "source": "05-expense-policy.md",
+          "score": 0.6569
+        },
+        {
+          "rank": 10,
+          "chunk_id": "08-information-security.md:chunk-10",
+          "source": "08-information-security.md",
+          "score": 0.6545
+        }
+      ],
+      "hit_rank": 2,
+      "relevant_hit_count": 4,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 0.5
+    },
+    {
+      "question_id": "q04",
+      "question": "购买办公用品后 25 天还能正常提交报销吗？",
+      "type": "reasoning",
+      "relevant_chunk_ids": [
+        "05-expense-policy.md:chunk-0",
+        "05-expense-policy.md:chunk-2",
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-2:chunk-1"
+      ],
+      "latency_ms": 242,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.7525
+        },
+        {
+          "rank": 2,
+          "chunk_id": "05-expense-policy.md:chunk-1",
+          "source": "05-expense-policy.md",
+          "score": 0.7514
+        },
+        {
+          "rank": 3,
+          "chunk_id": "05-expense-policy.md:chunk-7",
+          "source": "05-expense-policy.md",
+          "score": 0.6928
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.6631
+        },
+        {
+          "rank": 5,
+          "chunk_id": "05-expense-policy.md:chunk-8",
+          "source": "05-expense-policy.md",
+          "score": 0.6456
+        },
+        {
+          "rank": 6,
+          "chunk_id": "06-travel-policy.md:chunk-7",
+          "source": "06-travel-policy.md",
+          "score": 0.6366
+        },
+        {
+          "rank": 7,
+          "chunk_id": "08-information-security.md:chunk-10",
+          "source": "08-information-security.md",
+          "score": 0.6255
+        },
+        {
+          "rank": 8,
+          "chunk_id": "06-travel-policy.md:chunk-10",
+          "source": "06-travel-policy.md",
+          "score": 0.6248
+        },
+        {
+          "rank": 9,
+          "chunk_id": "07-remote-work.md:chunk-10",
+          "source": "07-remote-work.md",
+          "score": 0.6248
+        },
+        {
+          "rank": 10,
+          "chunk_id": "09-it-support.md:chunk-10",
+          "source": "09-it-support.md",
+          "score": 0.6248
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q05",
+      "question": "一笔 6000 元的日常费用需要谁审批？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "05-expense-policy.md:chunk-0",
+        "05-expense-policy.md:chunk-5"
+      ],
+      "latency_ms": 210,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "05-expense-policy.md:chunk-5",
+          "source": "05-expense-policy.md",
+          "score": 0.6623
+        },
+        {
+          "rank": 2,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.653
+        },
+        {
+          "rank": 3,
+          "chunk_id": "05-expense-policy.md:chunk-4",
+          "source": "05-expense-policy.md",
+          "score": 0.6452
+        },
+        {
+          "rank": 4,
+          "chunk_id": "05-expense-policy.md:chunk-2",
+          "source": "05-expense-policy.md",
+          "score": 0.6439
+        },
+        {
+          "rank": 5,
+          "chunk_id": "05-expense-policy.md:chunk-1",
+          "source": "05-expense-policy.md",
+          "score": 0.6136
+        },
+        {
+          "rank": 6,
+          "chunk_id": "10-faq.pdf:page-3:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.6132
+        },
+        {
+          "rank": 7,
+          "chunk_id": "06-travel-policy.md:chunk-6",
+          "source": "06-travel-policy.md",
+          "score": 0.6084
+        },
+        {
+          "rank": 8,
+          "chunk_id": "04-leave-policy.md:chunk-8",
+          "source": "04-leave-policy.md",
+          "score": 0.608
+        },
+        {
+          "rank": 9,
+          "chunk_id": "06-travel-policy.md:chunk-8",
+          "source": "06-travel-policy.md",
+          "score": 0.608
+        },
+        {
+          "rank": 10,
+          "chunk_id": "06-travel-policy.md:chunk-9",
+          "source": "06-travel-policy.md",
+          "score": 0.6036
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q06",
+      "question": "同一项采购能否拆成两笔来降低审批等级？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "05-expense-policy.md:chunk-0",
+        "05-expense-policy.md:chunk-6"
+      ],
+      "latency_ms": 234,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "05-expense-policy.md:chunk-5",
+          "source": "05-expense-policy.md",
+          "score": 0.6634
+        },
+        {
+          "rank": 2,
+          "chunk_id": "05-expense-policy.md:chunk-6",
+          "source": "05-expense-policy.md",
+          "score": 0.6358
+        },
+        {
+          "rank": 3,
+          "chunk_id": "05-expense-policy.md:chunk-4",
+          "source": "05-expense-policy.md",
+          "score": 0.587
+        },
+        {
+          "rank": 4,
+          "chunk_id": "08-information-security.md:chunk-3",
+          "source": "08-information-security.md",
+          "score": 0.5738
+        },
+        {
+          "rank": 5,
+          "chunk_id": "09-it-support.md:chunk-3",
+          "source": "09-it-support.md",
+          "score": 0.5725
+        },
+        {
+          "rank": 6,
+          "chunk_id": "01-company-overview.md:chunk-7",
+          "source": "01-company-overview.md",
+          "score": 0.5653
+        },
+        {
+          "rank": 7,
+          "chunk_id": "05-expense-policy.md:chunk-7",
+          "source": "05-expense-policy.md",
+          "score": 0.5644
+        },
+        {
+          "rank": 8,
+          "chunk_id": "10-faq.pdf:page-3:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.5626
+        },
+        {
+          "rank": 9,
+          "chunk_id": "08-information-security.md:chunk-2",
+          "source": "08-information-security.md",
+          "score": 0.5575
+        },
+        {
+          "rank": 10,
+          "chunk_id": "05-expense-policy.md:chunk-3",
+          "source": "05-expense-policy.md",
+          "score": 0.5572
+        }
+      ],
+      "hit_rank": 2,
+      "relevant_hit_count": 1,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 0.5
+    },
+    {
+      "question_id": "q07",
+      "question": "连续请两天病假一定要医疗证明吗？",
+      "type": "confusable",
+      "relevant_chunk_ids": [
+        "04-leave-policy.md:chunk-0",
+        "04-leave-policy.md:chunk-4"
+      ],
+      "latency_ms": 574,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "04-leave-policy.md:chunk-4",
+          "source": "04-leave-policy.md",
+          "score": 0.6692
+        },
+        {
+          "rank": 2,
+          "chunk_id": "04-leave-policy.md:chunk-5",
+          "source": "04-leave-policy.md",
+          "score": 0.6528
+        },
+        {
+          "rank": 3,
+          "chunk_id": "04-leave-policy.md:chunk-0",
+          "source": "04-leave-policy.md",
+          "score": 0.6386
+        },
+        {
+          "rank": 4,
+          "chunk_id": "04-leave-policy.md:chunk-1",
+          "source": "04-leave-policy.md",
+          "score": 0.6096
+        },
+        {
+          "rank": 5,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.6007
+        },
+        {
+          "rank": 6,
+          "chunk_id": "04-leave-policy.md:chunk-2",
+          "source": "04-leave-policy.md",
+          "score": 0.5902
+        },
+        {
+          "rank": 7,
+          "chunk_id": "04-leave-policy.md:chunk-3",
+          "source": "04-leave-policy.md",
+          "score": 0.5855
+        },
+        {
+          "rank": 8,
+          "chunk_id": "10-faq.pdf:page-5:chunk-2",
+          "source": "10-faq.pdf",
+          "score": 0.5833
+        },
+        {
+          "rank": 9,
+          "chunk_id": "06-travel-policy.md:chunk-1",
+          "source": "06-travel-policy.md",
+          "score": 0.5612
+        },
+        {
+          "rank": 10,
+          "chunk_id": "04-leave-policy.md:chunk-6",
+          "source": "04-leave-policy.md",
+          "score": 0.556
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q08",
+      "question": "连续休四天年假要提前多久申请？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "04-leave-policy.md:chunk-0",
+        "04-leave-policy.md:chunk-2"
+      ],
+      "latency_ms": 165,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "04-leave-policy.md:chunk-0",
+          "source": "04-leave-policy.md",
+          "score": 0.7572
+        },
+        {
+          "rank": 2,
+          "chunk_id": "04-leave-policy.md:chunk-2",
+          "source": "04-leave-policy.md",
+          "score": 0.7134
+        },
+        {
+          "rank": 3,
+          "chunk_id": "04-leave-policy.md:chunk-1",
+          "source": "04-leave-policy.md",
+          "score": 0.6465
+        },
+        {
+          "rank": 4,
+          "chunk_id": "04-leave-policy.md:chunk-5",
+          "source": "04-leave-policy.md",
+          "score": 0.6366
+        },
+        {
+          "rank": 5,
+          "chunk_id": "04-leave-policy.md:chunk-3",
+          "source": "04-leave-policy.md",
+          "score": 0.6271
+        },
+        {
+          "rank": 6,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.6236
+        },
+        {
+          "rank": 7,
+          "chunk_id": "04-leave-policy.md:chunk-7",
+          "source": "04-leave-policy.md",
+          "score": 0.6214
+        },
+        {
+          "rank": 8,
+          "chunk_id": "04-leave-policy.md:chunk-6",
+          "source": "04-leave-policy.md",
+          "score": 0.6185
+        },
+        {
+          "rank": 9,
+          "chunk_id": "03-attendance.md:chunk-5",
+          "source": "03-attendance.md",
+          "score": 0.6081
+        },
+        {
+          "rank": 10,
+          "chunk_id": "06-travel-policy.md:chunk-1",
+          "source": "06-travel-policy.md",
+          "score": 0.6045
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q09",
+      "question": "员工周一周二休年假，周三生病，可以直接把原申请延长吗？",
+      "type": "reasoning",
+      "relevant_chunk_ids": [
+        "04-leave-policy.md:chunk-0",
+        "04-leave-policy.md:chunk-1",
+        "04-leave-policy.md:chunk-7"
+      ],
+      "latency_ms": 206,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "04-leave-policy.md:chunk-0",
+          "source": "04-leave-policy.md",
+          "score": 0.7441
+        },
+        {
+          "rank": 2,
+          "chunk_id": "04-leave-policy.md:chunk-5",
+          "source": "04-leave-policy.md",
+          "score": 0.7137
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.7028
+        },
+        {
+          "rank": 4,
+          "chunk_id": "04-leave-policy.md:chunk-3",
+          "source": "04-leave-policy.md",
+          "score": 0.696
+        },
+        {
+          "rank": 5,
+          "chunk_id": "04-leave-policy.md:chunk-2",
+          "source": "04-leave-policy.md",
+          "score": 0.6954
+        },
+        {
+          "rank": 6,
+          "chunk_id": "04-leave-policy.md:chunk-1",
+          "source": "04-leave-policy.md",
+          "score": 0.691
+        },
+        {
+          "rank": 7,
+          "chunk_id": "04-leave-policy.md:chunk-7",
+          "source": "04-leave-policy.md",
+          "score": 0.6834
+        },
+        {
+          "rank": 8,
+          "chunk_id": "04-leave-policy.md:chunk-4",
+          "source": "04-leave-policy.md",
+          "score": 0.6633
+        },
+        {
+          "rank": 9,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.65
+        },
+        {
+          "rank": 10,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.6494
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 3,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q10",
+      "question": "正式员工一周最多可以远程办公几天？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "07-remote-work.md:chunk-0",
+        "07-remote-work.md:chunk-1",
+        "02-onboarding.md:chunk-0",
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-2:chunk-0",
+        "10-faq.pdf:page-2:chunk-1"
+      ],
+      "latency_ms": 397,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.793
+        },
+        {
+          "rank": 2,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.75
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-2:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.7389
+        },
+        {
+          "rank": 4,
+          "chunk_id": "07-remote-work.md:chunk-1",
+          "source": "07-remote-work.md",
+          "score": 0.7354
+        },
+        {
+          "rank": 5,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.727
+        },
+        {
+          "rank": 6,
+          "chunk_id": "07-remote-work.md:chunk-2",
+          "source": "07-remote-work.md",
+          "score": 0.6955
+        },
+        {
+          "rank": 7,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.6666
+        },
+        {
+          "rank": 8,
+          "chunk_id": "03-attendance.md:chunk-1",
+          "source": "03-attendance.md",
+          "score": 0.6478
+        },
+        {
+          "rank": 9,
+          "chunk_id": "07-remote-work.md:chunk-3",
+          "source": "07-remote-work.md",
+          "score": 0.6448
+        },
+        {
+          "rank": 10,
+          "chunk_id": "02-onboarding.md:chunk-0",
+          "source": "02-onboarding.md",
+          "score": 0.6382
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 6,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q11",
+      "question": "试用期员工是否也能每周远程办公两天？",
+      "type": "multi_source",
+      "relevant_chunk_ids": [
+        "02-onboarding.md:chunk-0",
+        "02-onboarding.md:chunk-5",
+        "07-remote-work.md:chunk-0",
+        "07-remote-work.md:chunk-2",
+        "10-faq.pdf:page-2:chunk-0",
+        "10-faq.pdf:page-2:chunk-1"
+      ],
+      "latency_ms": 219,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.8063
+        },
+        {
+          "rank": 2,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.7609
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-2:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.7533
+        },
+        {
+          "rank": 4,
+          "chunk_id": "07-remote-work.md:chunk-2",
+          "source": "07-remote-work.md",
+          "score": 0.7254
+        },
+        {
+          "rank": 5,
+          "chunk_id": "07-remote-work.md:chunk-1",
+          "source": "07-remote-work.md",
+          "score": 0.7215
+        },
+        {
+          "rank": 6,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.7067
+        },
+        {
+          "rank": 7,
+          "chunk_id": "02-onboarding.md:chunk-5",
+          "source": "02-onboarding.md",
+          "score": 0.6921
+        },
+        {
+          "rank": 8,
+          "chunk_id": "02-onboarding.md:chunk-0",
+          "source": "02-onboarding.md",
+          "score": 0.6817
+        },
+        {
+          "rank": 9,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.6428
+        },
+        {
+          "rank": 10,
+          "chunk_id": "07-remote-work.md:chunk-3",
+          "source": "07-remote-work.md",
+          "score": 0.6355
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 6,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q12",
+      "question": "上周没有远程办公，这周能申请四天吗？",
+      "type": "multi_source",
+      "relevant_chunk_ids": [
+        "07-remote-work.md:chunk-0",
+        "07-remote-work.md:chunk-2",
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-2:chunk-0"
+      ],
+      "latency_ms": 228,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.7584
+        },
+        {
+          "rank": 2,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.7446
+        },
+        {
+          "rank": 3,
+          "chunk_id": "07-remote-work.md:chunk-1",
+          "source": "07-remote-work.md",
+          "score": 0.7115
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-2:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.7105
+        },
+        {
+          "rank": 5,
+          "chunk_id": "07-remote-work.md:chunk-2",
+          "source": "07-remote-work.md",
+          "score": 0.7091
+        },
+        {
+          "rank": 6,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.6979
+        },
+        {
+          "rank": 7,
+          "chunk_id": "07-remote-work.md:chunk-3",
+          "source": "07-remote-work.md",
+          "score": 0.6726
+        },
+        {
+          "rank": 8,
+          "chunk_id": "03-attendance.md:chunk-1",
+          "source": "03-attendance.md",
+          "score": 0.6574
+        },
+        {
+          "rank": 9,
+          "chunk_id": "07-remote-work.md:chunk-7",
+          "source": "07-remote-work.md",
+          "score": 0.6527
+        },
+        {
+          "rank": 10,
+          "chunk_id": "07-remote-work.md:chunk-4",
+          "source": "07-remote-work.md",
+          "score": 0.6509
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 4,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q13",
+      "question": "从另一个城市连续远程工作六个工作日，需要哪些批准？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "07-remote-work.md:chunk-0",
+        "07-remote-work.md:chunk-1",
+        "07-remote-work.md:chunk-7"
+      ],
+      "latency_ms": 198,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "07-remote-work.md:chunk-1",
+          "source": "07-remote-work.md",
+          "score": 0.7284
+        },
+        {
+          "rank": 2,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.7119
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.6813
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-2:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.6704
+        },
+        {
+          "rank": 5,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.6647
+        },
+        {
+          "rank": 6,
+          "chunk_id": "07-remote-work.md:chunk-2",
+          "source": "07-remote-work.md",
+          "score": 0.6596
+        },
+        {
+          "rank": 7,
+          "chunk_id": "07-remote-work.md:chunk-4",
+          "source": "07-remote-work.md",
+          "score": 0.6374
+        },
+        {
+          "rank": 8,
+          "chunk_id": "07-remote-work.md:chunk-7",
+          "source": "07-remote-work.md",
+          "score": 0.6368
+        },
+        {
+          "rank": 9,
+          "chunk_id": "07-remote-work.md:chunk-3",
+          "source": "07-remote-work.md",
+          "score": 0.6356
+        },
+        {
+          "rank": 10,
+          "chunk_id": "07-remote-work.md:chunk-8",
+          "source": "07-remote-work.md",
+          "score": 0.6201
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 3,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q14",
+      "question": "新员工需要在多久内开启多因素认证？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "02-onboarding.md:chunk-0",
+        "02-onboarding.md:chunk-4"
+      ],
+      "latency_ms": 198,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "08-information-security.md:chunk-4",
+          "source": "08-information-security.md",
+          "score": 0.6936
+        },
+        {
+          "rank": 2,
+          "chunk_id": "02-onboarding.md:chunk-4",
+          "source": "02-onboarding.md",
+          "score": 0.6876
+        },
+        {
+          "rank": 3,
+          "chunk_id": "02-onboarding.md:chunk-0",
+          "source": "02-onboarding.md",
+          "score": 0.6622
+        },
+        {
+          "rank": 4,
+          "chunk_id": "02-onboarding.md:chunk-1",
+          "source": "02-onboarding.md",
+          "score": 0.6362
+        },
+        {
+          "rank": 5,
+          "chunk_id": "08-information-security.md:chunk-3",
+          "source": "08-information-security.md",
+          "score": 0.6324
+        },
+        {
+          "rank": 6,
+          "chunk_id": "02-onboarding.md:chunk-8",
+          "source": "02-onboarding.md",
+          "score": 0.6065
+        },
+        {
+          "rank": 7,
+          "chunk_id": "02-onboarding.md:chunk-2",
+          "source": "02-onboarding.md",
+          "score": 0.6033
+        },
+        {
+          "rank": 8,
+          "chunk_id": "04-leave-policy.md:chunk-4",
+          "source": "04-leave-policy.md",
+          "score": 0.6028
+        },
+        {
+          "rank": 9,
+          "chunk_id": "02-onboarding.md:chunk-10",
+          "source": "02-onboarding.md",
+          "score": 0.6007
+        },
+        {
+          "rank": 10,
+          "chunk_id": "07-remote-work.md:chunk-1",
+          "source": "07-remote-work.md",
+          "score": 0.5992
+        }
+      ],
+      "hit_rank": 2,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 0.5
+    },
+    {
+      "question_id": "q15",
+      "question": "信息安全基础课程考试多少分算通过？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "02-onboarding.md:chunk-0",
+        "02-onboarding.md:chunk-1",
+        "02-onboarding.md:chunk-6"
+      ],
+      "latency_ms": 240,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "02-onboarding.md:chunk-6",
+          "source": "02-onboarding.md",
+          "score": 0.6868
+        },
+        {
+          "rank": 2,
+          "chunk_id": "08-information-security.md:chunk-0",
+          "source": "08-information-security.md",
+          "score": 0.5887
+        },
+        {
+          "rank": 3,
+          "chunk_id": "02-onboarding.md:chunk-0",
+          "source": "02-onboarding.md",
+          "score": 0.571
+        },
+        {
+          "rank": 4,
+          "chunk_id": "02-onboarding.md:chunk-1",
+          "source": "02-onboarding.md",
+          "score": 0.5702
+        },
+        {
+          "rank": 5,
+          "chunk_id": "01-company-overview.md:chunk-6",
+          "source": "01-company-overview.md",
+          "score": 0.565
+        },
+        {
+          "rank": 6,
+          "chunk_id": "02-onboarding.md:chunk-4",
+          "source": "02-onboarding.md",
+          "score": 0.5639
+        },
+        {
+          "rank": 7,
+          "chunk_id": "08-information-security.md:chunk-7",
+          "source": "08-information-security.md",
+          "score": 0.5508
+        },
+        {
+          "rank": 8,
+          "chunk_id": "02-onboarding.md:chunk-3",
+          "source": "02-onboarding.md",
+          "score": 0.5443
+        },
+        {
+          "rank": 9,
+          "chunk_id": "08-information-security.md:chunk-9",
+          "source": "08-information-security.md",
+          "score": 0.5432
+        },
+        {
+          "rank": 10,
+          "chunk_id": "07-remote-work.md:chunk-9",
+          "source": "07-remote-work.md",
+          "score": 0.5426
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 3,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q16",
+      "question": "公司电脑丢失应该只提交 IT 工单吗？",
+      "type": "multi_source",
+      "relevant_chunk_ids": [
+        "08-information-security.md:chunk-0",
+        "08-information-security.md:chunk-6",
+        "09-it-support.md:chunk-0",
+        "09-it-support.md:chunk-2",
+        "07-remote-work.md:chunk-0",
+        "07-remote-work.md:chunk-7"
+      ],
+      "latency_ms": 150,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "08-information-security.md:chunk-1",
+          "source": "08-information-security.md",
+          "score": 0.6576
+        },
+        {
+          "rank": 2,
+          "chunk_id": "09-it-support.md:chunk-1",
+          "source": "09-it-support.md",
+          "score": 0.6537
+        },
+        {
+          "rank": 3,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.6492
+        },
+        {
+          "rank": 4,
+          "chunk_id": "02-onboarding.md:chunk-3",
+          "source": "02-onboarding.md",
+          "score": 0.6415
+        },
+        {
+          "rank": 5,
+          "chunk_id": "10-faq.pdf:page-4:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.6217
+        },
+        {
+          "rank": 6,
+          "chunk_id": "07-remote-work.md:chunk-7",
+          "source": "07-remote-work.md",
+          "score": 0.6208
+        },
+        {
+          "rank": 7,
+          "chunk_id": "09-it-support.md:chunk-6",
+          "source": "09-it-support.md",
+          "score": 0.6175
+        },
+        {
+          "rank": 8,
+          "chunk_id": "02-onboarding.md:chunk-10",
+          "source": "02-onboarding.md",
+          "score": 0.6153
+        },
+        {
+          "rank": 9,
+          "chunk_id": "01-company-overview.md:chunk-6",
+          "source": "01-company-overview.md",
+          "score": 0.613
+        },
+        {
+          "rank": 10,
+          "chunk_id": "09-it-support.md:chunk-7",
+          "source": "09-it-support.md",
+          "score": 0.6082
+        }
+      ],
+      "hit_rank": 3,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 0.3333
+    },
+    {
+      "question_id": "q17",
+      "question": "收到索要验证码的邮件但没有点击，该怎么办？",
+      "type": "multi_source",
+      "relevant_chunk_ids": [
+        "08-information-security.md:chunk-0",
+        "08-information-security.md:chunk-5",
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-4:chunk-0"
+      ],
+      "latency_ms": 194,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "10-faq.pdf:page-4:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.7003
+        },
+        {
+          "rank": 2,
+          "chunk_id": "08-information-security.md:chunk-6",
+          "source": "08-information-security.md",
+          "score": 0.6084
+        },
+        {
+          "rank": 3,
+          "chunk_id": "08-information-security.md:chunk-5",
+          "source": "08-information-security.md",
+          "score": 0.5965
+        },
+        {
+          "rank": 4,
+          "chunk_id": "02-onboarding.md:chunk-4",
+          "source": "02-onboarding.md",
+          "score": 0.5892
+        },
+        {
+          "rank": 5,
+          "chunk_id": "08-information-security.md:chunk-4",
+          "source": "08-information-security.md",
+          "score": 0.5873
+        },
+        {
+          "rank": 6,
+          "chunk_id": "08-information-security.md:chunk-8",
+          "source": "08-information-security.md",
+          "score": 0.5657
+        },
+        {
+          "rank": 7,
+          "chunk_id": "09-it-support.md:chunk-2",
+          "source": "09-it-support.md",
+          "score": 0.5654
+        },
+        {
+          "rank": 8,
+          "chunk_id": "08-information-security.md:chunk-2",
+          "source": "08-information-security.md",
+          "score": 0.5643
+        },
+        {
+          "rank": 9,
+          "chunk_id": "02-onboarding.md:chunk-6",
+          "source": "02-onboarding.md",
+          "score": 0.5634
+        },
+        {
+          "rank": 10,
+          "chunk_id": "08-information-security.md:chunk-7",
+          "source": "08-information-security.md",
+          "score": 0.5615
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q18",
+      "question": "P1 IT 故障承诺多久解决？",
+      "type": "trap",
+      "relevant_chunk_ids": [
+        "09-it-support.md:chunk-0",
+        "09-it-support.md:chunk-3",
+        "09-it-support.md:chunk-5",
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-4:chunk-1"
+      ],
+      "latency_ms": 174,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.6071
+        },
+        {
+          "rank": 2,
+          "chunk_id": "09-it-support.md:chunk-3",
+          "source": "09-it-support.md",
+          "score": 0.5993
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-4:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.5661
+        },
+        {
+          "rank": 4,
+          "chunk_id": "09-it-support.md:chunk-4",
+          "source": "09-it-support.md",
+          "score": 0.5556
+        },
+        {
+          "rank": 5,
+          "chunk_id": "09-it-support.md:chunk-5",
+          "source": "09-it-support.md",
+          "score": 0.553
+        },
+        {
+          "rank": 6,
+          "chunk_id": "09-it-support.md:chunk-2",
+          "source": "09-it-support.md",
+          "score": 0.5397
+        },
+        {
+          "rank": 7,
+          "chunk_id": "09-it-support.md:chunk-6",
+          "source": "09-it-support.md",
+          "score": 0.526
+        },
+        {
+          "rank": 8,
+          "chunk_id": "02-onboarding.md:chunk-3",
+          "source": "02-onboarding.md",
+          "score": 0.5178
+        },
+        {
+          "rank": 9,
+          "chunk_id": "02-onboarding.md:chunk-4",
+          "source": "02-onboarding.md",
+          "score": 0.4953
+        },
+        {
+          "rank": 10,
+          "chunk_id": "09-it-support.md:chunk-1",
+          "source": "09-it-support.md",
+          "score": 0.4878
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 4,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q19",
+      "question": "公司电脑用了四年后是否一定自动换新？",
+      "type": "trap",
+      "relevant_chunk_ids": [
+        "09-it-support.md:chunk-0",
+        "09-it-support.md:chunk-6"
+      ],
+      "latency_ms": 229,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "09-it-support.md:chunk-6",
+          "source": "09-it-support.md",
+          "score": 0.6265
+        },
+        {
+          "rank": 2,
+          "chunk_id": "08-information-security.md:chunk-1",
+          "source": "08-information-security.md",
+          "score": 0.5593
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-4:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.5591
+        },
+        {
+          "rank": 4,
+          "chunk_id": "02-onboarding.md:chunk-10",
+          "source": "02-onboarding.md",
+          "score": 0.5535
+        },
+        {
+          "rank": 5,
+          "chunk_id": "09-it-support.md:chunk-1",
+          "source": "09-it-support.md",
+          "score": 0.5484
+        },
+        {
+          "rank": 6,
+          "chunk_id": "08-information-security.md:chunk-8",
+          "source": "08-information-security.md",
+          "score": 0.5411
+        },
+        {
+          "rank": 7,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.5384
+        },
+        {
+          "rank": 8,
+          "chunk_id": "05-expense-policy.md:chunk-7",
+          "source": "05-expense-policy.md",
+          "score": 0.536
+        },
+        {
+          "rank": 9,
+          "chunk_id": "02-onboarding.md:chunk-3",
+          "source": "02-onboarding.md",
+          "score": 0.533
+        },
+        {
+          "rank": 10,
+          "chunk_id": "08-information-security.md:chunk-4",
+          "source": "08-information-security.md",
+          "score": 0.5325
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q20",
+      "question": "外出拜访客户会占用每周远程办公天数吗？",
+      "type": "confusable",
+      "relevant_chunk_ids": [
+        "03-attendance.md:chunk-1",
+        "03-attendance.md:chunk-7"
+      ],
+      "latency_ms": 233,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.708
+        },
+        {
+          "rank": 2,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.6991
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.6719
+        },
+        {
+          "rank": 4,
+          "chunk_id": "07-remote-work.md:chunk-2",
+          "source": "07-remote-work.md",
+          "score": 0.6463
+        },
+        {
+          "rank": 5,
+          "chunk_id": "10-faq.pdf:page-2:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.6457
+        },
+        {
+          "rank": 6,
+          "chunk_id": "07-remote-work.md:chunk-1",
+          "source": "07-remote-work.md",
+          "score": 0.6378
+        },
+        {
+          "rank": 7,
+          "chunk_id": "03-attendance.md:chunk-1",
+          "source": "03-attendance.md",
+          "score": 0.6223
+        },
+        {
+          "rank": 8,
+          "chunk_id": "07-remote-work.md:chunk-7",
+          "source": "07-remote-work.md",
+          "score": 0.6009
+        },
+        {
+          "rank": 9,
+          "chunk_id": "03-attendance.md:chunk-7",
+          "source": "03-attendance.md",
+          "score": 0.5984
+        },
+        {
+          "rank": 10,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.5953
+        }
+      ],
+      "hit_rank": 7,
+      "relevant_hit_count": 2,
+      "recall_at_5": 0,
+      "recall_at_10": 1,
+      "reciprocal_rank": 0.1429
+    },
+    {
+      "question_id": "q21",
+      "question": "考勤记录错了，应在多久内申请更正？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "03-attendance.md:chunk-0",
+        "03-attendance.md:chunk-4"
+      ],
+      "latency_ms": 211,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "03-attendance.md:chunk-3",
+          "source": "03-attendance.md",
+          "score": 0.7281
+        },
+        {
+          "rank": 2,
+          "chunk_id": "03-attendance.md:chunk-4",
+          "source": "03-attendance.md",
+          "score": 0.7158
+        },
+        {
+          "rank": 3,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.6395
+        },
+        {
+          "rank": 4,
+          "chunk_id": "08-information-security.md:chunk-10",
+          "source": "08-information-security.md",
+          "score": 0.6366
+        },
+        {
+          "rank": 5,
+          "chunk_id": "03-attendance.md:chunk-10",
+          "source": "03-attendance.md",
+          "score": 0.6355
+        },
+        {
+          "rank": 6,
+          "chunk_id": "04-leave-policy.md:chunk-10",
+          "source": "04-leave-policy.md",
+          "score": 0.6355
+        },
+        {
+          "rank": 7,
+          "chunk_id": "05-expense-policy.md:chunk-10",
+          "source": "05-expense-policy.md",
+          "score": 0.6355
+        },
+        {
+          "rank": 8,
+          "chunk_id": "06-travel-policy.md:chunk-10",
+          "source": "06-travel-policy.md",
+          "score": 0.6355
+        },
+        {
+          "rank": 9,
+          "chunk_id": "07-remote-work.md:chunk-10",
+          "source": "07-remote-work.md",
+          "score": 0.6355
+        },
+        {
+          "rank": 10,
+          "chunk_id": "09-it-support.md:chunk-10",
+          "source": "09-it-support.md",
+          "score": 0.6355
+        }
+      ],
+      "hit_rank": 2,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 0.5
+    },
+    {
+      "question_id": "q22",
+      "question": "公司每个月提供多少健身补贴？",
+      "type": "unanswerable",
+      "relevant_chunk_ids": [
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-4:chunk-0"
+      ],
+      "latency_ms": 161,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.5596
+        },
+        {
+          "rank": 2,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.529
+        },
+        {
+          "rank": 3,
+          "chunk_id": "05-expense-policy.md:chunk-1",
+          "source": "05-expense-policy.md",
+          "score": 0.5086
+        },
+        {
+          "rank": 4,
+          "chunk_id": "02-onboarding.md:chunk-10",
+          "source": "02-onboarding.md",
+          "score": 0.5014
+        },
+        {
+          "rank": 5,
+          "chunk_id": "04-leave-policy.md:chunk-0",
+          "source": "04-leave-policy.md",
+          "score": 0.4932
+        },
+        {
+          "rank": 6,
+          "chunk_id": "02-onboarding.md:chunk-1",
+          "source": "02-onboarding.md",
+          "score": 0.4873
+        },
+        {
+          "rank": 7,
+          "chunk_id": "06-travel-policy.md:chunk-0",
+          "source": "06-travel-policy.md",
+          "score": 0.4859
+        },
+        {
+          "rank": 8,
+          "chunk_id": "10-faq.pdf:page-4:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.4829
+        },
+        {
+          "rank": 9,
+          "chunk_id": "03-attendance.md:chunk-1",
+          "source": "03-attendance.md",
+          "score": 0.482
+        },
+        {
+          "rank": 10,
+          "chunk_id": "05-expense-policy.md:chunk-7",
+          "source": "05-expense-policy.md",
+          "score": 0.4796
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q23",
+      "question": "杭州办公室的员工婚假统一是几天？",
+      "type": "unanswerable",
+      "relevant_chunk_ids": [
+        "04-leave-policy.md:chunk-0",
+        "04-leave-policy.md:chunk-1",
+        "04-leave-policy.md:chunk-6",
+        "10-faq.pdf:page-5:chunk-0"
+      ],
+      "latency_ms": 152,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "04-leave-policy.md:chunk-0",
+          "source": "04-leave-policy.md",
+          "score": 0.5885
+        },
+        {
+          "rank": 2,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.5829
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-5:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.5815
+        },
+        {
+          "rank": 4,
+          "chunk_id": "01-company-overview.md:chunk-2",
+          "source": "01-company-overview.md",
+          "score": 0.5544
+        },
+        {
+          "rank": 5,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.5504
+        },
+        {
+          "rank": 6,
+          "chunk_id": "01-company-overview.md:chunk-3",
+          "source": "01-company-overview.md",
+          "score": 0.5494
+        },
+        {
+          "rank": 7,
+          "chunk_id": "01-company-overview.md:chunk-0",
+          "source": "01-company-overview.md",
+          "score": 0.5473
+        },
+        {
+          "rank": 8,
+          "chunk_id": "01-company-overview.md:chunk-1",
+          "source": "01-company-overview.md",
+          "score": 0.5451
+        },
+        {
+          "rank": 9,
+          "chunk_id": "01-company-overview.md:chunk-10",
+          "source": "01-company-overview.md",
+          "score": 0.5322
+        },
+        {
+          "rank": 10,
+          "chunk_id": "06-travel-policy.md:chunk-5",
+          "source": "06-travel-policy.md",
+          "score": 0.5308
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q24",
+      "question": "公司食堂午餐多少钱？",
+      "type": "unanswerable",
+      "relevant_chunk_ids": [],
+      "latency_ms": 161,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.5658
+        },
+        {
+          "rank": 2,
+          "chunk_id": "06-travel-policy.md:chunk-0",
+          "source": "06-travel-policy.md",
+          "score": 0.5443
+        },
+        {
+          "rank": 3,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.5131
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.5112
+        },
+        {
+          "rank": 5,
+          "chunk_id": "05-expense-policy.md:chunk-1",
+          "source": "05-expense-policy.md",
+          "score": 0.5094
+        },
+        {
+          "rank": 6,
+          "chunk_id": "06-travel-policy.md:chunk-5",
+          "source": "06-travel-policy.md",
+          "score": 0.4963
+        },
+        {
+          "rank": 7,
+          "chunk_id": "05-expense-policy.md:chunk-5",
+          "source": "05-expense-policy.md",
+          "score": 0.4894
+        },
+        {
+          "rank": 8,
+          "chunk_id": "03-attendance.md:chunk-1",
+          "source": "03-attendance.md",
+          "score": 0.4726
+        },
+        {
+          "rank": 9,
+          "chunk_id": "10-faq.pdf:page-3:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.4725
+        },
+        {
+          "rank": 10,
+          "chunk_id": "06-travel-policy.md:chunk-6",
+          "source": "06-travel-policy.md",
+          "score": 0.4707
+        }
+      ],
+      "hit_rank": null,
+      "relevant_hit_count": 0,
+      "recall_at_5": null,
+      "recall_at_10": null,
+      "reciprocal_rank": null
+    },
+    {
+      "question_id": "q25",
+      "question": "客户数据可以保存在私人网盘吗？",
+      "type": "multi_source",
+      "relevant_chunk_ids": [
+        "01-company-overview.md:chunk-0",
+        "01-company-overview.md:chunk-5",
+        "01-company-overview.md:chunk-6",
+        "07-remote-work.md:chunk-0",
+        "07-remote-work.md:chunk-6",
+        "09-it-support.md:chunk-1"
+      ],
+      "latency_ms": 221,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "01-company-overview.md:chunk-6",
+          "source": "01-company-overview.md",
+          "score": 0.6057
+        },
+        {
+          "rank": 2,
+          "chunk_id": "01-company-overview.md:chunk-5",
+          "source": "01-company-overview.md",
+          "score": 0.5932
+        },
+        {
+          "rank": 3,
+          "chunk_id": "08-information-security.md:chunk-0",
+          "source": "08-information-security.md",
+          "score": 0.5928
+        },
+        {
+          "rank": 4,
+          "chunk_id": "07-remote-work.md:chunk-6",
+          "source": "07-remote-work.md",
+          "score": 0.5916
+        },
+        {
+          "rank": 5,
+          "chunk_id": "08-information-security.md:chunk-1",
+          "source": "08-information-security.md",
+          "score": 0.5851
+        },
+        {
+          "rank": 6,
+          "chunk_id": "09-it-support.md:chunk-1",
+          "source": "09-it-support.md",
+          "score": 0.5768
+        },
+        {
+          "rank": 7,
+          "chunk_id": "08-information-security.md:chunk-2",
+          "source": "08-information-security.md",
+          "score": 0.5675
+        },
+        {
+          "rank": 8,
+          "chunk_id": "02-onboarding.md:chunk-3",
+          "source": "02-onboarding.md",
+          "score": 0.5617
+        },
+        {
+          "rank": 9,
+          "chunk_id": "07-remote-work.md:chunk-5",
+          "source": "07-remote-work.md",
+          "score": 0.5528
+        },
+        {
+          "rank": 10,
+          "chunk_id": "09-it-support.md:chunk-8",
+          "source": "09-it-support.md",
+          "score": 0.5501
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 4,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q26",
+      "question": "公司账户被锁定、无法登录系统提交工单时，可以拨打哪个内部电话？",
+      "type": "keyword",
+      "relevant_chunk_ids": [
+        "09-it-support.md:chunk-0",
+        "09-it-support.md:chunk-2"
+      ],
+      "latency_ms": 162,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "09-it-support.md:chunk-2",
+          "source": "09-it-support.md",
+          "score": 0.635
+        },
+        {
+          "rank": 2,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.6181
+        },
+        {
+          "rank": 3,
+          "chunk_id": "02-onboarding.md:chunk-10",
+          "source": "02-onboarding.md",
+          "score": 0.5864
+        },
+        {
+          "rank": 4,
+          "chunk_id": "08-information-security.md:chunk-7",
+          "source": "08-information-security.md",
+          "score": 0.5724
+        },
+        {
+          "rank": 5,
+          "chunk_id": "08-information-security.md:chunk-0",
+          "source": "08-information-security.md",
+          "score": 0.5711
+        },
+        {
+          "rank": 6,
+          "chunk_id": "03-attendance.md:chunk-5",
+          "source": "03-attendance.md",
+          "score": 0.5565
+        },
+        {
+          "rank": 7,
+          "chunk_id": "01-company-overview.md:chunk-10",
+          "source": "01-company-overview.md",
+          "score": 0.5565
+        },
+        {
+          "rank": 8,
+          "chunk_id": "02-onboarding.md:chunk-4",
+          "source": "02-onboarding.md",
+          "score": 0.5546
+        },
+        {
+          "rank": 9,
+          "chunk_id": "08-information-security.md:chunk-3",
+          "source": "08-information-security.md",
+          "score": 0.5536
+        },
+        {
+          "rank": 10,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.5518
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q27",
+      "question": "发现公司电脑疑似感染恶意软件，应把安全事件报告发送到哪个邮箱？",
+      "type": "keyword",
+      "relevant_chunk_ids": [
+        "01-company-overview.md:chunk-0",
+        "08-information-security.md:chunk-0",
+        "08-information-security.md:chunk-6",
+        "08-information-security.md:chunk-7",
+        "09-it-support.md:chunk-0",
+        "09-it-support.md:chunk-2"
+      ],
+      "latency_ms": 171,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "08-information-security.md:chunk-0",
+          "source": "08-information-security.md",
+          "score": 0.6281
+        },
+        {
+          "rank": 2,
+          "chunk_id": "08-information-security.md:chunk-7",
+          "source": "08-information-security.md",
+          "score": 0.6003
+        },
+        {
+          "rank": 3,
+          "chunk_id": "01-company-overview.md:chunk-6",
+          "source": "01-company-overview.md",
+          "score": 0.5855
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-4:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.5676
+        },
+        {
+          "rank": 5,
+          "chunk_id": "02-onboarding.md:chunk-10",
+          "source": "02-onboarding.md",
+          "score": 0.5664
+        },
+        {
+          "rank": 6,
+          "chunk_id": "08-information-security.md:chunk-1",
+          "source": "08-information-security.md",
+          "score": 0.5551
+        },
+        {
+          "rank": 7,
+          "chunk_id": "08-information-security.md:chunk-5",
+          "source": "08-information-security.md",
+          "score": 0.5498
+        },
+        {
+          "rank": 8,
+          "chunk_id": "01-company-overview.md:chunk-8",
+          "source": "01-company-overview.md",
+          "score": 0.5478
+        },
+        {
+          "rank": 9,
+          "chunk_id": "08-information-security.md:chunk-6",
+          "source": "08-information-security.md",
+          "score": 0.5429
+        },
+        {
+          "rank": 10,
+          "chunk_id": "07-remote-work.md:chunk-7",
+          "source": "07-remote-work.md",
+          "score": 0.5412
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 3,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q28",
+      "question": "安装新软件、打印机故障这类普通技术问题，应通过哪个系统的什么项目提交工单？",
+      "type": "keyword",
+      "relevant_chunk_ids": [
+        "01-company-overview.md:chunk-0",
+        "09-it-support.md:chunk-0",
+        "09-it-support.md:chunk-1"
+      ],
+      "latency_ms": 164,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.6754
+        },
+        {
+          "rank": 2,
+          "chunk_id": "08-information-security.md:chunk-1",
+          "source": "08-information-security.md",
+          "score": 0.5985
+        },
+        {
+          "rank": 3,
+          "chunk_id": "02-onboarding.md:chunk-10",
+          "source": "02-onboarding.md",
+          "score": 0.5964
+        },
+        {
+          "rank": 4,
+          "chunk_id": "08-information-security.md:chunk-8",
+          "source": "08-information-security.md",
+          "score": 0.5696
+        },
+        {
+          "rank": 5,
+          "chunk_id": "02-onboarding.md:chunk-9",
+          "source": "02-onboarding.md",
+          "score": 0.5652
+        },
+        {
+          "rank": 6,
+          "chunk_id": "09-it-support.md:chunk-1",
+          "source": "09-it-support.md",
+          "score": 0.5649
+        },
+        {
+          "rank": 7,
+          "chunk_id": "02-onboarding.md:chunk-3",
+          "source": "02-onboarding.md",
+          "score": 0.562
+        },
+        {
+          "rank": 8,
+          "chunk_id": "09-it-support.md:chunk-5",
+          "source": "09-it-support.md",
+          "score": 0.556
+        },
+        {
+          "rank": 9,
+          "chunk_id": "02-onboarding.md:chunk-4",
+          "source": "02-onboarding.md",
+          "score": 0.5516
+        },
+        {
+          "rank": 10,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.5512
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q29",
+      "question": "P2 工单的目标响应时间是多久？",
+      "type": "keyword",
+      "relevant_chunk_ids": [
+        "09-it-support.md:chunk-0",
+        "09-it-support.md:chunk-3"
+      ],
+      "latency_ms": 272,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "09-it-support.md:chunk-3",
+          "source": "09-it-support.md",
+          "score": 0.599
+        },
+        {
+          "rank": 2,
+          "chunk_id": "09-it-support.md:chunk-4",
+          "source": "09-it-support.md",
+          "score": 0.5652
+        },
+        {
+          "rank": 3,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.5365
+        },
+        {
+          "rank": 4,
+          "chunk_id": "09-it-support.md:chunk-2",
+          "source": "09-it-support.md",
+          "score": 0.5209
+        },
+        {
+          "rank": 5,
+          "chunk_id": "09-it-support.md:chunk-5",
+          "source": "09-it-support.md",
+          "score": 0.5122
+        },
+        {
+          "rank": 6,
+          "chunk_id": "03-attendance.md:chunk-2",
+          "source": "03-attendance.md",
+          "score": 0.4997
+        },
+        {
+          "rank": 7,
+          "chunk_id": "10-faq.pdf:page-4:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.4995
+        },
+        {
+          "rank": 8,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.4912
+        },
+        {
+          "rank": 9,
+          "chunk_id": "02-onboarding.md:chunk-8",
+          "source": "02-onboarding.md",
+          "score": 0.4912
+        },
+        {
+          "rank": 10,
+          "chunk_id": "05-expense-policy.md:chunk-2",
+          "source": "05-expense-policy.md",
+          "score": 0.4899
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q30",
+      "question": "按公司数据分类标准，“完整客户数据导出”属于哪一级？",
+      "type": "keyword",
+      "relevant_chunk_ids": [
+        "08-information-security.md:chunk-0",
+        "08-information-security.md:chunk-2",
+        "08-information-security.md:chunk-3"
+      ],
+      "latency_ms": 156,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "08-information-security.md:chunk-0",
+          "source": "08-information-security.md",
+          "score": 0.5876
+        },
+        {
+          "rank": 2,
+          "chunk_id": "02-onboarding.md:chunk-10",
+          "source": "02-onboarding.md",
+          "score": 0.532
+        },
+        {
+          "rank": 3,
+          "chunk_id": "09-it-support.md:chunk-3",
+          "source": "09-it-support.md",
+          "score": 0.5258
+        },
+        {
+          "rank": 4,
+          "chunk_id": "03-attendance.md:chunk-10",
+          "source": "03-attendance.md",
+          "score": 0.5129
+        },
+        {
+          "rank": 5,
+          "chunk_id": "04-leave-policy.md:chunk-10",
+          "source": "04-leave-policy.md",
+          "score": 0.5129
+        },
+        {
+          "rank": 6,
+          "chunk_id": "05-expense-policy.md:chunk-10",
+          "source": "05-expense-policy.md",
+          "score": 0.5129
+        },
+        {
+          "rank": 7,
+          "chunk_id": "06-travel-policy.md:chunk-10",
+          "source": "06-travel-policy.md",
+          "score": 0.5129
+        },
+        {
+          "rank": 8,
+          "chunk_id": "07-remote-work.md:chunk-10",
+          "source": "07-remote-work.md",
+          "score": 0.5129
+        },
+        {
+          "rank": 9,
+          "chunk_id": "09-it-support.md:chunk-10",
+          "source": "09-it-support.md",
+          "score": 0.5129
+        },
+        {
+          "rank": 10,
+          "chunk_id": "10-faq.pdf:page-5:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.5126
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 1,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q31",
+      "question": "杭州总部前台在工作日的开放时间是什么？",
+      "type": "confusable",
+      "relevant_chunk_ids": [
+        "01-company-overview.md:chunk-0",
+        "01-company-overview.md:chunk-2"
+      ],
+      "latency_ms": 145,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "01-company-overview.md:chunk-3",
+          "source": "01-company-overview.md",
+          "score": 0.664
+        },
+        {
+          "rank": 2,
+          "chunk_id": "01-company-overview.md:chunk-2",
+          "source": "01-company-overview.md",
+          "score": 0.6515
+        },
+        {
+          "rank": 3,
+          "chunk_id": "01-company-overview.md:chunk-0",
+          "source": "01-company-overview.md",
+          "score": 0.6189
+        },
+        {
+          "rank": 4,
+          "chunk_id": "01-company-overview.md:chunk-4",
+          "source": "01-company-overview.md",
+          "score": 0.584
+        },
+        {
+          "rank": 5,
+          "chunk_id": "09-it-support.md:chunk-2",
+          "source": "09-it-support.md",
+          "score": 0.5666
+        },
+        {
+          "rank": 6,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.5664
+        },
+        {
+          "rank": 7,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.5582
+        },
+        {
+          "rank": 8,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.5466
+        },
+        {
+          "rank": 9,
+          "chunk_id": "06-travel-policy.md:chunk-5",
+          "source": "06-travel-policy.md",
+          "score": 0.5212
+        },
+        {
+          "rank": 10,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.5202
+        }
+      ],
+      "hit_rank": 2,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 0.5
+    },
+    {
+      "question_id": "q32",
+      "question": "台风导致地铁停运，今天能临时申请在家办公吗？",
+      "type": "semantic",
+      "relevant_chunk_ids": [
+        "07-remote-work.md:chunk-0",
+        "07-remote-work.md:chunk-4"
+      ],
+      "latency_ms": 237,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.554
+        },
+        {
+          "rank": 2,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.5365
+        },
+        {
+          "rank": 3,
+          "chunk_id": "07-remote-work.md:chunk-4",
+          "source": "07-remote-work.md",
+          "score": 0.5332
+        },
+        {
+          "rank": 4,
+          "chunk_id": "07-remote-work.md:chunk-3",
+          "source": "07-remote-work.md",
+          "score": 0.5277
+        },
+        {
+          "rank": 5,
+          "chunk_id": "01-company-overview.md:chunk-3",
+          "source": "01-company-overview.md",
+          "score": 0.5214
+        },
+        {
+          "rank": 6,
+          "chunk_id": "03-attendance.md:chunk-1",
+          "source": "03-attendance.md",
+          "score": 0.5185
+        },
+        {
+          "rank": 7,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.5162
+        },
+        {
+          "rank": 8,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.5147
+        },
+        {
+          "rank": 9,
+          "chunk_id": "02-onboarding.md:chunk-10",
+          "source": "02-onboarding.md",
+          "score": 0.511
+        },
+        {
+          "rank": 10,
+          "chunk_id": "05-expense-policy.md:chunk-7",
+          "source": "05-expense-policy.md",
+          "score": 0.5091
+        }
+      ],
+      "hit_rank": 2,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 0.5
+    }
+  ]
+}

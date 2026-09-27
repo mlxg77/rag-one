@@ -1,0 +1,1 @@
+"""v2.0 检索评估包：指标计算（metrics）与评估脚本（evaluate_retrieval）。"""

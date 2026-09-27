@@ -20,6 +20,7 @@ LLM_MODEL = os.getenv("LLM_MODEL", "Qwen/Qwen3-8B")
 # ---------- 路径配置 ----------
 DATA_RAW_DIR = PROJECT_ROOT / "data" / "raw"
 CHROMA_DIR = PROJECT_ROOT / "storage" / "chroma"
+BM25_DIR = PROJECT_ROOT / "storage" / "bm25"
 
 # ---------- 索引配置 ----------
 COLLECTION_NAME = "rag_mvp_docs"  # Chroma 集合名：3~512 字符，只含字母/数字/._-，首尾必须是字母或数字

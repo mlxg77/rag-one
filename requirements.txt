@@ -15,3 +15,6 @@ streamlit
 
 # Testing
 pytest
+
+# Chinese tokenization (BM25 keyword retrieval)
+jieba

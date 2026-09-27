@@ -5,8 +5,11 @@
 ## 数据集内容
 
 - `raw/`：10 份知识库文件——9 份 Markdown 专项制度（`01`～`09`）与 1 份 PDF 版常见问题（`10-faq.pdf`，6 页）
-- `eval/questions.jsonl`：32 条评估问题（25 条原题 + 7 条新增），字段为 `id / question / expected_answer / expected_sources / type`
+- `eval/questions.jsonl`：32 条评估问题（25 条原题 + 7 条新增），字段为 `id / question / expected_answer / expected_sources / relevant_chunk_ids / type`
 - `eval/eval-report.md`：32 题人工评估表，用于逐题走查检索与生成质量并汇总指标
+- `eval/corpus-version.md`：v2.0 语料版本快照（文件指纹 / 切分参数 / chunk 统计）
+- `eval/baseline-v1.json` + `eval/baseline-v1.md`：v1.0 向量检索基线结果（32 题；机器可读 JSON + 可读报告，配套评估脚本见仓库 `evaluation/`）
+- `eval/run-bm25.json` + `eval/run-bm25.md`：BM25 关键词检索评估结果（32 题，与向量基线同口径，可直接对照）
 
 ## 推荐用法
 

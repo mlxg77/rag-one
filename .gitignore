@@ -10,3 +10,6 @@ __pycache__/
 
 # 向量库持久化产物（可由文档重建）
 storage/chroma/
+
+# BM25 索引持久化产物（可由文档重建）
+storage/bm25/
