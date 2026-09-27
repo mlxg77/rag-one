@@ -10,5 +10,8 @@ chromadb
 # PDF parsing
 pymupdf
 
+# Web UI
+streamlit
+
 # Testing
 pytest

@@ -38,7 +38,7 @@ LLM 生成带引用的回答
 | 四 | 建立向量索引 | `src/config.py` / `src/embeddings.py` / `src/vector_store.py` / `src/indexer.py` / `ingest.py` | 已完成并验收 |
 | 五 | 实现并验证检索 | `src/retriever.py` | 已完成并验收 |
 | 六 | 实现答案生成 | `src/generator.py` / `src/rag.py` | 已完成并验收 |
-| 七 | 增加简单界面 | `app.py`（Streamlit） | 未开始 |
+| 七 | 增加简单界面 | `app.py`（Streamlit） | 已完成并验收 |
 
 ---
 
@@ -64,6 +64,7 @@ pip install -r requirements.txt
 | openai | 3.19.2 | LLM / Embedding 调用（兼容 OpenAI 协议，配硅基流动） |
 | chromadb | 1.5.9 | 向量数据库（本地持久化） |
 | pymupdf | 1.28.2 | PDF 文本提取（导入名 `import pymupdf`） |
+| streamlit | 1.64.0 | Web 界面（附带依赖 pandas / pyarrow 等自动安装） |
 | pytest | 9.1.1 | 测试 |
 
 ### 运行规范（本机必读）
@@ -91,6 +92,12 @@ pip install -r requirements.txt
 
 4. **不要使用 `conda run`**。conda 24.5.0 在本机中文环境下捕获中文输出会崩溃（UnicodeEncodeError）或吞掉输出；直接激活环境或用环境内 python 全路径运行。
 
+5. **启动 Web 界面用 `python -m streamlit`**（`streamlit` 命令不在 PATH）：
+
+   ```powershell
+   E:\Anaconda_envs\envs\rag-one\python.exe -X utf8 -m streamlit run app.py
+   ```
+
 ---
 
 ## 项目结构
@@ -99,7 +106,9 @@ pip install -r requirements.txt
 rag-one/
 ├── data/
 │   ├── raw/                  # 10 篇制度手册（知识库）
-│   ├── eval/questions.jsonl  # 25 题评估集（JSONL，一行一题）
+│   ├── eval/
+│   │   ├── questions.jsonl   # 25 题评估集（JSONL，一行一题）
+│   │   └── eval-report.md    # 人工评估表（收尾：25 题逐题走查记录）
 │   └── README.md             # 数据集说明
 ├── storage/
 │   └── chroma/               # ChromaDB 持久化索引（git 忽略，可用 ingest.py 重建）
@@ -115,6 +124,7 @@ rag-one/
 │   ├── generator.py          # 阶段六：Prompt 与答案生成（已完成）
 │   └── rag.py                # 阶段六：检索→生成主流程（已完成）
 ├── ingest.py                 # 阶段四：索引入口（已完成）
+├── app.py                    # 阶段七：Streamlit 界面（已完成）
 ├── .env.example              # 环境变量模板（.env 含密钥，被 git 忽略）
 ├── RAG-MVP学习规划.md         # 总规划：目标、技术栈、七阶段验收清单
 ├── readme.md                 # 本文件
@@ -341,13 +351,60 @@ result = ask(question, top_k=5)
 - q24 拒答题："根据现有资料无法确定"正确触发；检索仍正常返回 5 条（拒答靠 Prompt，而非检索端）；
 - 已知观察：拒答时模型仍会附带"使用的资料编号"一行，第一版接受。
 
+### 阶段七：Streamlit 界面 `app.py`（已完成并验收）
+
+**流程**：`浏览器交互 → app.py（页面只调用 RAG 模块）→ 上传 / 重建 / 提问 / 展示`；页面不写核心逻辑，全部通过 `build_index()` 和 `ask()` 两个既有接口驱动。
+
+**页面结构**：
+
+- 侧边栏：`st.file_uploader` 多文件上传（.md / .txt / .pdf）→ "保存到知识库"写入 `data/raw/`；"重建索引"按钮调用 `build_index()` 并展示统计（文档 / chunk / 向量数）；
+- 主区：`st.text_input` 问题输入 + "提问"按钮调用 `ask()`；答案 `st.markdown` 展示、token 消耗用 caption、每条检索结果放入 `st.expander`（标题含 `[编号] 来源 · score`，内容为片段原文）；
+- 结果存 `st.session_state["result"]`：**Streamlit 每次交互都会从上到下重跑整个脚本**，不存则答案一刷新就丢。
+
+**启动方式**（`streamlit` 命令不在 PATH，统一走模块方式，见运行规范 5）：
+
+```powershell
+E:\Anaconda_envs\envs\rag-one\python.exe -X utf8 -m streamlit run app.py
+```
+
+浏览器自动打开 `http://localhost:8501`。
+
+**验收结果**：用 Streamlit 官方无头测试 `streamlit.testing.v1.AppTest` 模拟真实点击，24/24 断言 + 上传路径补验通过：
+
+- 首屏结构：标题 / 引导条（未提问时的占位提示）/ 上传控件 / 提问框 / 提问与重建按钮齐全；
+- 空输入拦截：点"提问"提示"请先输入问题。"，不报错；
+- 提问链路（验收清单 1/2/3）：模拟输入 q01 → 答案"普通员工去上海出差，酒店每晚含税最高可以报销 700 元。使用的资料编号：[1]"、5 个检索折叠区（首条 `[1] 06-travel-policy.md · score=0.6852`）、片段原文可见、token 行显示；提问前后库恒为 10 条（只读链路不触碰索引）；
+- 重建按钮：点击提示"完成：10 篇文档 / 10 个 chunk / 集合内 10 条向量"，重建后库仍为 10 条；
+- **页面错误不损坏索引（验收清单 4）**：向页面注入"ask 抛异常 / build_index 抛异常"两个故意失败 → 页面显示 `st.error` 提示而非崩溃，库均保持 10 条；
+- 上传 → 保存路径补验：AppTest 模拟上传测试文件 → 点"保存到知识库"提示"已保存"、文件真实写入 `data/raw/`（测后已删除，知识库恢复 10 篇）。
+
+### 收尾：MVP 完成定义核对（规划第 9 节，10/10 达成）
+
+| # | 完成定义 | 核对证据 |
+|---|---|---|
+| 1 | 一条命令可以建立文档索引 | `python -X utf8 ingest.py`（阶段四） |
+| 2 | 一条命令可以启动问答程序 | `python -X utf8 -m src.rag`（命令行）；`python -X utf8 -m streamlit run app.py`（界面） |
+| 3 | 能回答知识库内的问题 | q01 端到端实测"700 元 [1]"（阶段六、阶段七 AppTest 双确认） |
+| 4 | 每个答案包含来源 | 引用编号 [N] 可逐条追溯，界面折叠区可展开核对（阶段六/七） |
+| 5 | 找不到依据时能够拒答 | q24 实测"根据现有资料无法确定"（阶段六） |
+| 6 | 能查看 Top-K 原始检索结果 | `src/retriever.py` 逐条打印（阶段五）+ 界面折叠区（阶段七） |
+| 7 | 有至少 15 个固定评估问题 | `data/eval/questions.jsonl` 25 题（阶段一） |
+| 8 | README 记录安装和运行方式 | 本文件"环境与运行" |
+| 9 | README 记录关键参数及其作用 | 本文件"关键参数"（8 项） |
+| 10 | 核心流程不依赖 LangChain 或 LangGraph | 全部模块手写，无框架依赖（阶段二~七） |
+
 ---
 
-## 附录：
+## 附录
 
-> 与七个开发阶段平行的独立记录线：凡「改一个参数 → 重建索引 → 用 25 题评估集对比效果」的实验都记在这里，编号 T1、T2……「关键参数」表只反映当前生效值，本板块保留“为什么是这个值”的完整证据链。另设「知识笔记」小节，收纳开发中实测沉淀的 API / 协议结构知识（不占 T 编号、非实验）。
+> 与七个开发阶段平行的独立记录线，内部分两条子线，性质不同、分开归档：
+>
+> - **调优实验**（编号 T1、T2……）：凡「改一个参数 → 重建索引 → 用 25 题评估集对比效果」的对比实验。本板块保留“为什么是这个值”的完整证据链；「关键参数」表只反映当前生效值。
+> - **知识笔记**（不占 T 编号、非实验）：开发中实测沉淀的 API / 协议结构知识。
 
-### T1 · CHUNK_SIZE：800 → 400（重叠 150 不变）
+### 调优实验
+
+#### T1 · CHUNK_SIZE：800 → 400（重叠 150 不变）
 
 **动机与假设**：块更小 → 问题向量与目标段落更贴合，预期检索更准、上下文更省 token；风险是语义单元被切断。当前 10 篇手册均为 663~783 字符的短文，800 等于“每篇整切”，400 会把每篇切成 3~4 块。
 
@@ -378,7 +435,9 @@ python -X utf8 -m src.retriever
 
 **当前状态**：两轮实验均已闭环。第一轮为阶段五验收期间的临时切换（测后恢复 800）；第二轮为阶段五之后再次手动设为 400 并重建（库内实测 32 条：10 个 chunk-0、22 个后续块）。阶段六开工时发现该漂移，经确认后**已恢复 800/150 并重建索引**（库内实测 10 条、每篇 1 块），源码与库一致——「关键参数」表已按“只反映当前生效值”同步为 800。
 
-### 知识笔记 · ChatCompletion 返回结构（阶段六 generator 实测）
+### 知识笔记
+
+#### D1 · ChatCompletion 返回结构（阶段六 generator 实测）
 
 **背景**：`generator.py` 调用 `_get_client().chat.completions.create(...)` 后拿到的 `resp`，是 OpenAI 兼容协议的标准返回对象 `ChatCompletion`（SDK 里的 Pydantic 模型）。用临时脚本发了一次最小请求（Qwen3-8B、“只回复两个字：收到”、temperature 0.2，脚本跑完即删），真实返回节选：
 
@@ -461,12 +520,15 @@ python -X utf8 -m src.retriever
 11. **服务端向量有微小跨请求抖动**：同一文本两次请求可能有 ≤0.002 的浮点差异（多数为 0），而不同文本差异约 0.1 / 余弦 ≈ 0.58——比较向量时阈值取 0.01 量级，勿用 1e-4。
 12. **切分粒度不是越细越好（有对比数据，详见调优实验 T1）**：同一知识库把 CHUNK_SIZE 从 800 降到 400（重叠同 150），chunk 数 10 → 32，25 题的来源级 Recall@5 反而从 100% 降到 93.5%，且 q01 首位命中从《差旅制度》变成《FAQ》。当前手册均为 800 字符内短文，"每篇整切"最优，维持 800/150。
 13. **Qwen3-8B 默认开启思考模式（生成时必须关闭）**：不传 `extra_body={"enable_thinking": False}` 时，一次最小问答耗时约 14.7s、completion 399 token（其中思考链 397）；关闭后 0.5s、1 token。RAG 照资料答题用不到思考链，`generator.py` 已默认关闭（返回结构详见附录知识笔记）。
+14. **界面启动走 `python -m streamlit`**：streamlit 装好后可执行文件在环境的 `Scripts\` 目录（不在 PATH），直接敲 `streamlit run` 会提示无法识别命令；统一用 `python -X utf8 -m streamlit run app.py` 启动界面。
 
 ---
 
 ## 下一步
 
-- 阶段七（待启动）：Streamlit 界面 `app.py`——文档上传 / 重建索引按钮 / 问题输入 / 答案与引用展示 / 检索片段折叠区；界面只调用 RAG 模块，不把核心逻辑写进页面。
+- 七个阶段已全部完成；MVP 完成定义 10 项已逐条核对（见"工作记录 → 收尾"）。最后一项收尾正在进行：
+  - **人工评估表**：模板已生成在 `data/eval/eval-report.md`（25 题预填题面与参考），在界面里逐题走查后填 4 个判定列（正确片段进入 Top-5 / 答案正确 / 引用正确 / 是否出现幻觉），并在文末汇总四项指标，对照 Recall@5 ≥ 80%、答案正确率 ≥ 70%、引用准确率 ≥ 80% 的目标。
+- 后续迭代方向（多轮对话、Reranker、混合检索等）见规划第 10 节。
 
 ---
 
