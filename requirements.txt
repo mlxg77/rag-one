@@ -1,23 +1,23 @@
 # Config loading
-python-dotenv
+python-dotenv==1.2.3
 
 # LLM / Embedding calls (OpenAI-compatible SDK, works with SiliconFlow)
-openai
+openai==3.19.2
 
 # Reranker HTTP calls (SiliconFlow rerank API)
-httpx
+httpx==0.28.1
 
 # Vector database
-chromadb
+chromadb==1.5.9
 
 # PDF parsing
-pymupdf
+pymupdf==1.28.2
 
 # Web UI
-streamlit
+streamlit==1.64.0
 
 # Testing
-pytest
+pytest==9.1.1
 
 # Chinese tokenization (BM25 keyword retrieval)
-jieba
+jieba==0.42.1

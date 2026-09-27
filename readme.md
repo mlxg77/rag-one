@@ -42,7 +42,7 @@ LLM 生成带引用的回答
 | 六 | 实现答案生成 | `src/generator.py` / `src/rag.py` | 已完成并验收 |
 | 七 | 增加简单界面 | `app.py`（Streamlit） | 已完成并验收 |
 
-### v2.0 · 召回与排序（进行中）
+### v2.0 · 召回与排序（已完成）
 
 在 v1.0 基础上学习“召回与排序”——BM25、RRF 融合、Reranker；规划见 `RAG-v2.0学习规划.md`（共 7 个阶段）。
 
@@ -54,7 +54,23 @@ LLM 生成带引用的回答
 | 四 | 实现混合检索与 RRF 融合 | 已完成并验收 |
 | 五 | 接入 Reranker | 已完成并验收 |
 | 六 | 端到端对照实验 | 已完成并验收 |
-| 七 | 工程化与界面升级 | 未开始 |
+| 七 | 工程化与界面升级 | 已完成并验收 |
+
+**能力三态**（「已实现 / 已测试 / 已通过指标」三态标注；全部测试离线运行，不依赖真实 API Key）：
+
+| 能力 | 已实现 | 已测试（tests/） | 已通过指标 |
+|---|---|---|---|
+| 文档加载与切分 | `src/loaders.py` / `src/splitter.py` | ✓ 16 用例 | ✓ 111 块与语料快照对齐（阶段一验收） |
+| 向量检索 | `src/retriever.py` / `src/indexer.py` | ✓ 索引侧 6 用例 + 链路替身 7 用例 | ✓ R@5 96.8% / MRR 0.838（baseline-v1） |
+| BM25 关键词检索 | `src/bm25_store.py` | ✓ 8 用例 | ✓ R@5 100% / MRR 0.888（run-bm25） |
+| RRF 融合 | `src/fusion.py` | ✓ 6 用例 | ✓ MRR 0.925（run-hybrid） |
+| Reranker 精排 | `src/reranker.py` | ✓ 9 用例 | ✓ MRR 1.000（run-hybrid-rerank） |
+| 四链路追踪层 | `src/pipeline.py` | ✓ 7 用例 | ✓ 四条链路与分阶段耗时实测（阶段七） |
+| 索引安全重建 | `src/indexer.py` / `ingest_bm25.py` | ✓ 8 用例（含失败注入） | ✓ 失败注入保留旧索引（阶段七） |
+| 答案生成与 RAG 组装 | `src/generator.py` / `src/rag.py` | ✓ 5 用例 | ✓ E4 答案正确率 100% / 引用准确率 79.3%（阶段六） |
+| Streamlit 界面 | `app.py` | ✓ 8 用例（AppTest 无头） | — 界面无指标口径，按验收清单核对（阶段七） |
+
+用例快照：全量 `python -X utf8 -m pytest tests/ -v`（65 用例全绿）；各阶段命令与验收细节见「工作记录 → v2.0」。
 
 ---
 
@@ -116,6 +132,32 @@ pip install -r requirements.txt
    E:\Anaconda_envs\envs\rag-one\python.exe -X utf8 -m streamlit run app.py
    ```
 
+### v2.0 常用命令
+
+全部在项目根目录执行；`python` 均指 rag-one 环境（见上方运行规范）：
+
+```powershell
+# 0) 一次性：安装依赖 + 配置 Key（复制模板后填写，.env 不提交）
+pip install -r requirements.txt
+Copy-Item .env.example .env
+
+# 1) 建索引：向量（全量嵌入，先建后切）+ BM25（原子替换）
+python -X utf8 ingest.py
+python -X utf8 ingest_bm25.py
+
+# 2) 检索评估：四模式任选 vector / bm25 / hybrid / hybrid_rerank（只评检索，不调 LLM）
+python -X utf8 -m evaluation.evaluate_retrieval --mode hybrid_rerank --out data/eval/run-hybrid-rerank.json
+
+# 3) 端到端答案评估：vector 或 hybrid_rerank（会真实调用 LLM / Rerank）
+python -X utf8 -m evaluation.evaluate_e2e --mode hybrid_rerank --out data/eval/run-e2e-hybrid_rerank.json
+
+# 4) 离线测试：全部替身，不依赖真实 API Key 与网络
+python -X utf8 -m pytest tests/ -v
+
+# 5) 启动界面：四模式切换 / 候选池各阶段名次 / 分阶段耗时
+python -X utf8 -m streamlit run app.py
+```
+
 ---
 
 ## 项目结构
@@ -159,19 +201,27 @@ rag-one/
 │   ├── fusion.py             # v2.0 阶段四：RRF 排名融合（纯函数，已完成）
 │   ├── hybrid_retriever.py   # v2.0 阶段四：双路召回 + RRF 融合（已完成）
 │   ├── reranker.py           # v2.0 阶段五：Reranker 精排（独立封装 + 回退，已完成）
-│   └── hybrid_reranker.py    # v2.0 阶段五：混合召回 + 重排组合（已完成）
+│   ├── hybrid_reranker.py    # v2.0 阶段五：混合召回 + 重排组合（已完成）
+│   └── pipeline.py           # v2.0 阶段七：四链路追踪层（分段计时 + 候选池，已完成）
 ├── ingest.py                 # 阶段四：索引入口（已完成）
 ├── ingest_bm25.py            # v2.0 阶段三：BM25 索引入口（已完成）
-├── app.py                    # 阶段七：Streamlit 界面（已完成）
+├── app.py                    # 阶段七：Streamlit 界面；v2.0 阶段七升级（四模式 / 候选池名次 / 分阶段耗时）
 ├── evaluation/               # v2.0：离线评估（检索 + 端到端，正式包）
 │   ├── __init__.py
 │   ├── metrics.py            # 指标纯函数：HitRank / Recall@K / RR@K / 百分位
 │   ├── evaluate_retrieval.py # 检索评估 CLI：一条命令跑完全部题目 → JSON + Markdown
 │   └── evaluate_e2e.py       # v2.0 阶段六：端到端评估 CLI（E1/E4，答案 + token + 三段延迟）
-├── tests/
-│   ├── test_bm25.py          # v2.0 阶段三：BM25 单元测试（pytest，6 用例）
-│   ├── test_fusion.py        # v2.0 阶段四：RRF 融合单元测试（pytest，6 用例）
-│   └── test_reranker.py      # v2.0 阶段五：重排链路单元测试（pytest，9 用例）
+├── tests/                    # 10 个文件 / 65 用例（离线替身，python -X utf8 -m pytest tests/ -v）
+│   ├── test_bm25.py          # v2.0 阶段三：BM25 单元测试（8 用例，含原子写 2）
+│   ├── test_fusion.py        # v2.0 阶段四：RRF 融合单元测试（6 用例）
+│   ├── test_reranker.py      # v2.0 阶段五：重排链路单元测试（9 用例）
+│   ├── test_indexer.py       # v2.0 阶段七：安全重建（6 用例，含三类失败注入）
+│   ├── test_pipeline.py      # v2.0 阶段七：四链路追踪层（7 用例）
+│   ├── test_splitter.py      # v2.0 阶段七：切分逻辑（9 用例）
+│   ├── test_loaders.py       # v2.0 阶段七：加载器（7 用例）
+│   ├── test_generator.py     # v2.0 阶段七：Prompt 与调用参数（3 用例）
+│   ├── test_rag.py           # v2.0 阶段七：RAG 组装（2 用例）
+│   └── test_app.py           # v2.0 阶段七：界面 AppTest 无头测试（8 用例）
 ├── tools/
 │   └── freeze_corpus.py      # v2.0：语料冻结脚本（生成 data/eval/corpus-version.md）
 ├── .env.example              # 环境变量模板（.env 含密钥，被 git 忽略）
@@ -447,7 +497,7 @@ E:\Anaconda_envs\envs\rag-one\python.exe -X utf8 -m streamlit run app.py
 | 9 | README 记录关键参数及其作用 | 本文件"关键参数"（8 项） |
 | 10 | 核心流程不依赖 LangChain 或 LangGraph | 全部模块手写，无框架依赖（阶段二~七） |
 
-### v2.0 · 召回与排序（进行中）
+### v2.0 · 召回与排序（已完成）
 
 #### 阶段一：冻结语料与评估标注（已完成并验收）
 
@@ -725,6 +775,41 @@ python -X utf8 -m evaluation.evaluate_e2e --mode hybrid_rerank  --out data/eval/
 - **拒答与成本账**：q22~q24 双链路全部正确拒答、零编造；E4 每题比 E1 多付约 0.95s（fuse + rerank P50），换来答案 +6.2pp、引用 +17.2pp、覆盖 +20.7pp。
 
 **验收结果**：本阶段由助手实施并自检——独立重算验收（不依赖评估包汇总逻辑，从产物 JSON 原始字段重推导：recall 与 token 均值同产物 summary 完全一致；引用编号去重口径 56 / 72 与判定分母一致）；抽检 q12 / q20 / q32 双链路答案与判定记录一致；`eval-report.md` 完成 32 题 × 4 判定列双链路填写（含运行观测、检索层与端到端对照、失败案例与数据观察）。
+
+#### 阶段七：工程化与界面升级（已完成并验收）
+
+**目标**（v2.0 规划第 5 节）：把验证有效的四链路接入 Streamlit（检索模式选择 / 候选数与最终 Top-K / 回答和引用 / 四阶段排名详情 / 各阶段耗时 / 索引版本与文档 chunk 数），并处理四项工程遗留：①重建索引「先构建 → 校验 → 成功后切换」失败保留旧索引；②核心临时断言转仓库内 pytest；③ requirements 固定已验证的直接依赖版本；④ README 区分「已实现 / 已测试 / 已通过指标」三种状态。
+
+**实现**：新增一个追踪层与全套界面，外加四处工程改造（评估链路零改动）：
+
+- `src/pipeline.py`（新）：四链路统一追踪层——`run_chain(mode, question, top_k, vector_k, bm25_k, rrf_k, candidate_k, fallback)` 按 `vector / bm25 / hybrid / hybrid_rerank` 分发，组合层按与生产模块同一逻辑展开（同函数、同参数、同截断口径）；逐段计时成 `stages`（名称 / elapsed_ms / count）；候选池每条附可得阶段的完整名次（`vector_rank / bm25_rank / rrf_rank / rerank_score / final_rank`）；重排链路一次 `top_k=len(fused)` 调回**全量候选**的重排分，再取前 Top-K 进 Prompt——「各阶段排名变化」展示不缺数据；`RerankError` 按回退口径记 `warnings`；未知模式显式报错；
+- `app.py`（v2，80 → 199 行）：主区四模式下拉（默认混合重排）+ 最终 Top-K 滑块 + 候选数滑块（仅两路链路出现）；回答 / token 用量（含 rerank）/ 分阶段耗时 / 候选池表格（向量#、BM25#、融合#、重排分、最终#；缺失阶段显示 —）/ 最终引用 expander（名次链 caption + 原文）；侧栏知识库管理（上传保存 / 一键重建两套索引，各自独立报错且提示「旧索引未受影响」/ 索引状态：向量条数、BM25 chunk 与词项、文档数、语料版本与日期）；
+- 安全重建（`src/indexer.py` + `src/vector_store.py`）：「先建后切」六步——加载切分 → 全量 embed（旧索引无损）→ 写 staging 集合（`rag_mvp_docs__staging`）→ 校验条数 + 可读探针 → 删旧集合 + `collection.modify(name=...)` 改名接管 → 统计；校验失败时主动清理 staging。`vector_store` 新增 `delete_collection / rename_collection / reset_collection` 原语与 `get_collection(name=)` 参数——用前先探针实测 chromadb 1.5.9 的 rename 保留数据 / 向量 / 查询能力与 hnsw:space 元数据；
+- BM25 原子替换（`src/bm25_store.py` + `ingest_bm25.py`）：`save_index` 改为写 `.tmp` 后 `os.replace()` 同目录原子替换；抽出 `rebuild_bm25_index()` 供界面复用，并补齐 `load_index.cache_clear()`——重建后失效进程内缓存（否则界面仍读旧索引）；
+- pytest 补齐（临时断言转仓库测试）：新增 `tests/test_indexer.py`（6 用例：切换成功 / embed 失败 / 写入失败 / 校验失败 / 切换后可查 / 首次构建）、`test_pipeline.py`（7）、`test_splitter.py`（9）、`test_loaders.py`（7）、`test_generator.py`（3）、`test_rag.py`（2）、`test_app.py`（8，Streamlit AppTest 无头执行整页：渲染 / 模式切换 / 提问展示 / 失败提示 / 重建双路径）；`test_bm25.py` 补 2 个原子写用例——全仓 **10 个文件 / 65 用例**，全程替身、不触网；
+- 依赖与文档：`requirements.txt` 固定 8 个直接依赖的已验证版本；readme 新增「v2.0 常用命令」区与「能力三态」表。
+
+**运行方式**：
+
+```powershell
+python -X utf8 -m pytest tests/ -v        # 65 用例（全绿，约 11s）
+python -X utf8 ingest.py                  # 真实重建冒烟：10 篇 / 111 chunk / 111 向量
+python -X utf8 ingest_bm25.py             # BM25：111 chunk / 1515 词项
+python -X utf8 -m streamlit run app.py    # 界面 v2：四模式 / 候选池名次 / 分阶段耗时
+```
+
+**验收结果**（三项实测 + 重建冒烟）：
+
+1. **真实库失败注入 8/8**：对真实索引注入三类重建失败（embed 失败 / staging 写入失败 / 校验失败——写入 0 条），每次失败后旧索引 count 与样本 id 逐位不变、staging 无残留（校验失败路径主动清理）；随后真实检索 smoke 正常——q01 rank 1 = `06-travel-policy.md:chunk-5`，与阶段一记录一致；
+2. **离线测试不依赖真实 API Key**：移走 `.env` 后全量 pytest **65 passed**（11s），随后恢复；测试全程替身（LLM / Embedding / Rerank 均不触网）；
+3. **AppTest 界面 8 用例**：初始渲染（四模式选项 / 默认参数 / 无异常）、模式切换联动候选数滑块、提问展示（回答 / 候选池 2 行 / 引用 2 条 / token 含 rerank）、空问题警告、问答失败与 BM25 缺索引提示、重建成功双消息与调用顺序（先向量后 BM25）、重建失败双报错且页面存活；
+4. **真实重建冒烟**：`ingest.py` 全量重建（10 篇 / 111 chunk / 111 向量，先建后切路径真库生效）+ `ingest_bm25.py`（111 chunk / 1515 词项 / 平均 326.3 tokens）。
+
+**验收清单 6 条对照**（规划阶段七）：四模式可切换 ✓；各阶段排名变化可见 ✓（候选池五列 + 引用名次链）；重建失败不破坏旧索引 ✓（注入实测 8/8）；离线测试不依赖 Key ✓（.env 移除实测）；pytest 实际用例全通过 ✓（65 用例）；README 含安装 / 索引 / 评估 / 启动命令 ✓（v2.0 常用命令区）。
+
+**过程发现（顺手修复）**：候选池表格名次列 int 与「—」混排触发 dataframe 序列化类型告警（统一转字符串后消除）；`use_container_width` 已被 Streamlit 标记弃用（改为 `width="stretch"`）。
+
+重排分在界面候选池直接可见——阶段六「低分作拒答信号」观察项（拒答题 rank 1 重排分仅 0.0151）有了界面入口。
 
 ---
 
@@ -1013,16 +1098,18 @@ D4 里“名次和相同、融合分差 1e-5”的三个候选，被重排用 0.
 18. **融合层用 RRF、只用排名不用分数（v2.0 阶段四）**：余弦相似度与 BM25 分数不同量纲（余弦约 0~1 且分布集中，BM25 无上界、量级随语料变化），加权相加会让某一路的分数尺度吞噬另一路；RRF 只取名次 `Σ 1/(k+rank)`，免归一化、免训练、可人工复算。k=60（规划起点值）：k 越小越偏向“单路头部”，越大越压平差距、趋于共识；本库实测共识策略成立——相对向量路改善 6 题、零退化，相对 BM25 路改善 4 题 / 2 题首位各退 1 位（q03 / q16 仍居 Top-3，机制详见知识笔记 D4）。融合结果保留每条命中的两路原始排名与分数（`vector_rank / vector_score / bm25_rank / bm25_score`），未命中路显式 `None`；同分按 chunk id 升序兜底（与 BM25 一致）。
 19. **Reranker 独立封装走 HTTP 直连、失败回退不断链（v2.0 阶段五）**：rerank 不在 OpenAI 端点集内，用 `httpx` 直连 `{base_url}/rerank`（httpx 本就是 openai SDK 的底层依赖，按“直接 import 就显式声明”写入 requirements）；接口 `rerank(question, candidates, top_k)` 与供应商解耦，换模型 / 供应商只改 `src/reranker.py`。设计四要点：① `top_n=len(texts)` 拿回全部候选分数、在本地排序截断（tie-break 与字段控制留在自己手里，同分保持输入顺序）；② 空候选短路不发请求（实测 API 对空列表报 400）；③ 失败抛 `RerankError` 不吞错，组合层 `fallback=True` 回退融合 Top-K 并打印 `[WARN]`、`fallback=False` 严格抛错——两种都满足“明确报错或回退，不返回半截结果”；④ 重排是“贵”操作（每题一次调用、20 候选约 8.1k tokens、P50 +约 760ms），只处理 20 条窄候选——链路定型为“宽召回 + 窄精排”。
 20. **端到端评估的判定口径（v2.0 阶段六）**：答案按「核心结论与期望一致」判定（错误拒答判否；冗余不误导不扣分）；引用用严格口径——答案标注的每个引用编号对应块均须含支撑结论的直接依据（点名问题对象的规则句 / 数字），间接相关与无关块判否；拒答题（q22~q24）不纳入引用准确率分母（正确性由拒答准确率覆盖）。该口径下引用准确率 E1 62.1% / E4 79.3%，未达 90% 目标，主要误差源是生成端「多标编号」（把 Top-5 中无关模板块一并标入）；如实记录不回填，留待阶段七作为界面观察项。
+21. **索引安全重建「先建后切」、BM25 原子替换与界面追踪层（v2.0 阶段七）**：重建顺序刻意让最大失败源先暴露——全量 embed 在触碰旧索引之前，再写 staging 集合（`rag_mvp_docs__staging`）→ 校验条数 + 可读探针 → 删旧集合并 `modify(name=...)` 改名接管（chromadb 1.5.9 实测 rename 保留数据 / 向量 / 查询能力与 hnsw:space 元数据）；三类失败注入（embed / 写入 / 校验失败）在真实库实测旧索引逐位不变、staging 无残留。BM25 侧「写 .tmp → `os.replace()` 原子替换」，重建函数补齐 `load_index.cache_clear()`（否则界面读到进程内旧缓存）。界面层不重复实现链路：`src/pipeline.py` 按组合层同一逻辑展开四模式并分段计时；重排链路一次 `top_k=len(fused)` 调回全部候选的重排分（复用 `rerank()` 内部 `top_n=len(texts)` 行为），「各阶段排名变化」展示不缺数据。界面自动化用 Streamlit AppTest（无头跑整页，monkeypatch 目标是提供方模块——脚本内 from-import 在执行时取模块当前属性）。
 
 ---
 
 ## 下一步
 
 - v1.0 七个阶段已全部完成（MVP 完成定义 10/10，见“工作记录 → v1.0 → 收尾”）。
-- **v2.0 进行中**（规划见 `RAG-v2.0学习规划.md`）：
-  - 阶段一“冻结语料与评估标注”、阶段二“建立 v1.0 可重复评估基线”、阶段三“实现 BM25 检索”、阶段四“实现混合检索与 RRF 融合”、阶段五“接入 Reranker”、阶段六“端到端对照实验”已完成并验收（见“工作记录 → v2.0”）；
-  - 下一环节：阶段七“工程化与界面升级”——把验证有效的链路接入 Streamlit（检索模式选择、候选数与 Top-K 设置、引用展示、四阶段详情与耗时、索引版本与 chunk 数），并处理 v1.0 遗留工程项（索引“先建后切”重建、临时断言转 pytest、依赖版本固定、README 三态标注）；
-  - 人工评估表 `data/eval/eval-report.md` 已按 E1 / E4 双链路完成 32 题判定（含指标汇总、检索层与端到端对照、失败案例；端到端结论：E4 答案正确率 100%、引用准确率 79.3%，均优于 E1）。
+- **v2.0 已完成**（规划见 `RAG-v2.0学习规划.md`）：阶段一 ~ 七全部完成并验收（见“工作记录 → v2.0”），完成定义 14 条逐条核对全部达成；人工评估表 `data/eval/eval-report.md` 按 E1 / E4 双链路完成 32 题判定（端到端结论：E4 答案正确率 100%、引用准确率 79.3%，均优于 E1）。
+- v2.0 已知短板与后续方向（规划第 10 节）：
+  - 引用准确率 90% 目标双链路未达标（E1 62.1% / E4 79.3%，误差源为生成端“多标编号”）——如实保留，作为下一版本生成端的改进对象；
+  - “重排分阈值拒答”观察项（拒答题 rank 1 重排分仅 0.0151，与计分题最低 0.1349 明显分离）——界面候选池已直接展示重排分，可继续观察；
+  - 按问题类型选下一主线：召回困难 → Query Rewriting / Multi-Query；跨片段综合 → 上下文压缩 / 父子块检索；连续追问 → 多轮对话与历史问题改写。
 
 ---
 

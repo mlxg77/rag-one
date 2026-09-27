@@ -9,6 +9,7 @@
 
 import json
 import math
+import os
 from datetime import datetime
 from functools import lru_cache
 from pathlib import Path
@@ -77,12 +78,14 @@ def build_index(chunks: list[dict]) -> dict:
 
 
 def save_index(index: dict, path: Path = INDEX_PATH) -> None:
-    """全量写出索引（覆盖写 = 先删后建；纯 JSON，可安全重建）。"""
+    """全量写出索引：先写 .tmp 再原子替换（写一半失败不破坏旧索引）。"""
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(
         json.dumps(index, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8",
     )
+    os.replace(tmp, path)  # 同目录原子替换：磁盘上只会是"旧版或完整新版"，无半截文件
 
 
 @lru_cache(maxsize=1)

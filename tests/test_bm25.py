@@ -3,9 +3,12 @@
 运行：python -X utf8 -m pytest tests/test_bm25.py -v
 """
 
+import json
+import os
+
 import pytest
 
-from src.bm25_store import build_index, search
+from src.bm25_store import build_index, save_index, search
 
 CHUNKS = [
     {
@@ -75,3 +78,27 @@ def test_result_fields_and_order():
         assert set(hit) >= {"rank", "id", "score", "source", "page", "text"}
     scores = [h["score"] for h in hits]
     assert scores == sorted(scores, reverse=True)
+
+
+def test_save_index_atomic_no_tmp_left(tmp_path):
+    # 原子写：替换后无 .tmp 残留，内容完整可读
+    path = tmp_path / "index.json"
+    save_index(INDEX, path)
+    assert path.exists()
+    assert not (tmp_path / "index.json.tmp").exists()
+    assert json.loads(path.read_text(encoding="utf-8"))["meta"]["chunk_count"] == len(CHUNKS)
+
+
+def test_save_index_failure_keeps_old_file(tmp_path, monkeypatch):
+    # 替换失败（模拟写出中断）：旧文件原封不动，新内容只落在 .tmp
+    path = tmp_path / "index.json"
+    save_index(INDEX, path)
+    before = path.read_text(encoding="utf-8")
+
+    def boom(src, dst):
+        raise OSError("模拟替换失败")
+
+    monkeypatch.setattr(os, "replace", boom)
+    with pytest.raises(OSError):
+        save_index({**INDEX, "avgdl": 0.0}, path)
+    assert path.read_text(encoding="utf-8") == before
