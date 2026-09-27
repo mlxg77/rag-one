@@ -16,6 +16,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.siliconflow.cn/v1")
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "BAAI/bge-m3")
 LLM_MODEL = os.getenv("LLM_MODEL", "Qwen/Qwen3-8B")
+RERANK_MODEL = os.getenv("RERANK_MODEL", "BAAI/bge-reranker-v2-m3")
 
 # ---------- 路径配置 ----------
 DATA_RAW_DIR = PROJECT_ROOT / "data" / "raw"

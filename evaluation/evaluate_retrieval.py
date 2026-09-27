@@ -5,6 +5,8 @@
 用法（项目根目录执行）：
     python -X utf8 -m evaluation.evaluate_retrieval
     python -X utf8 -m evaluation.evaluate_retrieval --mode bm25 --out data/eval/run-bm25.json
+    python -X utf8 -m evaluation.evaluate_retrieval --mode hybrid --out data/eval/run-hybrid.json
+    python -X utf8 -m evaluation.evaluate_retrieval --mode hybrid_rerank --out data/eval/run-hybrid-rerank.json
 """
 
 import argparse
@@ -24,6 +26,8 @@ from src import vector_store
 from src.config import COLLECTION_NAME, EMBEDDING_MODEL
 from src.retriever import retrieve
 from src.bm25_store import search as bm25_search
+from src.hybrid_retriever import hybrid_search
+from src.hybrid_reranker import hybrid_rerank_search
 
 QUESTIONS_PATH = Path("data/eval/questions.jsonl")
 DEFAULT_OUT = Path("data/eval/baseline-v1.json")
@@ -45,12 +49,33 @@ def index_snapshot() -> int:
     return vector_store.count(collection)
 
 def retrieve_by_mode(mode: str, question: str, top_k: int) -> list[dict]:
-    """按检索模式分发：vector = 向量链路（v1.0 生产链路）；bm25 = 关键词链路。"""
+    """按检索模式分发：vector 向量链路；bm25 关键词链路；hybrid 双路 RRF；hybrid_rerank 融合后重排。"""
     if mode == "vector":
         return retrieve(question, top_k=top_k)
     if mode == "bm25":
         return bm25_search(question, top_k=top_k)
+    if mode == "hybrid":
+        return hybrid_search(question, top_k=top_k)
+    if mode == "hybrid_rerank":
+        return hybrid_rerank_search(question, top_k=top_k)
     raise ValueError(f"未知检索模式：{mode}")
+
+def hit_to_row(hit: dict) -> dict:
+    """评估产物里的单条命中：公共四字段 + 检索链路各阶段附加字段（存在才记）。"""
+    row = {
+        "rank": hit["rank"],
+        "chunk_id": hit["id"],
+        "source": hit["source"],
+        "score": round(hit["score"], 4),
+    }
+    if "vector_rank" in hit:  # 混合模式起：两路原始排名
+        row["vector_rank"] = hit["vector_rank"]
+        row["bm25_rank"] = hit["bm25_rank"]
+    if "rrf_rank" in hit:  # 重排模式：融合名次（重排前）
+        row["rrf_rank"] = hit["rrf_rank"]
+    if "rerank_score" in hit:  # 重排模式：重排分数（API 失败回退时无此字段）
+        row["rerank_score"] = round(hit["rerank_score"], 4)
+    return row
 
 def evaluate_one(q: dict, top_k: int, mode: str) -> dict:
     """跑一题：检索 + 计时 + 计算该题指标。"""
@@ -67,15 +92,7 @@ def evaluate_one(q: dict, top_k: int, mode: str) -> dict:
         "type": q["type"],
         "relevant_chunk_ids": relevant,
         "latency_ms": latency_ms,
-        "hits": [
-            {
-                "rank": h["rank"],
-                "chunk_id": h["id"],
-                "source": h["source"],
-                "score": round(h["score"], 4),
-            }
-            for h in hits
-        ],
+        "hits": [hit_to_row(h) for h in hits],
         # 以下指标只有可答题（有标注）才算；拒答题保持 None
         "hit_rank": None,
         "relevant_hit_count": 0,
@@ -192,14 +209,14 @@ def render_markdown(payload: dict) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="离线检索评估：跑全部评估题，产出 JSON 与 Markdown 报告")
-    parser.add_argument("--mode", default="vector", help="检索模式（vector / bm25）")
+    parser.add_argument("--mode", default="vector", help="检索模式（vector / bm25 / hybrid / hybrid_rerank）")
     parser.add_argument("--top-k", type=int, default=10, help="每题检索候选数（默认 10，Recall@10 需要）")
     parser.add_argument("--out", default=str(DEFAULT_OUT), help=f"JSON 结果输出路径（默认 {DEFAULT_OUT}）")
     parser.add_argument("--force", action="store_true", help="允许覆盖已存在的输出文件（默认拒绝）")
     args = parser.parse_args()
 
-    if args.mode not in ("vector", "bm25"):
-        raise SystemExit(f"未知检索模式：{args.mode}（当前支持 vector / bm25）")
+    if args.mode not in ("vector", "bm25", "hybrid", "hybrid_rerank"):
+        raise SystemExit(f"未知检索模式：{args.mode}（当前支持 vector / bm25 / hybrid / hybrid_rerank）")
     if args.top_k < max(RECALL_KS):
         raise SystemExit(f"--top-k={args.top_k} 小于评估深度 {max(RECALL_KS)}，Recall@10 会失真")
 

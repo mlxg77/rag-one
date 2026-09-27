@@ -10,6 +10,8 @@
 - `eval/corpus-version.md`：v2.0 语料版本快照（文件指纹 / 切分参数 / chunk 统计）
 - `eval/baseline-v1.json` + `eval/baseline-v1.md`：v1.0 向量检索基线结果（32 题；机器可读 JSON + 可读报告，配套评估脚本见仓库 `evaluation/`）
 - `eval/run-bm25.json` + `eval/run-bm25.md`：BM25 关键词检索评估结果（32 题，与向量基线同口径，可直接对照）
+- `eval/run-hybrid.json` + `eval/run-hybrid.md`：混合检索（向量 + BM25 → RRF 融合）评估结果（32 题，与基线 / BM25 同口径，含每条命中的两路名次）
+- `eval/run-hybrid-rerank.json` + `eval/run-hybrid-rerank.md`：混合检索 + Reranker 精排评估结果（32 题，与前述同口径，含每条命中的重排前融合名次与重排分数）
 
 ## 推荐用法
 

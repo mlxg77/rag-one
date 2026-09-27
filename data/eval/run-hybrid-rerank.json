@@ -1,0 +1,3813 @@
+{
+  "run": {
+    "name": "run-hybrid-rerank",
+    "mode": "hybrid_rerank",
+    "top_k": 10,
+    "recall_ks": [
+      5,
+      10
+    ],
+    "mrr_k": 10,
+    "collection": "rag_mvp_docs",
+    "chunk_count": 111,
+    "embedding_model": "BAAI/bge-m3",
+    "question_count": 32,
+    "created_at": "2026-09-27T17:53:26"
+  },
+  "summary": {
+    "scored_count": 31,
+    "recall_at_5": 1.0,
+    "recall_at_10": 1.0,
+    "mrr_at_10": 1.0,
+    "avg_relevant_coverage": 0.9478,
+    "latency_ms": {
+      "avg": 1074.5,
+      "p50": 954,
+      "p95": 2057
+    }
+  },
+  "questions": [
+    {
+      "question_id": "q01",
+      "question": "普通员工去上海出差，酒店每晚含税最高可以报销多少？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "06-travel-policy.md:chunk-0",
+        "06-travel-policy.md:chunk-4",
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-3:chunk-0"
+      ],
+      "latency_ms": 2222,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "10-faq.pdf:page-3:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.032,
+          "vector_rank": 2,
+          "bm25_rank": 3,
+          "rrf_rank": 3,
+          "rerank_score": 0.9897
+        },
+        {
+          "rank": 2,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.032,
+          "vector_rank": 4,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.9642
+        },
+        {
+          "rank": 3,
+          "chunk_id": "06-travel-policy.md:chunk-0",
+          "source": "06-travel-policy.md",
+          "score": 0.032,
+          "vector_rank": 3,
+          "bm25_rank": 2,
+          "rrf_rank": 2,
+          "rerank_score": 0.946
+        },
+        {
+          "rank": 4,
+          "chunk_id": "06-travel-policy.md:chunk-4",
+          "source": "06-travel-policy.md",
+          "score": 0.0149,
+          "vector_rank": 7,
+          "bm25_rank": null,
+          "rrf_rank": 17,
+          "rerank_score": 0.8395
+        },
+        {
+          "rank": 5,
+          "chunk_id": "06-travel-policy.md:chunk-5",
+          "source": "06-travel-policy.md",
+          "score": 0.0164,
+          "vector_rank": 1,
+          "bm25_rank": null,
+          "rrf_rank": 15,
+          "rerank_score": 0.735
+        },
+        {
+          "rank": 6,
+          "chunk_id": "02-onboarding.md:chunk-10",
+          "source": "02-onboarding.md",
+          "score": 0.0139,
+          "vector_rank": null,
+          "bm25_rank": 12,
+          "rrf_rank": 18,
+          "rerank_score": 0.3438
+        },
+        {
+          "rank": 7,
+          "chunk_id": "10-faq.pdf:page-3:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0132,
+          "vector_rank": 16,
+          "bm25_rank": null,
+          "rrf_rank": 20,
+          "rerank_score": 0.2531
+        },
+        {
+          "rank": 8,
+          "chunk_id": "04-leave-policy.md:chunk-10",
+          "source": "04-leave-policy.md",
+          "score": 0.029,
+          "vector_rank": 12,
+          "bm25_rank": 6,
+          "rrf_rank": 4,
+          "rerank_score": 0.2293
+        },
+        {
+          "rank": 9,
+          "chunk_id": "10-faq.pdf:page-5:chunk-2",
+          "source": "10-faq.pdf",
+          "score": 0.0286,
+          "vector_rank": 17,
+          "bm25_rank": 4,
+          "rrf_rank": 9,
+          "rerank_score": 0.2291
+        },
+        {
+          "rank": 10,
+          "chunk_id": "09-it-support.md:chunk-10",
+          "source": "09-it-support.md",
+          "score": 0.0286,
+          "vector_rank": 9,
+          "bm25_rank": 11,
+          "rrf_rank": 10,
+          "rerank_score": 0.2286
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 4,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q02",
+      "question": "部门总监去成都出差的住宿标准是多少？",
+      "type": "table",
+      "relevant_chunk_ids": [
+        "06-travel-policy.md:chunk-0",
+        "06-travel-policy.md:chunk-5",
+        "10-faq.pdf:page-3:chunk-1"
+      ],
+      "latency_ms": 1646,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "10-faq.pdf:page-3:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0325,
+          "vector_rank": 1,
+          "bm25_rank": 2,
+          "rrf_rank": 1,
+          "rerank_score": 0.9949
+        },
+        {
+          "rank": 2,
+          "chunk_id": "06-travel-policy.md:chunk-5",
+          "source": "06-travel-policy.md",
+          "score": 0.032,
+          "vector_rank": 2,
+          "bm25_rank": 3,
+          "rrf_rank": 3,
+          "rerank_score": 0.9874
+        },
+        {
+          "rank": 3,
+          "chunk_id": "06-travel-policy.md:chunk-0",
+          "source": "06-travel-policy.md",
+          "score": 0.0323,
+          "vector_rank": 3,
+          "bm25_rank": 1,
+          "rrf_rank": 2,
+          "rerank_score": 0.9637
+        },
+        {
+          "rank": 4,
+          "chunk_id": "06-travel-policy.md:chunk-4",
+          "source": "06-travel-policy.md",
+          "score": 0.0312,
+          "vector_rank": 4,
+          "bm25_rank": 4,
+          "rrf_rank": 4,
+          "rerank_score": 0.7366
+        },
+        {
+          "rank": 5,
+          "chunk_id": "10-faq.pdf:page-3:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0303,
+          "vector_rank": 6,
+          "bm25_rank": 6,
+          "rrf_rank": 5,
+          "rerank_score": 0.3349
+        },
+        {
+          "rank": 6,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0295,
+          "vector_rank": 11,
+          "bm25_rank": 5,
+          "rrf_rank": 7,
+          "rerank_score": 0.0674
+        },
+        {
+          "rank": 7,
+          "chunk_id": "06-travel-policy.md:chunk-3",
+          "source": "06-travel-policy.md",
+          "score": 0.0278,
+          "vector_rank": 14,
+          "bm25_rank": 10,
+          "rrf_rank": 12,
+          "rerank_score": 0.0261
+        },
+        {
+          "rank": 8,
+          "chunk_id": "06-travel-policy.md:chunk-6",
+          "source": "06-travel-policy.md",
+          "score": 0.0299,
+          "vector_rank": 7,
+          "bm25_rank": 7,
+          "rrf_rank": 6,
+          "rerank_score": 0.0231
+        },
+        {
+          "rank": 9,
+          "chunk_id": "06-travel-policy.md:chunk-1",
+          "source": "06-travel-policy.md",
+          "score": 0.0294,
+          "vector_rank": 8,
+          "bm25_rank": 8,
+          "rrf_rank": 8,
+          "rerank_score": 0.0145
+        },
+        {
+          "rank": 10,
+          "chunk_id": "06-travel-policy.md:chunk-7",
+          "source": "06-travel-policy.md",
+          "score": 0.0267,
+          "vector_rank": 17,
+          "bm25_rank": 13,
+          "rrf_rank": 14,
+          "rerank_score": 0.0105
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 3,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q03",
+      "question": "出差返回后多少天内要提交报销？",
+      "type": "confusable",
+      "relevant_chunk_ids": [
+        "06-travel-policy.md:chunk-0",
+        "06-travel-policy.md:chunk-7",
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-3:chunk-0"
+      ],
+      "latency_ms": 843,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "06-travel-policy.md:chunk-7",
+          "source": "06-travel-policy.md",
+          "score": 0.0315,
+          "vector_rank": 2,
+          "bm25_rank": 5,
+          "rrf_rank": 4,
+          "rerank_score": 0.9474
+        },
+        {
+          "rank": 2,
+          "chunk_id": "06-travel-policy.md:chunk-0",
+          "source": "06-travel-policy.md",
+          "score": 0.032,
+          "vector_rank": 3,
+          "bm25_rank": 2,
+          "rrf_rank": 2,
+          "rerank_score": 0.9371
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-3:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.029,
+          "vector_rank": 8,
+          "bm25_rank": 10,
+          "rrf_rank": 6,
+          "rerank_score": 0.9313
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0318,
+          "vector_rank": 5,
+          "bm25_rank": 1,
+          "rrf_rank": 3,
+          "rerank_score": 0.6386
+        },
+        {
+          "rank": 5,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.032,
+          "vector_rank": 1,
+          "bm25_rank": 4,
+          "rrf_rank": 1,
+          "rerank_score": 0.6147
+        },
+        {
+          "rank": 6,
+          "chunk_id": "09-it-support.md:chunk-10",
+          "source": "09-it-support.md",
+          "score": 0.0141,
+          "vector_rank": 11,
+          "bm25_rank": null,
+          "rrf_rank": 17,
+          "rerank_score": 0.5411
+        },
+        {
+          "rank": 7,
+          "chunk_id": "07-remote-work.md:chunk-10",
+          "source": "07-remote-work.md",
+          "score": 0.0139,
+          "vector_rank": 12,
+          "bm25_rank": null,
+          "rrf_rank": 18,
+          "rerank_score": 0.5411
+        },
+        {
+          "rank": 8,
+          "chunk_id": "04-leave-policy.md:chunk-10",
+          "source": "04-leave-policy.md",
+          "score": 0.0143,
+          "vector_rank": 10,
+          "bm25_rank": null,
+          "rrf_rank": 16,
+          "rerank_score": 0.5398
+        },
+        {
+          "rank": 9,
+          "chunk_id": "08-information-security.md:chunk-10",
+          "source": "08-information-security.md",
+          "score": 0.0137,
+          "vector_rank": 13,
+          "bm25_rank": null,
+          "rrf_rank": 19,
+          "rerank_score": 0.5384
+        },
+        {
+          "rank": 10,
+          "chunk_id": "10-faq.pdf:page-5:chunk-2",
+          "source": "10-faq.pdf",
+          "score": 0.0281,
+          "vector_rank": 6,
+          "bm25_rank": 17,
+          "rrf_rank": 9,
+          "rerank_score": 0.5134
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 4,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q04",
+      "question": "购买办公用品后 25 天还能正常提交报销吗？",
+      "type": "reasoning",
+      "relevant_chunk_ids": [
+        "05-expense-policy.md:chunk-0",
+        "05-expense-policy.md:chunk-2",
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-2:chunk-1"
+      ],
+      "latency_ms": 870,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.0325,
+          "vector_rank": 1,
+          "bm25_rank": 2,
+          "rrf_rank": 1,
+          "rerank_score": 0.3075
+        },
+        {
+          "rank": 2,
+          "chunk_id": "05-expense-policy.md:chunk-1",
+          "source": "05-expense-policy.md",
+          "score": 0.0318,
+          "vector_rank": 2,
+          "bm25_rank": 4,
+          "rrf_rank": 3,
+          "rerank_score": 0.3002
+        },
+        {
+          "rank": 3,
+          "chunk_id": "05-expense-policy.md:chunk-7",
+          "source": "05-expense-policy.md",
+          "score": 0.0317,
+          "vector_rank": 3,
+          "bm25_rank": 3,
+          "rrf_rank": 4,
+          "rerank_score": 0.2365
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0279,
+          "vector_rank": 20,
+          "bm25_rank": 5,
+          "rrf_rank": 7,
+          "rerank_score": 0.113
+        },
+        {
+          "rank": 5,
+          "chunk_id": "05-expense-policy.md:chunk-8",
+          "source": "05-expense-policy.md",
+          "score": 0.0299,
+          "vector_rank": 5,
+          "bm25_rank": 9,
+          "rrf_rank": 5,
+          "rerank_score": 0.0306
+        },
+        {
+          "rank": 6,
+          "chunk_id": "06-travel-policy.md:chunk-7",
+          "source": "06-travel-policy.md",
+          "score": 0.0289,
+          "vector_rank": 6,
+          "bm25_rank": 13,
+          "rrf_rank": 6,
+          "rerank_score": 0.0142
+        },
+        {
+          "rank": 7,
+          "chunk_id": "10-faq.pdf:page-3:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0147,
+          "vector_rank": null,
+          "bm25_rank": 8,
+          "rrf_rank": 12,
+          "rerank_score": 0.0074
+        },
+        {
+          "rank": 8,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.032,
+          "vector_rank": 4,
+          "bm25_rank": 1,
+          "rrf_rank": 2,
+          "rerank_score": 0.0057
+        },
+        {
+          "rank": 9,
+          "chunk_id": "06-travel-policy.md:chunk-10",
+          "source": "06-travel-policy.md",
+          "score": 0.0139,
+          "vector_rank": 12,
+          "bm25_rank": null,
+          "rrf_rank": 19,
+          "rerank_score": 0.0047
+        },
+        {
+          "rank": 10,
+          "chunk_id": "05-expense-policy.md:chunk-10",
+          "source": "05-expense-policy.md",
+          "score": 0.0137,
+          "vector_rank": 13,
+          "bm25_rank": null,
+          "rrf_rank": 20,
+          "rerank_score": 0.0047
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 3,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q05",
+      "question": "一笔 6000 元的日常费用需要谁审批？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "05-expense-policy.md:chunk-0",
+        "05-expense-policy.md:chunk-5"
+      ],
+      "latency_ms": 1014,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "05-expense-policy.md:chunk-5",
+          "source": "05-expense-policy.md",
+          "score": 0.0328,
+          "vector_rank": 1,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.9337
+        },
+        {
+          "rank": 2,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.0323,
+          "vector_rank": 2,
+          "bm25_rank": 2,
+          "rrf_rank": 2,
+          "rerank_score": 0.5597
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-3:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0154,
+          "vector_rank": null,
+          "bm25_rank": 5,
+          "rrf_rank": 13,
+          "rerank_score": 0.2627
+        },
+        {
+          "rank": 4,
+          "chunk_id": "05-expense-policy.md:chunk-1",
+          "source": "05-expense-policy.md",
+          "score": 0.0303,
+          "vector_rank": 6,
+          "bm25_rank": 6,
+          "rrf_rank": 3,
+          "rerank_score": 0.161
+        },
+        {
+          "rank": 5,
+          "chunk_id": "05-expense-policy.md:chunk-4",
+          "source": "05-expense-policy.md",
+          "score": 0.0294,
+          "vector_rank": 3,
+          "bm25_rank": 14,
+          "rrf_rank": 6,
+          "rerank_score": 0.1472
+        },
+        {
+          "rank": 6,
+          "chunk_id": "06-travel-policy.md:chunk-0",
+          "source": "06-travel-policy.md",
+          "score": 0.0159,
+          "vector_rank": null,
+          "bm25_rank": 3,
+          "rrf_rank": 11,
+          "rerank_score": 0.1264
+        },
+        {
+          "rank": 7,
+          "chunk_id": "06-travel-policy.md:chunk-7",
+          "source": "06-travel-policy.md",
+          "score": 0.0143,
+          "vector_rank": null,
+          "bm25_rank": 10,
+          "rrf_rank": 17,
+          "rerank_score": 0.1128
+        },
+        {
+          "rank": 8,
+          "chunk_id": "05-expense-policy.md:chunk-2",
+          "source": "05-expense-policy.md",
+          "score": 0.0295,
+          "vector_rank": 4,
+          "bm25_rank": 12,
+          "rrf_rank": 4,
+          "rerank_score": 0.0951
+        },
+        {
+          "rank": 9,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0145,
+          "vector_rank": null,
+          "bm25_rank": 9,
+          "rrf_rank": 16,
+          "rerank_score": 0.0486
+        },
+        {
+          "rank": 10,
+          "chunk_id": "09-it-support.md:chunk-9",
+          "source": "09-it-support.md",
+          "score": 0.0143,
+          "vector_rank": 10,
+          "bm25_rank": null,
+          "rrf_rank": 18,
+          "rerank_score": 0.0317
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q06",
+      "question": "同一项采购能否拆成两笔来降低审批等级？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "05-expense-policy.md:chunk-0",
+        "05-expense-policy.md:chunk-6"
+      ],
+      "latency_ms": 840,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "05-expense-policy.md:chunk-6",
+          "source": "05-expense-policy.md",
+          "score": 0.0325,
+          "vector_rank": 2,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.988
+        },
+        {
+          "rank": 2,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.0161,
+          "vector_rank": null,
+          "bm25_rank": 2,
+          "rrf_rank": 5,
+          "rerank_score": 0.8791
+        },
+        {
+          "rank": 3,
+          "chunk_id": "05-expense-policy.md:chunk-5",
+          "source": "05-expense-policy.md",
+          "score": 0.0291,
+          "vector_rank": 1,
+          "bm25_rank": 19,
+          "rrf_rank": 4,
+          "rerank_score": 0.2479
+        },
+        {
+          "rank": 4,
+          "chunk_id": "05-expense-policy.md:chunk-7",
+          "source": "05-expense-policy.md",
+          "score": 0.0301,
+          "vector_rank": 7,
+          "bm25_rank": 6,
+          "rrf_rank": 3,
+          "rerank_score": 0.2159
+        },
+        {
+          "rank": 5,
+          "chunk_id": "05-expense-policy.md:chunk-4",
+          "source": "05-expense-policy.md",
+          "score": 0.0159,
+          "vector_rank": 3,
+          "bm25_rank": null,
+          "rrf_rank": 6,
+          "rerank_score": 0.0443
+        },
+        {
+          "rank": 6,
+          "chunk_id": "09-it-support.md:chunk-3",
+          "source": "09-it-support.md",
+          "score": 0.0154,
+          "vector_rank": 5,
+          "bm25_rank": null,
+          "rrf_rank": 10,
+          "rerank_score": 0.0384
+        },
+        {
+          "rank": 7,
+          "chunk_id": "09-it-support.md:chunk-5",
+          "source": "09-it-support.md",
+          "score": 0.0141,
+          "vector_rank": 11,
+          "bm25_rank": null,
+          "rrf_rank": 19,
+          "rerank_score": 0.0336
+        },
+        {
+          "rank": 8,
+          "chunk_id": "01-company-overview.md:chunk-7",
+          "source": "01-company-overview.md",
+          "score": 0.0152,
+          "vector_rank": 6,
+          "bm25_rank": null,
+          "rrf_rank": 11,
+          "rerank_score": 0.0258
+        },
+        {
+          "rank": 9,
+          "chunk_id": "05-expense-policy.md:chunk-3",
+          "source": "05-expense-policy.md",
+          "score": 0.0145,
+          "vector_rank": 9,
+          "bm25_rank": null,
+          "rrf_rank": 15,
+          "rerank_score": 0.0215
+        },
+        {
+          "rank": 10,
+          "chunk_id": "10-faq.pdf:page-3:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0301,
+          "vector_rank": 8,
+          "bm25_rank": 5,
+          "rrf_rank": 2,
+          "rerank_score": 0.0208
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q07",
+      "question": "连续请两天病假一定要医疗证明吗？",
+      "type": "confusable",
+      "relevant_chunk_ids": [
+        "04-leave-policy.md:chunk-0",
+        "04-leave-policy.md:chunk-4"
+      ],
+      "latency_ms": 2057,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "04-leave-policy.md:chunk-4",
+          "source": "04-leave-policy.md",
+          "score": 0.0323,
+          "vector_rank": 1,
+          "bm25_rank": 3,
+          "rrf_rank": 2,
+          "rerank_score": 0.9356
+        },
+        {
+          "rank": 2,
+          "chunk_id": "04-leave-policy.md:chunk-0",
+          "source": "04-leave-policy.md",
+          "score": 0.0323,
+          "vector_rank": 3,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.9323
+        },
+        {
+          "rank": 3,
+          "chunk_id": "04-leave-policy.md:chunk-5",
+          "source": "04-leave-policy.md",
+          "score": 0.0313,
+          "vector_rank": 2,
+          "bm25_rank": 6,
+          "rrf_rank": 4,
+          "rerank_score": 0.4936
+        },
+        {
+          "rank": 4,
+          "chunk_id": "04-leave-policy.md:chunk-8",
+          "source": "04-leave-policy.md",
+          "score": 0.0145,
+          "vector_rank": null,
+          "bm25_rank": 9,
+          "rrf_rank": 13,
+          "rerank_score": 0.0664
+        },
+        {
+          "rank": 5,
+          "chunk_id": "04-leave-policy.md:chunk-2",
+          "source": "04-leave-policy.md",
+          "score": 0.0299,
+          "vector_rank": 6,
+          "bm25_rank": 8,
+          "rrf_rank": 5,
+          "rerank_score": 0.0342
+        },
+        {
+          "rank": 6,
+          "chunk_id": "04-leave-policy.md:chunk-3",
+          "source": "04-leave-policy.md",
+          "score": 0.0276,
+          "vector_rank": 7,
+          "bm25_rank": 19,
+          "rrf_rank": 8,
+          "rerank_score": 0.0265
+        },
+        {
+          "rank": 7,
+          "chunk_id": "04-leave-policy.md:chunk-1",
+          "source": "04-leave-policy.md",
+          "score": 0.0284,
+          "vector_rank": 4,
+          "bm25_rank": 18,
+          "rrf_rank": 7,
+          "rerank_score": 0.0257
+        },
+        {
+          "rank": 8,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.0154,
+          "vector_rank": null,
+          "bm25_rank": 5,
+          "rrf_rank": 10,
+          "rerank_score": 0.0175
+        },
+        {
+          "rank": 9,
+          "chunk_id": "04-leave-policy.md:chunk-7",
+          "source": "04-leave-policy.md",
+          "score": 0.0258,
+          "vector_rank": 15,
+          "bm25_rank": 20,
+          "rrf_rank": 9,
+          "rerank_score": 0.0144
+        },
+        {
+          "rank": 10,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0315,
+          "vector_rank": 5,
+          "bm25_rank": 2,
+          "rrf_rank": 3,
+          "rerank_score": 0.0125
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q08",
+      "question": "连续休四天年假要提前多久申请？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "04-leave-policy.md:chunk-0",
+        "04-leave-policy.md:chunk-2"
+      ],
+      "latency_ms": 1512,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "04-leave-policy.md:chunk-0",
+          "source": "04-leave-policy.md",
+          "score": 0.0328,
+          "vector_rank": 1,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.9622
+        },
+        {
+          "rank": 2,
+          "chunk_id": "04-leave-policy.md:chunk-2",
+          "source": "04-leave-policy.md",
+          "score": 0.0323,
+          "vector_rank": 2,
+          "bm25_rank": 2,
+          "rrf_rank": 2,
+          "rerank_score": 0.9589
+        },
+        {
+          "rank": 3,
+          "chunk_id": "04-leave-policy.md:chunk-6",
+          "source": "04-leave-policy.md",
+          "score": 0.0147,
+          "vector_rank": 8,
+          "bm25_rank": null,
+          "rrf_rank": 15,
+          "rerank_score": 0.213
+        },
+        {
+          "rank": 4,
+          "chunk_id": "04-leave-policy.md:chunk-7",
+          "source": "04-leave-policy.md",
+          "score": 0.0301,
+          "vector_rank": 7,
+          "bm25_rank": 6,
+          "rrf_rank": 4,
+          "rerank_score": 0.1092
+        },
+        {
+          "rank": 5,
+          "chunk_id": "04-leave-policy.md:chunk-4",
+          "source": "04-leave-policy.md",
+          "score": 0.0274,
+          "vector_rank": 13,
+          "bm25_rank": 13,
+          "rrf_rank": 9,
+          "rerank_score": 0.0991
+        },
+        {
+          "rank": 6,
+          "chunk_id": "04-leave-policy.md:chunk-5",
+          "source": "04-leave-policy.md",
+          "score": 0.0291,
+          "vector_rank": 4,
+          "bm25_rank": 14,
+          "rrf_rank": 7,
+          "rerank_score": 0.0962
+        },
+        {
+          "rank": 7,
+          "chunk_id": "07-remote-work.md:chunk-2",
+          "source": "07-remote-work.md",
+          "score": 0.0156,
+          "vector_rank": null,
+          "bm25_rank": 4,
+          "rrf_rank": 12,
+          "rerank_score": 0.0661
+        },
+        {
+          "rank": 8,
+          "chunk_id": "04-leave-policy.md:chunk-1",
+          "source": "04-leave-policy.md",
+          "score": 0.0304,
+          "vector_rank": 3,
+          "bm25_rank": 9,
+          "rrf_rank": 3,
+          "rerank_score": 0.0621
+        },
+        {
+          "rank": 9,
+          "chunk_id": "03-attendance.md:chunk-1",
+          "source": "03-attendance.md",
+          "score": 0.0139,
+          "vector_rank": 12,
+          "bm25_rank": null,
+          "rrf_rank": 20,
+          "rerank_score": 0.0512
+        },
+        {
+          "rank": 10,
+          "chunk_id": "03-attendance.md:chunk-5",
+          "source": "03-attendance.md",
+          "score": 0.0145,
+          "vector_rank": 9,
+          "bm25_rank": null,
+          "rrf_rank": 17,
+          "rerank_score": 0.0508
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q09",
+      "question": "员工周一周二休年假，周三生病，可以直接把原申请延长吗？",
+      "type": "reasoning",
+      "relevant_chunk_ids": [
+        "04-leave-policy.md:chunk-0",
+        "04-leave-policy.md:chunk-1",
+        "04-leave-policy.md:chunk-7"
+      ],
+      "latency_ms": 992,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "04-leave-policy.md:chunk-7",
+          "source": "04-leave-policy.md",
+          "score": 0.0313,
+          "vector_rank": 7,
+          "bm25_rank": 1,
+          "rrf_rank": 3,
+          "rerank_score": 0.9906
+        },
+        {
+          "rank": 2,
+          "chunk_id": "04-leave-policy.md:chunk-1",
+          "source": "04-leave-policy.md",
+          "score": 0.031,
+          "vector_rank": 6,
+          "bm25_rank": 3,
+          "rrf_rank": 4,
+          "rerank_score": 0.8757
+        },
+        {
+          "rank": 3,
+          "chunk_id": "04-leave-policy.md:chunk-0",
+          "source": "04-leave-policy.md",
+          "score": 0.0325,
+          "vector_rank": 1,
+          "bm25_rank": 2,
+          "rrf_rank": 1,
+          "rerank_score": 0.8452
+        },
+        {
+          "rank": 4,
+          "chunk_id": "04-leave-policy.md:chunk-3",
+          "source": "04-leave-policy.md",
+          "score": 0.0295,
+          "vector_rank": 5,
+          "bm25_rank": 11,
+          "rrf_rank": 6,
+          "rerank_score": 0.4814
+        },
+        {
+          "rank": 5,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0292,
+          "vector_rank": 10,
+          "bm25_rank": 7,
+          "rrf_rank": 7,
+          "rerank_score": 0.469
+        },
+        {
+          "rank": 6,
+          "chunk_id": "10-faq.pdf:page-2:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0143,
+          "vector_rank": null,
+          "bm25_rank": 10,
+          "rrf_rank": 14,
+          "rerank_score": 0.4391
+        },
+        {
+          "rank": 7,
+          "chunk_id": "04-leave-policy.md:chunk-2",
+          "source": "04-leave-policy.md",
+          "score": 0.031,
+          "vector_rank": 4,
+          "bm25_rank": 5,
+          "rrf_rank": 5,
+          "rerank_score": 0.4387
+        },
+        {
+          "rank": 8,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0315,
+          "vector_rank": 3,
+          "bm25_rank": 4,
+          "rrf_rank": 2,
+          "rerank_score": 0.3178
+        },
+        {
+          "rank": 9,
+          "chunk_id": "04-leave-policy.md:chunk-5",
+          "source": "04-leave-policy.md",
+          "score": 0.0161,
+          "vector_rank": 2,
+          "bm25_rank": null,
+          "rrf_rank": 10,
+          "rerank_score": 0.2954
+        },
+        {
+          "rank": 10,
+          "chunk_id": "03-attendance.md:chunk-6",
+          "source": "03-attendance.md",
+          "score": 0.0282,
+          "vector_rank": 13,
+          "bm25_rank": 9,
+          "rrf_rank": 9,
+          "rerank_score": 0.2361
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 3,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q10",
+      "question": "正式员工一周最多可以远程办公几天？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "07-remote-work.md:chunk-0",
+        "07-remote-work.md:chunk-1",
+        "02-onboarding.md:chunk-0",
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-2:chunk-0",
+        "10-faq.pdf:page-2:chunk-1"
+      ],
+      "latency_ms": 926,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "10-faq.pdf:page-2:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0315,
+          "vector_rank": 3,
+          "bm25_rank": 4,
+          "rrf_rank": 3,
+          "rerank_score": 0.996
+        },
+        {
+          "rank": 2,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.032,
+          "vector_rank": 2,
+          "bm25_rank": 3,
+          "rrf_rank": 2,
+          "rerank_score": 0.9953
+        },
+        {
+          "rank": 3,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.0328,
+          "vector_rank": 1,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.9912
+        },
+        {
+          "rank": 4,
+          "chunk_id": "07-remote-work.md:chunk-1",
+          "source": "07-remote-work.md",
+          "score": 0.031,
+          "vector_rank": 4,
+          "bm25_rank": 5,
+          "rrf_rank": 4,
+          "rerank_score": 0.9844
+        },
+        {
+          "rank": 5,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0305,
+          "vector_rank": 5,
+          "bm25_rank": 6,
+          "rrf_rank": 5,
+          "rerank_score": 0.9769
+        },
+        {
+          "rank": 6,
+          "chunk_id": "07-remote-work.md:chunk-2",
+          "source": "07-remote-work.md",
+          "score": 0.0301,
+          "vector_rank": 6,
+          "bm25_rank": 7,
+          "rrf_rank": 7,
+          "rerank_score": 0.9468
+        },
+        {
+          "rank": 7,
+          "chunk_id": "02-onboarding.md:chunk-0",
+          "source": "02-onboarding.md",
+          "score": 0.0304,
+          "vector_rank": 10,
+          "bm25_rank": 2,
+          "rrf_rank": 6,
+          "rerank_score": 0.9279
+        },
+        {
+          "rank": 8,
+          "chunk_id": "02-onboarding.md:chunk-5",
+          "source": "02-onboarding.md",
+          "score": 0.0286,
+          "vector_rank": 12,
+          "bm25_rank": 8,
+          "rrf_rank": 9,
+          "rerank_score": 0.7585
+        },
+        {
+          "rank": 9,
+          "chunk_id": "03-attendance.md:chunk-1",
+          "source": "03-attendance.md",
+          "score": 0.0286,
+          "vector_rank": 8,
+          "bm25_rank": 12,
+          "rrf_rank": 10,
+          "rerank_score": 0.471
+        },
+        {
+          "rank": 10,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.0292,
+          "vector_rank": 7,
+          "bm25_rank": 10,
+          "rrf_rank": 8,
+          "rerank_score": 0.2931
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 6,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q11",
+      "question": "试用期员工是否也能每周远程办公两天？",
+      "type": "multi_source",
+      "relevant_chunk_ids": [
+        "02-onboarding.md:chunk-0",
+        "02-onboarding.md:chunk-5",
+        "07-remote-work.md:chunk-0",
+        "07-remote-work.md:chunk-2",
+        "10-faq.pdf:page-2:chunk-0",
+        "10-faq.pdf:page-2:chunk-1"
+      ],
+      "latency_ms": 1087,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "10-faq.pdf:page-2:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.032,
+          "vector_rank": 3,
+          "bm25_rank": 2,
+          "rrf_rank": 2,
+          "rerank_score": 0.9988
+        },
+        {
+          "rank": 2,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.0328,
+          "vector_rank": 1,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.9986
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0318,
+          "vector_rank": 2,
+          "bm25_rank": 4,
+          "rrf_rank": 3,
+          "rerank_score": 0.9982
+        },
+        {
+          "rank": 4,
+          "chunk_id": "07-remote-work.md:chunk-1",
+          "source": "07-remote-work.md",
+          "score": 0.0303,
+          "vector_rank": 5,
+          "bm25_rank": 7,
+          "rrf_rank": 6,
+          "rerank_score": 0.9874
+        },
+        {
+          "rank": 5,
+          "chunk_id": "07-remote-work.md:chunk-2",
+          "source": "07-remote-work.md",
+          "score": 0.031,
+          "vector_rank": 4,
+          "bm25_rank": 5,
+          "rrf_rank": 4,
+          "rerank_score": 0.9858
+        },
+        {
+          "rank": 6,
+          "chunk_id": "02-onboarding.md:chunk-5",
+          "source": "02-onboarding.md",
+          "score": 0.0296,
+          "vector_rank": 7,
+          "bm25_rank": 8,
+          "rrf_rank": 8,
+          "rerank_score": 0.9813
+        },
+        {
+          "rank": 7,
+          "chunk_id": "02-onboarding.md:chunk-0",
+          "source": "02-onboarding.md",
+          "score": 0.0306,
+          "vector_rank": 8,
+          "bm25_rank": 3,
+          "rrf_rank": 5,
+          "rerank_score": 0.9723
+        },
+        {
+          "rank": 8,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0303,
+          "vector_rank": 6,
+          "bm25_rank": 6,
+          "rrf_rank": 7,
+          "rerank_score": 0.9266
+        },
+        {
+          "rank": 9,
+          "chunk_id": "03-attendance.md:chunk-1",
+          "source": "03-attendance.md",
+          "score": 0.0282,
+          "vector_rank": 11,
+          "bm25_rank": 11,
+          "rrf_rank": 10,
+          "rerank_score": 0.5337
+        },
+        {
+          "rank": 10,
+          "chunk_id": "03-attendance.md:chunk-7",
+          "source": "03-attendance.md",
+          "score": 0.0143,
+          "vector_rank": null,
+          "bm25_rank": 10,
+          "rrf_rank": 17,
+          "rerank_score": 0.4241
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 6,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q12",
+      "question": "上周没有远程办公，这周能申请四天吗？",
+      "type": "multi_source",
+      "relevant_chunk_ids": [
+        "07-remote-work.md:chunk-0",
+        "07-remote-work.md:chunk-2",
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-2:chunk-0"
+      ],
+      "latency_ms": 920,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "07-remote-work.md:chunk-2",
+          "source": "07-remote-work.md",
+          "score": 0.0315,
+          "vector_rank": 5,
+          "bm25_rank": 2,
+          "rrf_rank": 3,
+          "rerank_score": 0.9838
+        },
+        {
+          "rank": 2,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0325,
+          "vector_rank": 2,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.9589
+        },
+        {
+          "rank": 3,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.032,
+          "vector_rank": 1,
+          "bm25_rank": 4,
+          "rrf_rank": 2,
+          "rerank_score": 0.6356
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-2:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0315,
+          "vector_rank": 4,
+          "bm25_rank": 3,
+          "rrf_rank": 4,
+          "rerank_score": 0.6213
+        },
+        {
+          "rank": 5,
+          "chunk_id": "03-attendance.md:chunk-1",
+          "source": "03-attendance.md",
+          "score": 0.0279,
+          "vector_rank": 8,
+          "bm25_rank": 16,
+          "rrf_rank": 11,
+          "rerank_score": 0.4296
+        },
+        {
+          "rank": 6,
+          "chunk_id": "07-remote-work.md:chunk-1",
+          "source": "07-remote-work.md",
+          "score": 0.0313,
+          "vector_rank": 3,
+          "bm25_rank": 5,
+          "rrf_rank": 5,
+          "rerank_score": 0.2817
+        },
+        {
+          "rank": 7,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0296,
+          "vector_rank": 6,
+          "bm25_rank": 9,
+          "rrf_rank": 6,
+          "rerank_score": 0.2719
+        },
+        {
+          "rank": 8,
+          "chunk_id": "02-onboarding.md:chunk-5",
+          "source": "02-onboarding.md",
+          "score": 0.0272,
+          "vector_rank": 15,
+          "bm25_rank": 12,
+          "rrf_rank": 12,
+          "rerank_score": 0.2454
+        },
+        {
+          "rank": 9,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.029,
+          "vector_rank": 11,
+          "bm25_rank": 7,
+          "rrf_rank": 7,
+          "rerank_score": 0.1735
+        },
+        {
+          "rank": 10,
+          "chunk_id": "03-attendance.md:chunk-7",
+          "source": "03-attendance.md",
+          "score": 0.0269,
+          "vector_rank": 19,
+          "bm25_rank": 10,
+          "rrf_rank": 13,
+          "rerank_score": 0.1568
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 4,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q13",
+      "question": "从另一个城市连续远程工作六个工作日，需要哪些批准？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "07-remote-work.md:chunk-0",
+        "07-remote-work.md:chunk-1",
+        "07-remote-work.md:chunk-7"
+      ],
+      "latency_ms": 1033,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "07-remote-work.md:chunk-1",
+          "source": "07-remote-work.md",
+          "score": 0.0325,
+          "vector_rank": 1,
+          "bm25_rank": 2,
+          "rrf_rank": 2,
+          "rerank_score": 0.9663
+        },
+        {
+          "rank": 2,
+          "chunk_id": "07-remote-work.md:chunk-7",
+          "source": "07-remote-work.md",
+          "score": 0.0306,
+          "vector_rank": 8,
+          "bm25_rank": 3,
+          "rrf_rank": 3,
+          "rerank_score": 0.9
+        },
+        {
+          "rank": 3,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.0325,
+          "vector_rank": 2,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.8921
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-2:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0156,
+          "vector_rank": 4,
+          "bm25_rank": null,
+          "rrf_rank": 8,
+          "rerank_score": 0.493
+        },
+        {
+          "rank": 5,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0284,
+          "vector_rank": 3,
+          "bm25_rank": 20,
+          "rrf_rank": 5,
+          "rerank_score": 0.3997
+        },
+        {
+          "rank": 6,
+          "chunk_id": "07-remote-work.md:chunk-4",
+          "source": "07-remote-work.md",
+          "score": 0.0149,
+          "vector_rank": 7,
+          "bm25_rank": null,
+          "rrf_rank": 13,
+          "rerank_score": 0.3491
+        },
+        {
+          "rank": 7,
+          "chunk_id": "04-leave-policy.md:chunk-4",
+          "source": "04-leave-policy.md",
+          "score": 0.0284,
+          "vector_rank": 14,
+          "bm25_rank": 7,
+          "rrf_rank": 4,
+          "rerank_score": 0.3472
+        },
+        {
+          "rank": 8,
+          "chunk_id": "07-remote-work.md:chunk-3",
+          "source": "07-remote-work.md",
+          "score": 0.0145,
+          "vector_rank": 9,
+          "bm25_rank": null,
+          "rrf_rank": 16,
+          "rerank_score": 0.3054
+        },
+        {
+          "rank": 9,
+          "chunk_id": "03-attendance.md:chunk-7",
+          "source": "03-attendance.md",
+          "score": 0.0281,
+          "vector_rank": 20,
+          "bm25_rank": 4,
+          "rrf_rank": 6,
+          "rerank_score": 0.3042
+        },
+        {
+          "rank": 10,
+          "chunk_id": "07-remote-work.md:chunk-2",
+          "source": "07-remote-work.md",
+          "score": 0.0152,
+          "vector_rank": 6,
+          "bm25_rank": null,
+          "rrf_rank": 12,
+          "rerank_score": 0.2662
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 3,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q14",
+      "question": "新员工需要在多久内开启多因素认证？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "02-onboarding.md:chunk-0",
+        "02-onboarding.md:chunk-4"
+      ],
+      "latency_ms": 953,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "02-onboarding.md:chunk-4",
+          "source": "02-onboarding.md",
+          "score": 0.0323,
+          "vector_rank": 2,
+          "bm25_rank": 2,
+          "rrf_rank": 2,
+          "rerank_score": 0.9869
+        },
+        {
+          "rank": 2,
+          "chunk_id": "02-onboarding.md:chunk-0",
+          "source": "02-onboarding.md",
+          "score": 0.0323,
+          "vector_rank": 3,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.9347
+        },
+        {
+          "rank": 3,
+          "chunk_id": "08-information-security.md:chunk-3",
+          "source": "08-information-security.md",
+          "score": 0.0308,
+          "vector_rank": 5,
+          "bm25_rank": 5,
+          "rrf_rank": 4,
+          "rerank_score": 0.1506
+        },
+        {
+          "rank": 4,
+          "chunk_id": "08-information-security.md:chunk-4",
+          "source": "08-information-security.md",
+          "score": 0.032,
+          "vector_rank": 1,
+          "bm25_rank": 4,
+          "rrf_rank": 3,
+          "rerank_score": 0.1434
+        },
+        {
+          "rank": 5,
+          "chunk_id": "08-information-security.md:chunk-0",
+          "source": "08-information-security.md",
+          "score": 0.0159,
+          "vector_rank": null,
+          "bm25_rank": 3,
+          "rrf_rank": 8,
+          "rerank_score": 0.0573
+        },
+        {
+          "rank": 6,
+          "chunk_id": "02-onboarding.md:chunk-1",
+          "source": "02-onboarding.md",
+          "score": 0.0156,
+          "vector_rank": 4,
+          "bm25_rank": null,
+          "rrf_rank": 9,
+          "rerank_score": 0.0187
+        },
+        {
+          "rank": 7,
+          "chunk_id": "02-onboarding.md:chunk-8",
+          "source": "02-onboarding.md",
+          "score": 0.0152,
+          "vector_rank": 6,
+          "bm25_rank": null,
+          "rrf_rank": 10,
+          "rerank_score": 0.0023
+        },
+        {
+          "rank": 8,
+          "chunk_id": "02-onboarding.md:chunk-2",
+          "source": "02-onboarding.md",
+          "score": 0.0149,
+          "vector_rank": 7,
+          "bm25_rank": null,
+          "rrf_rank": 13,
+          "rerank_score": 0.0018
+        },
+        {
+          "rank": 9,
+          "chunk_id": "07-remote-work.md:chunk-1",
+          "source": "07-remote-work.md",
+          "score": 0.0141,
+          "vector_rank": 11,
+          "bm25_rank": null,
+          "rrf_rank": 20,
+          "rerank_score": 0.0008
+        },
+        {
+          "rank": 10,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0262,
+          "vector_rank": 14,
+          "bm25_rank": 19,
+          "rrf_rank": 6,
+          "rerank_score": 0.0008
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q15",
+      "question": "信息安全基础课程考试多少分算通过？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "02-onboarding.md:chunk-0",
+        "02-onboarding.md:chunk-1",
+        "02-onboarding.md:chunk-6"
+      ],
+      "latency_ms": 897,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "02-onboarding.md:chunk-6",
+          "source": "02-onboarding.md",
+          "score": 0.0325,
+          "vector_rank": 1,
+          "bm25_rank": 2,
+          "rrf_rank": 1,
+          "rerank_score": 0.9906
+        },
+        {
+          "rank": 2,
+          "chunk_id": "02-onboarding.md:chunk-0",
+          "source": "02-onboarding.md",
+          "score": 0.0323,
+          "vector_rank": 3,
+          "bm25_rank": 1,
+          "rrf_rank": 2,
+          "rerank_score": 0.7654
+        },
+        {
+          "rank": 3,
+          "chunk_id": "02-onboarding.md:chunk-1",
+          "source": "02-onboarding.md",
+          "score": 0.0299,
+          "vector_rank": 4,
+          "bm25_rank": 10,
+          "rrf_rank": 4,
+          "rerank_score": 0.2105
+        },
+        {
+          "rank": 4,
+          "chunk_id": "02-onboarding.md:chunk-3",
+          "source": "02-onboarding.md",
+          "score": 0.0279,
+          "vector_rank": 8,
+          "bm25_rank": 16,
+          "rrf_rank": 6,
+          "rerank_score": 0.0171
+        },
+        {
+          "rank": 5,
+          "chunk_id": "01-company-overview.md:chunk-6",
+          "source": "01-company-overview.md",
+          "score": 0.0279,
+          "vector_rank": 5,
+          "bm25_rank": 20,
+          "rrf_rank": 5,
+          "rerank_score": 0.0147
+        },
+        {
+          "rank": 6,
+          "chunk_id": "07-remote-work.md:chunk-7",
+          "source": "07-remote-work.md",
+          "score": 0.0147,
+          "vector_rank": null,
+          "bm25_rank": 8,
+          "rrf_rank": 15,
+          "rerank_score": 0.0135
+        },
+        {
+          "rank": 7,
+          "chunk_id": "08-information-security.md:chunk-6",
+          "source": "08-information-security.md",
+          "score": 0.026,
+          "vector_rank": 16,
+          "bm25_rank": 18,
+          "rrf_rank": 8,
+          "rerank_score": 0.0117
+        },
+        {
+          "rank": 8,
+          "chunk_id": "02-onboarding.md:chunk-4",
+          "source": "02-onboarding.md",
+          "score": 0.0152,
+          "vector_rank": 6,
+          "bm25_rank": null,
+          "rrf_rank": 11,
+          "rerank_score": 0.0102
+        },
+        {
+          "rank": 9,
+          "chunk_id": "08-information-security.md:chunk-7",
+          "source": "08-information-security.md",
+          "score": 0.0149,
+          "vector_rank": 7,
+          "bm25_rank": null,
+          "rrf_rank": 14,
+          "rerank_score": 0.0098
+        },
+        {
+          "rank": 10,
+          "chunk_id": "03-attendance.md:chunk-9",
+          "source": "03-attendance.md",
+          "score": 0.0145,
+          "vector_rank": 9,
+          "bm25_rank": null,
+          "rrf_rank": 16,
+          "rerank_score": 0.0087
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 3,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q16",
+      "question": "公司电脑丢失应该只提交 IT 工单吗？",
+      "type": "multi_source",
+      "relevant_chunk_ids": [
+        "08-information-security.md:chunk-0",
+        "08-information-security.md:chunk-6",
+        "09-it-support.md:chunk-0",
+        "09-it-support.md:chunk-2",
+        "07-remote-work.md:chunk-0",
+        "07-remote-work.md:chunk-7"
+      ],
+      "latency_ms": 1031,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "07-remote-work.md:chunk-7",
+          "source": "07-remote-work.md",
+          "score": 0.0301,
+          "vector_rank": 5,
+          "bm25_rank": 8,
+          "rrf_rank": 4,
+          "rerank_score": 0.9687
+        },
+        {
+          "rank": 2,
+          "chunk_id": "08-information-security.md:chunk-0",
+          "source": "08-information-security.md",
+          "score": 0.0295,
+          "vector_rank": 15,
+          "bm25_rank": 2,
+          "rrf_rank": 6,
+          "rerank_score": 0.9171
+        },
+        {
+          "rank": 3,
+          "chunk_id": "08-information-security.md:chunk-1",
+          "source": "08-information-security.md",
+          "score": 0.0318,
+          "vector_rank": 1,
+          "bm25_rank": 5,
+          "rrf_rank": 1,
+          "rerank_score": 0.8358
+        },
+        {
+          "rank": 4,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.0317,
+          "vector_rank": 3,
+          "bm25_rank": 3,
+          "rrf_rank": 3,
+          "rerank_score": 0.7665
+        },
+        {
+          "rank": 5,
+          "chunk_id": "01-company-overview.md:chunk-6",
+          "source": "01-company-overview.md",
+          "score": 0.0288,
+          "vector_rank": 9,
+          "bm25_rank": 10,
+          "rrf_rank": 8,
+          "rerank_score": 0.5953
+        },
+        {
+          "rank": 6,
+          "chunk_id": "09-it-support.md:chunk-1",
+          "source": "09-it-support.md",
+          "score": 0.0318,
+          "vector_rank": 2,
+          "bm25_rank": 4,
+          "rrf_rank": 2,
+          "rerank_score": 0.5886
+        },
+        {
+          "rank": 7,
+          "chunk_id": "09-it-support.md:chunk-5",
+          "source": "09-it-support.md",
+          "score": 0.0277,
+          "vector_rank": 18,
+          "bm25_rank": 7,
+          "rrf_rank": 12,
+          "rerank_score": 0.4247
+        },
+        {
+          "rank": 8,
+          "chunk_id": "02-onboarding.md:chunk-4",
+          "source": "02-onboarding.md",
+          "score": 0.0292,
+          "vector_rank": 11,
+          "bm25_rank": 6,
+          "rrf_rank": 7,
+          "rerank_score": 0.3637
+        },
+        {
+          "rank": 9,
+          "chunk_id": "09-it-support.md:chunk-7",
+          "source": "09-it-support.md",
+          "score": 0.0282,
+          "vector_rank": 10,
+          "bm25_rank": 12,
+          "rrf_rank": 11,
+          "rerank_score": 0.1698
+        },
+        {
+          "rank": 10,
+          "chunk_id": "08-information-security.md:chunk-7",
+          "source": "08-information-security.md",
+          "score": 0.0272,
+          "vector_rank": 16,
+          "bm25_rank": 11,
+          "rrf_rank": 13,
+          "rerank_score": 0.1691
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 3,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q17",
+      "question": "收到索要验证码的邮件但没有点击，该怎么办？",
+      "type": "multi_source",
+      "relevant_chunk_ids": [
+        "08-information-security.md:chunk-0",
+        "08-information-security.md:chunk-5",
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-4:chunk-0"
+      ],
+      "latency_ms": 954,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "08-information-security.md:chunk-0",
+          "source": "08-information-security.md",
+          "score": 0.0161,
+          "vector_rank": null,
+          "bm25_rank": 2,
+          "rrf_rank": 10,
+          "rerank_score": 0.6059
+        },
+        {
+          "rank": 2,
+          "chunk_id": "10-faq.pdf:page-4:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.032,
+          "vector_rank": 1,
+          "bm25_rank": 4,
+          "rrf_rank": 1,
+          "rerank_score": 0.5948
+        },
+        {
+          "rank": 3,
+          "chunk_id": "08-information-security.md:chunk-5",
+          "source": "08-information-security.md",
+          "score": 0.0317,
+          "vector_rank": 3,
+          "bm25_rank": 3,
+          "rrf_rank": 2,
+          "rerank_score": 0.5404
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0164,
+          "vector_rank": null,
+          "bm25_rank": 1,
+          "rrf_rank": 9,
+          "rerank_score": 0.2173
+        },
+        {
+          "rank": 5,
+          "chunk_id": "02-onboarding.md:chunk-3",
+          "source": "02-onboarding.md",
+          "score": 0.0149,
+          "vector_rank": null,
+          "bm25_rank": 7,
+          "rrf_rank": 12,
+          "rerank_score": 0.0709
+        },
+        {
+          "rank": 6,
+          "chunk_id": "08-information-security.md:chunk-3",
+          "source": "08-information-security.md",
+          "score": 0.029,
+          "vector_rank": 12,
+          "bm25_rank": 6,
+          "rrf_rank": 5,
+          "rerank_score": 0.0481
+        },
+        {
+          "rank": 7,
+          "chunk_id": "08-information-security.md:chunk-4",
+          "source": "08-information-security.md",
+          "score": 0.0308,
+          "vector_rank": 5,
+          "bm25_rank": 5,
+          "rrf_rank": 4,
+          "rerank_score": 0.0398
+        },
+        {
+          "rank": 8,
+          "chunk_id": "08-information-security.md:chunk-6",
+          "source": "08-information-security.md",
+          "score": 0.0308,
+          "vector_rank": 2,
+          "bm25_rank": 8,
+          "rrf_rank": 3,
+          "rerank_score": 0.0296
+        },
+        {
+          "rank": 9,
+          "chunk_id": "02-onboarding.md:chunk-4",
+          "source": "02-onboarding.md",
+          "score": 0.0288,
+          "vector_rank": 4,
+          "bm25_rank": 16,
+          "rrf_rank": 6,
+          "rerank_score": 0.0063
+        },
+        {
+          "rank": 10,
+          "chunk_id": "08-information-security.md:chunk-7",
+          "source": "08-information-security.md",
+          "score": 0.0143,
+          "vector_rank": 10,
+          "bm25_rank": null,
+          "rrf_rank": 16,
+          "rerank_score": 0.0046
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 4,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q18",
+      "question": "P1 IT 故障承诺多久解决？",
+      "type": "trap",
+      "relevant_chunk_ids": [
+        "09-it-support.md:chunk-0",
+        "09-it-support.md:chunk-3",
+        "09-it-support.md:chunk-5",
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-4:chunk-1"
+      ],
+      "latency_ms": 1114,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "10-faq.pdf:page-4:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.032,
+          "vector_rank": 3,
+          "bm25_rank": 2,
+          "rrf_rank": 3,
+          "rerank_score": 0.9574
+        },
+        {
+          "rank": 2,
+          "chunk_id": "09-it-support.md:chunk-3",
+          "source": "09-it-support.md",
+          "score": 0.032,
+          "vector_rank": 2,
+          "bm25_rank": 3,
+          "rrf_rank": 2,
+          "rerank_score": 0.5705
+        },
+        {
+          "rank": 3,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.0328,
+          "vector_rank": 1,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.4199
+        },
+        {
+          "rank": 4,
+          "chunk_id": "09-it-support.md:chunk-2",
+          "source": "09-it-support.md",
+          "score": 0.0292,
+          "vector_rank": 6,
+          "bm25_rank": 11,
+          "rrf_rank": 6,
+          "rerank_score": 0.0496
+        },
+        {
+          "rank": 5,
+          "chunk_id": "09-it-support.md:chunk-5",
+          "source": "09-it-support.md",
+          "score": 0.031,
+          "vector_rank": 5,
+          "bm25_rank": 4,
+          "rrf_rank": 4,
+          "rerank_score": 0.0196
+        },
+        {
+          "rank": 6,
+          "chunk_id": "09-it-support.md:chunk-4",
+          "source": "09-it-support.md",
+          "score": 0.0306,
+          "vector_rank": 4,
+          "bm25_rank": 7,
+          "rrf_rank": 5,
+          "rerank_score": 0.0094
+        },
+        {
+          "rank": 7,
+          "chunk_id": "09-it-support.md:chunk-6",
+          "source": "09-it-support.md",
+          "score": 0.0149,
+          "vector_rank": 7,
+          "bm25_rank": null,
+          "rrf_rank": 12,
+          "rerank_score": 0.0058
+        },
+        {
+          "rank": 8,
+          "chunk_id": "01-company-overview.md:chunk-6",
+          "source": "01-company-overview.md",
+          "score": 0.0145,
+          "vector_rank": null,
+          "bm25_rank": 9,
+          "rrf_rank": 14,
+          "rerank_score": 0.0047
+        },
+        {
+          "rank": 9,
+          "chunk_id": "09-it-support.md:chunk-1",
+          "source": "09-it-support.md",
+          "score": 0.029,
+          "vector_rank": 10,
+          "bm25_rank": 8,
+          "rrf_rank": 7,
+          "rerank_score": 0.0024
+        },
+        {
+          "rank": 10,
+          "chunk_id": "02-onboarding.md:chunk-3",
+          "source": "02-onboarding.md",
+          "score": 0.0147,
+          "vector_rank": 8,
+          "bm25_rank": null,
+          "rrf_rank": 13,
+          "rerank_score": 0.0018
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 4,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q19",
+      "question": "公司电脑用了四年后是否一定自动换新？",
+      "type": "trap",
+      "relevant_chunk_ids": [
+        "09-it-support.md:chunk-0",
+        "09-it-support.md:chunk-6"
+      ],
+      "latency_ms": 878,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "09-it-support.md:chunk-6",
+          "source": "09-it-support.md",
+          "score": 0.0328,
+          "vector_rank": 1,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.9785
+        },
+        {
+          "rank": 2,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.0311,
+          "vector_rank": 7,
+          "bm25_rank": 2,
+          "rrf_rank": 2,
+          "rerank_score": 0.924
+        },
+        {
+          "rank": 3,
+          "chunk_id": "08-information-security.md:chunk-4",
+          "source": "08-information-security.md",
+          "score": 0.0269,
+          "vector_rank": 10,
+          "bm25_rank": 19,
+          "rrf_rank": 10,
+          "rerank_score": 0.0331
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-4:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0296,
+          "vector_rank": 3,
+          "bm25_rank": 13,
+          "rrf_rank": 4,
+          "rerank_score": 0.0217
+        },
+        {
+          "rank": 5,
+          "chunk_id": "02-onboarding.md:chunk-3",
+          "source": "02-onboarding.md",
+          "score": 0.0145,
+          "vector_rank": 9,
+          "bm25_rank": null,
+          "rrf_rank": 17,
+          "rerank_score": 0.0216
+        },
+        {
+          "rank": 6,
+          "chunk_id": "08-information-security.md:chunk-1",
+          "source": "08-information-security.md",
+          "score": 0.0304,
+          "vector_rank": 2,
+          "bm25_rank": 10,
+          "rrf_rank": 3,
+          "rerank_score": 0.0191
+        },
+        {
+          "rank": 7,
+          "chunk_id": "08-information-security.md:chunk-0",
+          "source": "08-information-security.md",
+          "score": 0.0286,
+          "vector_rank": 13,
+          "bm25_rank": 7,
+          "rrf_rank": 6,
+          "rerank_score": 0.0157
+        },
+        {
+          "rank": 8,
+          "chunk_id": "09-it-support.md:chunk-1",
+          "source": "09-it-support.md",
+          "score": 0.0154,
+          "vector_rank": 5,
+          "bm25_rank": null,
+          "rrf_rank": 13,
+          "rerank_score": 0.0135
+        },
+        {
+          "rank": 9,
+          "chunk_id": "09-it-support.md:chunk-5",
+          "source": "09-it-support.md",
+          "score": 0.027,
+          "vector_rank": 16,
+          "bm25_rank": 12,
+          "rrf_rank": 9,
+          "rerank_score": 0.013
+        },
+        {
+          "rank": 10,
+          "chunk_id": "08-information-security.md:chunk-7",
+          "source": "08-information-security.md",
+          "score": 0.0145,
+          "vector_rank": null,
+          "bm25_rank": 9,
+          "rrf_rank": 18,
+          "rerank_score": 0.0122
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q20",
+      "question": "外出拜访客户会占用每周远程办公天数吗？",
+      "type": "confusable",
+      "relevant_chunk_ids": [
+        "03-attendance.md:chunk-1",
+        "03-attendance.md:chunk-7"
+      ],
+      "latency_ms": 1009,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "03-attendance.md:chunk-1",
+          "source": "03-attendance.md",
+          "score": 0.0306,
+          "vector_rank": 7,
+          "bm25_rank": 4,
+          "rrf_rank": 3,
+          "rerank_score": 0.9882
+        },
+        {
+          "rank": 2,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.0304,
+          "vector_rank": 10,
+          "bm25_rank": 2,
+          "rrf_rank": 6,
+          "rerank_score": 0.9626
+        },
+        {
+          "rank": 3,
+          "chunk_id": "03-attendance.md:chunk-7",
+          "source": "03-attendance.md",
+          "score": 0.0304,
+          "vector_rank": 9,
+          "bm25_rank": 3,
+          "rrf_rank": 7,
+          "rerank_score": 0.9611
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-2:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0305,
+          "vector_rank": 5,
+          "bm25_rank": 6,
+          "rrf_rank": 5,
+          "rerank_score": 0.4094
+        },
+        {
+          "rank": 5,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.0315,
+          "vector_rank": 2,
+          "bm25_rank": 5,
+          "rrf_rank": 2,
+          "rerank_score": 0.3175
+        },
+        {
+          "rank": 6,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0328,
+          "vector_rank": 1,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.2959
+        },
+        {
+          "rank": 7,
+          "chunk_id": "02-onboarding.md:chunk-5",
+          "source": "02-onboarding.md",
+          "score": 0.0282,
+          "vector_rank": 14,
+          "bm25_rank": 8,
+          "rrf_rank": 11,
+          "rerank_score": 0.2328
+        },
+        {
+          "rank": 8,
+          "chunk_id": "07-remote-work.md:chunk-2",
+          "source": "07-remote-work.md",
+          "score": 0.0306,
+          "vector_rank": 4,
+          "bm25_rank": 7,
+          "rrf_rank": 4,
+          "rerank_score": 0.1193
+        },
+        {
+          "rank": 9,
+          "chunk_id": "07-remote-work.md:chunk-1",
+          "source": "07-remote-work.md",
+          "score": 0.0292,
+          "vector_rank": 6,
+          "bm25_rank": 11,
+          "rrf_rank": 9,
+          "rerank_score": 0.116
+        },
+        {
+          "rank": 10,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0302,
+          "vector_rank": 3,
+          "bm25_rank": 10,
+          "rrf_rank": 8,
+          "rerank_score": 0.0998
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q21",
+      "question": "考勤记录错了，应在多久内申请更正？",
+      "type": "direct",
+      "relevant_chunk_ids": [
+        "03-attendance.md:chunk-0",
+        "03-attendance.md:chunk-4"
+      ],
+      "latency_ms": 790,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "03-attendance.md:chunk-4",
+          "source": "03-attendance.md",
+          "score": 0.0325,
+          "vector_rank": 2,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.9947
+        },
+        {
+          "rank": 2,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.032,
+          "vector_rank": 3,
+          "bm25_rank": 2,
+          "rrf_rank": 3,
+          "rerank_score": 0.8658
+        },
+        {
+          "rank": 3,
+          "chunk_id": "03-attendance.md:chunk-3",
+          "source": "03-attendance.md",
+          "score": 0.0323,
+          "vector_rank": 1,
+          "bm25_rank": 3,
+          "rrf_rank": 2,
+          "rerank_score": 0.6599
+        },
+        {
+          "rank": 4,
+          "chunk_id": "03-attendance.md:chunk-2",
+          "source": "03-attendance.md",
+          "score": 0.0149,
+          "vector_rank": null,
+          "bm25_rank": 7,
+          "rrf_rank": 16,
+          "rerank_score": 0.3668
+        },
+        {
+          "rank": 5,
+          "chunk_id": "03-attendance.md:chunk-6",
+          "source": "03-attendance.md",
+          "score": 0.0137,
+          "vector_rank": 13,
+          "bm25_rank": null,
+          "rrf_rank": 20,
+          "rerank_score": 0.0695
+        },
+        {
+          "rank": 6,
+          "chunk_id": "03-attendance.md:chunk-5",
+          "source": "03-attendance.md",
+          "score": 0.0141,
+          "vector_rank": 11,
+          "bm25_rank": null,
+          "rrf_rank": 18,
+          "rerank_score": 0.0445
+        },
+        {
+          "rank": 7,
+          "chunk_id": "10-faq.pdf:page-6:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0275,
+          "vector_rank": 17,
+          "bm25_rank": 9,
+          "rrf_rank": 12,
+          "rerank_score": 0.032
+        },
+        {
+          "rank": 8,
+          "chunk_id": "09-it-support.md:chunk-10",
+          "source": "09-it-support.md",
+          "score": 0.0279,
+          "vector_rank": 8,
+          "bm25_rank": 16,
+          "rrf_rank": 10,
+          "rerank_score": 0.0183
+        },
+        {
+          "rank": 9,
+          "chunk_id": "08-information-security.md:chunk-10",
+          "source": "08-information-security.md",
+          "score": 0.0276,
+          "vector_rank": 10,
+          "bm25_rank": 15,
+          "rrf_rank": 11,
+          "rerank_score": 0.0183
+        },
+        {
+          "rank": 10,
+          "chunk_id": "07-remote-work.md:chunk-10",
+          "source": "07-remote-work.md",
+          "score": 0.028,
+          "vector_rank": 9,
+          "bm25_rank": 14,
+          "rrf_rank": 9,
+          "rerank_score": 0.0181
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q22",
+      "question": "公司每个月提供多少健身补贴？",
+      "type": "unanswerable",
+      "relevant_chunk_ids": [
+        "10-faq.pdf:page-1:chunk-0",
+        "10-faq.pdf:page-4:chunk-0"
+      ],
+      "latency_ms": 825,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0328,
+          "vector_rank": 1,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.4117
+        },
+        {
+          "rank": 2,
+          "chunk_id": "10-faq.pdf:page-4:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0308,
+          "vector_rank": 8,
+          "bm25_rank": 2,
+          "rrf_rank": 2,
+          "rerank_score": 0.1791
+        },
+        {
+          "rank": 3,
+          "chunk_id": "06-travel-policy.md:chunk-5",
+          "source": "06-travel-policy.md",
+          "score": 0.0135,
+          "vector_rank": 14,
+          "bm25_rank": null,
+          "rrf_rank": 20,
+          "rerank_score": 0.0021
+        },
+        {
+          "rank": 4,
+          "chunk_id": "01-company-overview.md:chunk-1",
+          "source": "01-company-overview.md",
+          "score": 0.026,
+          "vector_rank": 15,
+          "bm25_rank": 19,
+          "rrf_rank": 11,
+          "rerank_score": 0.0019
+        },
+        {
+          "rank": 5,
+          "chunk_id": "03-attendance.md:chunk-1",
+          "source": "03-attendance.md",
+          "score": 0.0286,
+          "vector_rank": 9,
+          "bm25_rank": 11,
+          "rrf_rank": 8,
+          "rerank_score": 0.0016
+        },
+        {
+          "rank": 6,
+          "chunk_id": "02-onboarding.md:chunk-7",
+          "source": "02-onboarding.md",
+          "score": 0.0143,
+          "vector_rank": null,
+          "bm25_rank": 10,
+          "rrf_rank": 16,
+          "rerank_score": 0.0015
+        },
+        {
+          "rank": 7,
+          "chunk_id": "02-onboarding.md:chunk-1",
+          "source": "02-onboarding.md",
+          "score": 0.0303,
+          "vector_rank": 6,
+          "bm25_rank": 6,
+          "rrf_rank": 4,
+          "rerank_score": 0.0015
+        },
+        {
+          "rank": 8,
+          "chunk_id": "01-company-overview.md:chunk-0",
+          "source": "01-company-overview.md",
+          "score": 0.0154,
+          "vector_rank": null,
+          "bm25_rank": 5,
+          "rrf_rank": 14,
+          "rerank_score": 0.0011
+        },
+        {
+          "rank": 9,
+          "chunk_id": "02-onboarding.md:chunk-9",
+          "source": "02-onboarding.md",
+          "score": 0.0264,
+          "vector_rank": 12,
+          "bm25_rank": 20,
+          "rrf_rank": 10,
+          "rerank_score": 0.0011
+        },
+        {
+          "rank": 10,
+          "chunk_id": "02-onboarding.md:chunk-5",
+          "source": "02-onboarding.md",
+          "score": 0.0145,
+          "vector_rank": null,
+          "bm25_rank": 9,
+          "rrf_rank": 15,
+          "rerank_score": 0.0011
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q23",
+      "question": "杭州办公室的员工婚假统一是几天？",
+      "type": "unanswerable",
+      "relevant_chunk_ids": [
+        "04-leave-policy.md:chunk-0",
+        "04-leave-policy.md:chunk-1",
+        "04-leave-policy.md:chunk-6",
+        "10-faq.pdf:page-5:chunk-0"
+      ],
+      "latency_ms": 1376,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "10-faq.pdf:page-5:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0317,
+          "vector_rank": 3,
+          "bm25_rank": 3,
+          "rrf_rank": 2,
+          "rerank_score": 0.1349
+        },
+        {
+          "rank": 2,
+          "chunk_id": "04-leave-policy.md:chunk-6",
+          "source": "04-leave-policy.md",
+          "score": 0.0293,
+          "vector_rank": 13,
+          "bm25_rank": 4,
+          "rrf_rank": 7,
+          "rerank_score": 0.0415
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0311,
+          "vector_rank": 2,
+          "bm25_rank": 7,
+          "rrf_rank": 4,
+          "rerank_score": 0.0341
+        },
+        {
+          "rank": 4,
+          "chunk_id": "04-leave-policy.md:chunk-0",
+          "source": "04-leave-policy.md",
+          "score": 0.0325,
+          "vector_rank": 1,
+          "bm25_rank": 2,
+          "rrf_rank": 1,
+          "rerank_score": 0.0218
+        },
+        {
+          "rank": 5,
+          "chunk_id": "10-faq.pdf:page-2:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0139,
+          "vector_rank": null,
+          "bm25_rank": 12,
+          "rrf_rank": 18,
+          "rerank_score": 0.0159
+        },
+        {
+          "rank": 6,
+          "chunk_id": "01-company-overview.md:chunk-0",
+          "source": "01-company-overview.md",
+          "score": 0.0313,
+          "vector_rank": 7,
+          "bm25_rank": 1,
+          "rrf_rank": 3,
+          "rerank_score": 0.0086
+        },
+        {
+          "rank": 7,
+          "chunk_id": "01-company-overview.md:chunk-2",
+          "source": "01-company-overview.md",
+          "score": 0.0308,
+          "vector_rank": 4,
+          "bm25_rank": 6,
+          "rrf_rank": 5,
+          "rerank_score": 0.005
+        },
+        {
+          "rank": 8,
+          "chunk_id": "04-leave-policy.md:chunk-1",
+          "source": "04-leave-policy.md",
+          "score": 0.0276,
+          "vector_rank": 12,
+          "bm25_rank": 13,
+          "rrf_rank": 11,
+          "rerank_score": 0.0032
+        },
+        {
+          "rank": 9,
+          "chunk_id": "01-company-overview.md:chunk-1",
+          "source": "01-company-overview.md",
+          "score": 0.0147,
+          "vector_rank": 8,
+          "bm25_rank": null,
+          "rrf_rank": 14,
+          "rerank_score": 0.0025
+        },
+        {
+          "rank": 10,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.0282,
+          "vector_rank": 5,
+          "bm25_rank": 18,
+          "rrf_rank": 9,
+          "rerank_score": 0.002
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 4,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q24",
+      "question": "公司食堂午餐多少钱？",
+      "type": "unanswerable",
+      "relevant_chunk_ids": [],
+      "latency_ms": 1020,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.0164,
+          "vector_rank": 1,
+          "bm25_rank": null,
+          "rrf_rank": 2,
+          "rerank_score": 0.0151
+        },
+        {
+          "rank": 2,
+          "chunk_id": "06-travel-policy.md:chunk-5",
+          "source": "06-travel-policy.md",
+          "score": 0.0152,
+          "vector_rank": 6,
+          "bm25_rank": null,
+          "rrf_rank": 10,
+          "rerank_score": 0.0098
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-3:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0147,
+          "vector_rank": 8,
+          "bm25_rank": null,
+          "rrf_rank": 15,
+          "rerank_score": 0.0074
+        },
+        {
+          "rank": 4,
+          "chunk_id": "05-expense-policy.md:chunk-1",
+          "source": "05-expense-policy.md",
+          "score": 0.0154,
+          "vector_rank": 5,
+          "bm25_rank": null,
+          "rrf_rank": 8,
+          "rerank_score": 0.0043
+        },
+        {
+          "rank": 5,
+          "chunk_id": "06-travel-policy.md:chunk-0",
+          "source": "06-travel-policy.md",
+          "score": 0.0161,
+          "vector_rank": 2,
+          "bm25_rank": null,
+          "rrf_rank": 3,
+          "rerank_score": 0.0038
+        },
+        {
+          "rank": 6,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.032,
+          "vector_rank": 4,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.0023
+        },
+        {
+          "rank": 7,
+          "chunk_id": "10-faq.pdf:page-5:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0154,
+          "vector_rank": null,
+          "bm25_rank": 5,
+          "rrf_rank": 9,
+          "rerank_score": 0.0018
+        },
+        {
+          "rank": 8,
+          "chunk_id": "02-onboarding.md:chunk-9",
+          "source": "02-onboarding.md",
+          "score": 0.0159,
+          "vector_rank": null,
+          "bm25_rank": 3,
+          "rrf_rank": 5,
+          "rerank_score": 0.0014
+        },
+        {
+          "rank": 9,
+          "chunk_id": "06-travel-policy.md:chunk-6",
+          "source": "06-travel-policy.md",
+          "score": 0.0143,
+          "vector_rank": 10,
+          "bm25_rank": null,
+          "rrf_rank": 18,
+          "rerank_score": 0.0014
+        },
+        {
+          "rank": 10,
+          "chunk_id": "03-attendance.md:chunk-1",
+          "source": "03-attendance.md",
+          "score": 0.0145,
+          "vector_rank": 9,
+          "bm25_rank": null,
+          "rrf_rank": 17,
+          "rerank_score": 0.0014
+        }
+      ],
+      "hit_rank": null,
+      "relevant_hit_count": 0,
+      "recall_at_5": null,
+      "recall_at_10": null,
+      "reciprocal_rank": null
+    },
+    {
+      "question_id": "q25",
+      "question": "客户数据可以保存在私人网盘吗？",
+      "type": "multi_source",
+      "relevant_chunk_ids": [
+        "01-company-overview.md:chunk-0",
+        "01-company-overview.md:chunk-5",
+        "01-company-overview.md:chunk-6",
+        "07-remote-work.md:chunk-0",
+        "07-remote-work.md:chunk-6",
+        "09-it-support.md:chunk-1"
+      ],
+      "latency_ms": 1216,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "01-company-overview.md:chunk-0",
+          "source": "01-company-overview.md",
+          "score": 0.0156,
+          "vector_rank": null,
+          "bm25_rank": 4,
+          "rrf_rank": 11,
+          "rerank_score": 0.948
+        },
+        {
+          "rank": 2,
+          "chunk_id": "01-company-overview.md:chunk-5",
+          "source": "01-company-overview.md",
+          "score": 0.0323,
+          "vector_rank": 2,
+          "bm25_rank": 2,
+          "rrf_rank": 2,
+          "rerank_score": 0.9336
+        },
+        {
+          "rank": 3,
+          "chunk_id": "01-company-overview.md:chunk-6",
+          "source": "01-company-overview.md",
+          "score": 0.0323,
+          "vector_rank": 1,
+          "bm25_rank": 3,
+          "rrf_rank": 1,
+          "rerank_score": 0.9063
+        },
+        {
+          "rank": 4,
+          "chunk_id": "07-remote-work.md:chunk-6",
+          "source": "07-remote-work.md",
+          "score": 0.0308,
+          "vector_rank": 4,
+          "bm25_rank": 6,
+          "rrf_rank": 3,
+          "rerank_score": 0.8489
+        },
+        {
+          "rank": 5,
+          "chunk_id": "09-it-support.md:chunk-7",
+          "source": "09-it-support.md",
+          "score": 0.0147,
+          "vector_rank": null,
+          "bm25_rank": 8,
+          "rrf_rank": 16,
+          "rerank_score": 0.478
+        },
+        {
+          "rank": 6,
+          "chunk_id": "08-information-security.md:chunk-7",
+          "source": "08-information-security.md",
+          "score": 0.0278,
+          "vector_rank": 12,
+          "bm25_rank": 12,
+          "rrf_rank": 6,
+          "rerank_score": 0.3168
+        },
+        {
+          "rank": 7,
+          "chunk_id": "07-remote-work.md:chunk-5",
+          "source": "07-remote-work.md",
+          "score": 0.0272,
+          "vector_rank": 9,
+          "bm25_rank": 19,
+          "rrf_rank": 7,
+          "rerank_score": 0.2832
+        },
+        {
+          "rank": 8,
+          "chunk_id": "08-information-security.md:chunk-3",
+          "source": "08-information-security.md",
+          "score": 0.0285,
+          "vector_rank": 16,
+          "bm25_rank": 5,
+          "rrf_rank": 5,
+          "rerank_score": 0.1744
+        },
+        {
+          "rank": 9,
+          "chunk_id": "08-information-security.md:chunk-2",
+          "source": "08-information-security.md",
+          "score": 0.0292,
+          "vector_rank": 7,
+          "bm25_rank": 10,
+          "rrf_rank": 4,
+          "rerank_score": 0.1369
+        },
+        {
+          "rank": 10,
+          "chunk_id": "08-information-security.md:chunk-5",
+          "source": "08-information-security.md",
+          "score": 0.026,
+          "vector_rank": 19,
+          "bm25_rank": 15,
+          "rrf_rank": 8,
+          "rerank_score": 0.1338
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 4,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q26",
+      "question": "公司账户被锁定、无法登录系统提交工单时，可以拨打哪个内部电话？",
+      "type": "keyword",
+      "relevant_chunk_ids": [
+        "09-it-support.md:chunk-0",
+        "09-it-support.md:chunk-2"
+      ],
+      "latency_ms": 817,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.0323,
+          "vector_rank": 2,
+          "bm25_rank": 2,
+          "rrf_rank": 2,
+          "rerank_score": 0.9916
+        },
+        {
+          "rank": 2,
+          "chunk_id": "09-it-support.md:chunk-2",
+          "source": "09-it-support.md",
+          "score": 0.0323,
+          "vector_rank": 1,
+          "bm25_rank": 3,
+          "rrf_rank": 1,
+          "rerank_score": 0.9868
+        },
+        {
+          "rank": 3,
+          "chunk_id": "08-information-security.md:chunk-0",
+          "source": "08-information-security.md",
+          "score": 0.0318,
+          "vector_rank": 5,
+          "bm25_rank": 1,
+          "rrf_rank": 3,
+          "rerank_score": 0.7286
+        },
+        {
+          "rank": 4,
+          "chunk_id": "01-company-overview.md:chunk-0",
+          "source": "01-company-overview.md",
+          "score": 0.0156,
+          "vector_rank": null,
+          "bm25_rank": 4,
+          "rrf_rank": 10,
+          "rerank_score": 0.6228
+        },
+        {
+          "rank": 5,
+          "chunk_id": "08-information-security.md:chunk-7",
+          "source": "08-information-security.md",
+          "score": 0.0308,
+          "vector_rank": 4,
+          "bm25_rank": 6,
+          "rrf_rank": 4,
+          "rerank_score": 0.5769
+        },
+        {
+          "rank": 6,
+          "chunk_id": "08-information-security.md:chunk-6",
+          "source": "08-information-security.md",
+          "score": 0.0145,
+          "vector_rank": null,
+          "bm25_rank": 9,
+          "rrf_rank": 15,
+          "rerank_score": 0.3928
+        },
+        {
+          "rank": 7,
+          "chunk_id": "09-it-support.md:chunk-1",
+          "source": "09-it-support.md",
+          "score": 0.0149,
+          "vector_rank": null,
+          "bm25_rank": 7,
+          "rrf_rank": 13,
+          "rerank_score": 0.274
+        },
+        {
+          "rank": 8,
+          "chunk_id": "09-it-support.md:chunk-5",
+          "source": "09-it-support.md",
+          "score": 0.0139,
+          "vector_rank": null,
+          "bm25_rank": 12,
+          "rrf_rank": 19,
+          "rerank_score": 0.0379
+        },
+        {
+          "rank": 9,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.0275,
+          "vector_rank": 18,
+          "bm25_rank": 8,
+          "rrf_rank": 7,
+          "rerank_score": 0.01
+        },
+        {
+          "rank": 10,
+          "chunk_id": "02-onboarding.md:chunk-4",
+          "source": "02-onboarding.md",
+          "score": 0.0288,
+          "vector_rank": 8,
+          "bm25_rank": 11,
+          "rrf_rank": 5,
+          "rerank_score": 0.0091
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q27",
+      "question": "发现公司电脑疑似感染恶意软件，应把安全事件报告发送到哪个邮箱？",
+      "type": "keyword",
+      "relevant_chunk_ids": [
+        "01-company-overview.md:chunk-0",
+        "08-information-security.md:chunk-0",
+        "08-information-security.md:chunk-6",
+        "08-information-security.md:chunk-7",
+        "09-it-support.md:chunk-0",
+        "09-it-support.md:chunk-2"
+      ],
+      "latency_ms": 985,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "08-information-security.md:chunk-7",
+          "source": "08-information-security.md",
+          "score": 0.032,
+          "vector_rank": 2,
+          "bm25_rank": 3,
+          "rrf_rank": 2,
+          "rerank_score": 0.95
+        },
+        {
+          "rank": 2,
+          "chunk_id": "08-information-security.md:chunk-6",
+          "source": "08-information-security.md",
+          "score": 0.0306,
+          "vector_rank": 9,
+          "bm25_rank": 2,
+          "rrf_rank": 3,
+          "rerank_score": 0.7979
+        },
+        {
+          "rank": 3,
+          "chunk_id": "08-information-security.md:chunk-0",
+          "source": "08-information-security.md",
+          "score": 0.0328,
+          "vector_rank": 1,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.6771
+        },
+        {
+          "rank": 4,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.0265,
+          "vector_rank": 12,
+          "bm25_rank": 19,
+          "rrf_rank": 7,
+          "rerank_score": 0.2151
+        },
+        {
+          "rank": 5,
+          "chunk_id": "08-information-security.md:chunk-1",
+          "source": "08-information-security.md",
+          "score": 0.028,
+          "vector_rank": 6,
+          "bm25_rank": 18,
+          "rrf_rank": 6,
+          "rerank_score": 0.0998
+        },
+        {
+          "rank": 6,
+          "chunk_id": "01-company-overview.md:chunk-6",
+          "source": "01-company-overview.md",
+          "score": 0.0294,
+          "vector_rank": 3,
+          "bm25_rank": 14,
+          "rrf_rank": 4,
+          "rerank_score": 0.0948
+        },
+        {
+          "rank": 7,
+          "chunk_id": "08-information-security.md:chunk-5",
+          "source": "08-information-security.md",
+          "score": 0.0286,
+          "vector_rank": 7,
+          "bm25_rank": 13,
+          "rrf_rank": 5,
+          "rerank_score": 0.0429
+        },
+        {
+          "rank": 8,
+          "chunk_id": "02-onboarding.md:chunk-9",
+          "source": "02-onboarding.md",
+          "score": 0.0156,
+          "vector_rank": null,
+          "bm25_rank": 4,
+          "rrf_rank": 8,
+          "rerank_score": 0.0142
+        },
+        {
+          "rank": 9,
+          "chunk_id": "01-company-overview.md:chunk-8",
+          "source": "01-company-overview.md",
+          "score": 0.0147,
+          "vector_rank": 8,
+          "bm25_rank": null,
+          "rrf_rank": 14,
+          "rerank_score": 0.0137
+        },
+        {
+          "rank": 10,
+          "chunk_id": "02-onboarding.md:chunk-10",
+          "source": "02-onboarding.md",
+          "score": 0.0154,
+          "vector_rank": 5,
+          "bm25_rank": null,
+          "rrf_rank": 10,
+          "rerank_score": 0.0122
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 4,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q28",
+      "question": "安装新软件、打印机故障这类普通技术问题，应通过哪个系统的什么项目提交工单？",
+      "type": "keyword",
+      "relevant_chunk_ids": [
+        "01-company-overview.md:chunk-0",
+        "09-it-support.md:chunk-0",
+        "09-it-support.md:chunk-1"
+      ],
+      "latency_ms": 932,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.0328,
+          "vector_rank": 1,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.9961
+        },
+        {
+          "rank": 2,
+          "chunk_id": "09-it-support.md:chunk-1",
+          "source": "09-it-support.md",
+          "score": 0.0315,
+          "vector_rank": 5,
+          "bm25_rank": 2,
+          "rrf_rank": 3,
+          "rerank_score": 0.9951
+        },
+        {
+          "rank": 3,
+          "chunk_id": "08-information-security.md:chunk-1",
+          "source": "08-information-security.md",
+          "score": 0.0315,
+          "vector_rank": 2,
+          "bm25_rank": 5,
+          "rrf_rank": 2,
+          "rerank_score": 0.8546
+        },
+        {
+          "rank": 4,
+          "chunk_id": "01-company-overview.md:chunk-0",
+          "source": "01-company-overview.md",
+          "score": 0.0156,
+          "vector_rank": null,
+          "bm25_rank": 4,
+          "rrf_rank": 10,
+          "rerank_score": 0.8308
+        },
+        {
+          "rank": 5,
+          "chunk_id": "08-information-security.md:chunk-0",
+          "source": "08-information-security.md",
+          "score": 0.0159,
+          "vector_rank": null,
+          "bm25_rank": 3,
+          "rrf_rank": 9,
+          "rerank_score": 0.4044
+        },
+        {
+          "rank": 6,
+          "chunk_id": "01-company-overview.md:chunk-6",
+          "source": "01-company-overview.md",
+          "score": 0.0139,
+          "vector_rank": null,
+          "bm25_rank": 12,
+          "rrf_rank": 17,
+          "rerank_score": 0.2622
+        },
+        {
+          "rank": 7,
+          "chunk_id": "09-it-support.md:chunk-5",
+          "source": "09-it-support.md",
+          "score": 0.0296,
+          "vector_rank": 8,
+          "bm25_rank": 7,
+          "rrf_rank": 4,
+          "rerank_score": 0.1315
+        },
+        {
+          "rank": 8,
+          "chunk_id": "02-onboarding.md:chunk-4",
+          "source": "02-onboarding.md",
+          "score": 0.0292,
+          "vector_rank": 9,
+          "bm25_rank": 8,
+          "rrf_rank": 7,
+          "rerank_score": 0.0746
+        },
+        {
+          "rank": 9,
+          "chunk_id": "07-remote-work.md:chunk-7",
+          "source": "07-remote-work.md",
+          "score": 0.0141,
+          "vector_rank": null,
+          "bm25_rank": 11,
+          "rrf_rank": 16,
+          "rerank_score": 0.0744
+        },
+        {
+          "rank": 10,
+          "chunk_id": "08-information-security.md:chunk-8",
+          "source": "08-information-security.md",
+          "score": 0.0293,
+          "vector_rank": 4,
+          "bm25_rank": 13,
+          "rrf_rank": 5,
+          "rerank_score": 0.0143
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 3,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q29",
+      "question": "P2 工单的目标响应时间是多久？",
+      "type": "keyword",
+      "relevant_chunk_ids": [
+        "09-it-support.md:chunk-0",
+        "09-it-support.md:chunk-3"
+      ],
+      "latency_ms": 847,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.0323,
+          "vector_rank": 3,
+          "bm25_rank": 1,
+          "rrf_rank": 2,
+          "rerank_score": 0.96
+        },
+        {
+          "rank": 2,
+          "chunk_id": "09-it-support.md:chunk-3",
+          "source": "09-it-support.md",
+          "score": 0.0325,
+          "vector_rank": 1,
+          "bm25_rank": 2,
+          "rrf_rank": 1,
+          "rerank_score": 0.8964
+        },
+        {
+          "rank": 3,
+          "chunk_id": "09-it-support.md:chunk-5",
+          "source": "09-it-support.md",
+          "score": 0.0313,
+          "vector_rank": 5,
+          "bm25_rank": 3,
+          "rrf_rank": 4,
+          "rerank_score": 0.5751
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0156,
+          "vector_rank": null,
+          "bm25_rank": 4,
+          "rrf_rank": 7,
+          "rerank_score": 0.3246
+        },
+        {
+          "rank": 5,
+          "chunk_id": "10-faq.pdf:page-4:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0301,
+          "vector_rank": 7,
+          "bm25_rank": 6,
+          "rrf_rank": 5,
+          "rerank_score": 0.3107
+        },
+        {
+          "rank": 6,
+          "chunk_id": "09-it-support.md:chunk-4",
+          "source": "09-it-support.md",
+          "score": 0.0315,
+          "vector_rank": 2,
+          "bm25_rank": 5,
+          "rrf_rank": 3,
+          "rerank_score": 0.2497
+        },
+        {
+          "rank": 7,
+          "chunk_id": "09-it-support.md:chunk-1",
+          "source": "09-it-support.md",
+          "score": 0.0139,
+          "vector_rank": null,
+          "bm25_rank": 12,
+          "rrf_rank": 19,
+          "rerank_score": 0.0079
+        },
+        {
+          "rank": 8,
+          "chunk_id": "09-it-support.md:chunk-2",
+          "source": "09-it-support.md",
+          "score": 0.029,
+          "vector_rank": 4,
+          "bm25_rank": 15,
+          "rrf_rank": 6,
+          "rerank_score": 0.0076
+        },
+        {
+          "rank": 9,
+          "chunk_id": "07-remote-work.md:chunk-7",
+          "source": "07-remote-work.md",
+          "score": 0.0149,
+          "vector_rank": null,
+          "bm25_rank": 7,
+          "rrf_rank": 9,
+          "rerank_score": 0.0043
+        },
+        {
+          "rank": 10,
+          "chunk_id": "01-company-overview.md:chunk-6",
+          "source": "01-company-overview.md",
+          "score": 0.0147,
+          "vector_rank": null,
+          "bm25_rank": 8,
+          "rrf_rank": 10,
+          "rerank_score": 0.0041
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q30",
+      "question": "按公司数据分类标准，“完整客户数据导出”属于哪一级？",
+      "type": "keyword",
+      "relevant_chunk_ids": [
+        "08-information-security.md:chunk-0",
+        "08-information-security.md:chunk-2",
+        "08-information-security.md:chunk-3"
+      ],
+      "latency_ms": 874,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "08-information-security.md:chunk-0",
+          "source": "08-information-security.md",
+          "score": 0.0328,
+          "vector_rank": 1,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.7449
+        },
+        {
+          "rank": 2,
+          "chunk_id": "08-information-security.md:chunk-3",
+          "source": "08-information-security.md",
+          "score": 0.0296,
+          "vector_rank": 14,
+          "bm25_rank": 2,
+          "rrf_rank": 2,
+          "rerank_score": 0.2904
+        },
+        {
+          "rank": 3,
+          "chunk_id": "08-information-security.md:chunk-2",
+          "source": "08-information-security.md",
+          "score": 0.0284,
+          "vector_rank": 20,
+          "bm25_rank": 3,
+          "rrf_rank": 3,
+          "rerank_score": 0.1887
+        },
+        {
+          "rank": 4,
+          "chunk_id": "09-it-support.md:chunk-3",
+          "source": "09-it-support.md",
+          "score": 0.0159,
+          "vector_rank": 3,
+          "bm25_rank": null,
+          "rrf_rank": 7,
+          "rerank_score": 0.0095
+        },
+        {
+          "rank": 5,
+          "chunk_id": "02-onboarding.md:chunk-5",
+          "source": "02-onboarding.md",
+          "score": 0.0143,
+          "vector_rank": null,
+          "bm25_rank": 10,
+          "rrf_rank": 20,
+          "rerank_score": 0.0042
+        },
+        {
+          "rank": 6,
+          "chunk_id": "06-travel-policy.md:chunk-5",
+          "source": "06-travel-policy.md",
+          "score": 0.0264,
+          "vector_rank": 19,
+          "bm25_rank": 13,
+          "rrf_rank": 5,
+          "rerank_score": 0.0038
+        },
+        {
+          "rank": 7,
+          "chunk_id": "01-company-overview.md:chunk-5",
+          "source": "01-company-overview.md",
+          "score": 0.0265,
+          "vector_rank": 17,
+          "bm25_rank": 14,
+          "rrf_rank": 4,
+          "rerank_score": 0.0037
+        },
+        {
+          "rank": 8,
+          "chunk_id": "02-onboarding.md:chunk-10",
+          "source": "02-onboarding.md",
+          "score": 0.0161,
+          "vector_rank": 2,
+          "bm25_rank": null,
+          "rrf_rank": 6,
+          "rerank_score": 0.0033
+        },
+        {
+          "rank": 9,
+          "chunk_id": "03-attendance.md:chunk-7",
+          "source": "03-attendance.md",
+          "score": 0.0145,
+          "vector_rank": null,
+          "bm25_rank": 9,
+          "rrf_rank": 18,
+          "rerank_score": 0.0025
+        },
+        {
+          "rank": 10,
+          "chunk_id": "05-expense-policy.md:chunk-8",
+          "source": "05-expense-policy.md",
+          "score": 0.0156,
+          "vector_rank": null,
+          "bm25_rank": 4,
+          "rrf_rank": 8,
+          "rerank_score": 0.0022
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 3,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q31",
+      "question": "杭州总部前台在工作日的开放时间是什么？",
+      "type": "confusable",
+      "relevant_chunk_ids": [
+        "01-company-overview.md:chunk-0",
+        "01-company-overview.md:chunk-2"
+      ],
+      "latency_ms": 971,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "01-company-overview.md:chunk-2",
+          "source": "01-company-overview.md",
+          "score": 0.0323,
+          "vector_rank": 2,
+          "bm25_rank": 2,
+          "rrf_rank": 3,
+          "rerank_score": 0.9957
+        },
+        {
+          "rank": 2,
+          "chunk_id": "01-company-overview.md:chunk-0",
+          "source": "01-company-overview.md",
+          "score": 0.0323,
+          "vector_rank": 3,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.9682
+        },
+        {
+          "rank": 3,
+          "chunk_id": "01-company-overview.md:chunk-3",
+          "source": "01-company-overview.md",
+          "score": 0.0323,
+          "vector_rank": 1,
+          "bm25_rank": 3,
+          "rrf_rank": 2,
+          "rerank_score": 0.7612
+        },
+        {
+          "rank": 4,
+          "chunk_id": "01-company-overview.md:chunk-4",
+          "source": "01-company-overview.md",
+          "score": 0.0312,
+          "vector_rank": 4,
+          "bm25_rank": 4,
+          "rrf_rank": 4,
+          "rerank_score": 0.2985
+        },
+        {
+          "rank": 5,
+          "chunk_id": "09-it-support.md:chunk-2",
+          "source": "09-it-support.md",
+          "score": 0.0154,
+          "vector_rank": 5,
+          "bm25_rank": null,
+          "rrf_rank": 11,
+          "rerank_score": 0.1601
+        },
+        {
+          "rank": 6,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.0149,
+          "vector_rank": 7,
+          "bm25_rank": null,
+          "rrf_rank": 14,
+          "rerank_score": 0.048
+        },
+        {
+          "rank": 7,
+          "chunk_id": "07-remote-work.md:chunk-3",
+          "source": "07-remote-work.md",
+          "score": 0.0286,
+          "vector_rank": 13,
+          "bm25_rank": 7,
+          "rrf_rank": 8,
+          "rerank_score": 0.0362
+        },
+        {
+          "rank": 8,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.029,
+          "vector_rank": 10,
+          "bm25_rank": 8,
+          "rrf_rank": 7,
+          "rerank_score": 0.0216
+        },
+        {
+          "rank": 9,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.0152,
+          "vector_rank": 6,
+          "bm25_rank": null,
+          "rrf_rank": 12,
+          "rerank_score": 0.0152
+        },
+        {
+          "rank": 10,
+          "chunk_id": "10-faq.pdf:page-3:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0152,
+          "vector_rank": null,
+          "bm25_rank": 6,
+          "rrf_rank": 13,
+          "rerank_score": 0.0053
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question_id": "q32",
+      "question": "台风导致地铁停运，今天能临时申请在家办公吗？",
+      "type": "semantic",
+      "relevant_chunk_ids": [
+        "07-remote-work.md:chunk-0",
+        "07-remote-work.md:chunk-4"
+      ],
+      "latency_ms": 932,
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "07-remote-work.md:chunk-4",
+          "source": "07-remote-work.md",
+          "score": 0.0308,
+          "vector_rank": 3,
+          "bm25_rank": 7,
+          "rrf_rank": 4,
+          "rerank_score": 0.2125
+        },
+        {
+          "rank": 2,
+          "chunk_id": "07-remote-work.md:chunk-3",
+          "source": "07-remote-work.md",
+          "score": 0.0299,
+          "vector_rank": 4,
+          "bm25_rank": 10,
+          "rrf_rank": 5,
+          "rerank_score": 0.0731
+        },
+        {
+          "rank": 3,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.0315,
+          "vector_rank": 2,
+          "bm25_rank": 5,
+          "rrf_rank": 2,
+          "rerank_score": 0.0555
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.0328,
+          "vector_rank": 1,
+          "bm25_rank": 1,
+          "rrf_rank": 1,
+          "rerank_score": 0.0204
+        },
+        {
+          "rank": 5,
+          "chunk_id": "01-company-overview.md:chunk-6",
+          "source": "01-company-overview.md",
+          "score": 0.0156,
+          "vector_rank": null,
+          "bm25_rank": 4,
+          "rrf_rank": 13,
+          "rerank_score": 0.0145
+        },
+        {
+          "rank": 6,
+          "chunk_id": "01-company-overview.md:chunk-5",
+          "source": "01-company-overview.md",
+          "score": 0.0159,
+          "vector_rank": null,
+          "bm25_rank": 3,
+          "rrf_rank": 12,
+          "rerank_score": 0.0114
+        },
+        {
+          "rank": 7,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.0308,
+          "vector_rank": 8,
+          "bm25_rank": 2,
+          "rrf_rank": 3,
+          "rerank_score": 0.0035
+        },
+        {
+          "rank": 8,
+          "chunk_id": "07-remote-work.md:chunk-1",
+          "source": "07-remote-work.md",
+          "score": 0.0274,
+          "vector_rank": 13,
+          "bm25_rank": 13,
+          "rrf_rank": 9,
+          "rerank_score": 0.0034
+        },
+        {
+          "rank": 9,
+          "chunk_id": "03-attendance.md:chunk-5",
+          "source": "03-attendance.md",
+          "score": 0.0141,
+          "vector_rank": 11,
+          "bm25_rank": null,
+          "rrf_rank": 18,
+          "rerank_score": 0.0027
+        },
+        {
+          "rank": 10,
+          "chunk_id": "03-attendance.md:chunk-7",
+          "source": "03-attendance.md",
+          "score": 0.0135,
+          "vector_rank": null,
+          "bm25_rank": 14,
+          "rrf_rank": 20,
+          "rerank_score": 0.0026
+        }
+      ],
+      "hit_rank": 1,
+      "relevant_hit_count": 2,
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "reciprocal_rank": 1.0
+    }
+  ]
+}

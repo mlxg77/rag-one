@@ -4,6 +4,9 @@ python-dotenv
 # LLM / Embedding calls (OpenAI-compatible SDK, works with SiliconFlow)
 openai
 
+# Reranker HTTP calls (SiliconFlow rerank API)
+httpx
+
 # Vector database
 chromadb
 
