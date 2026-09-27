@@ -4,6 +4,8 @@
 # Python 缓存
 __pycache__/
 *.py[cod]
+.pytest_cache/
+*.egg-info/
 
 # 环境变量（含 API Key，绝不提交）
 .env
@@ -13,3 +15,7 @@ storage/chroma/
 
 # BM25 索引持久化产物（可由文档重建）
 storage/bm25/
+
+# 本机激活指针与版本清单（与本机可重建索引绑定）
+storage/active-index.json
+storage/index-manifests/

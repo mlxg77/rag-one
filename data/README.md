@@ -1,51 +1,35 @@
-# 星云科技员工手册：RAG 入门数据集
+# 数据目录
 
-这是一套完全虚构的中文员工手册，用于学习和测试检索增强生成（RAG）。公司、人员、制度和金额均为模拟信息，不能作为真实劳动或财务制度依据。
+本目录是一套完全虚构的中文员工手册与评估数据，不代表真实组织制度。
 
-## 数据集内容
+## 内容
 
-- `raw/`：10 份知识库文件——9 份 Markdown 专项制度（`01`～`09`）与 1 份 PDF 版常见问题（`10-faq.pdf`，6 页）
-- `eval/questions.jsonl`：32 条评估问题（25 条原题 + 7 条新增），字段为 `id / question / expected_answer / expected_sources / relevant_chunk_ids / type`
-- `eval/eval-report.md`：端到端人工评估表（E1 vector / E4 hybrid_rerank 双链路，32 题 × 4 判定列），逐题走查检索与生成质量并汇总指标
-- `eval/corpus-version.md`：v2.0 语料版本快照（文件指纹 / 切分参数 / chunk 统计）
-- `eval/baseline-v1.json` + `eval/baseline-v1.md`：v1.0 向量检索基线结果（32 题；机器可读 JSON + 可读报告，配套评估脚本见仓库 `evaluation/`）
-- `eval/run-bm25.json` + `eval/run-bm25.md`：BM25 关键词检索评估结果（32 题，与向量基线同口径，可直接对照）
-- `eval/run-hybrid.json` + `eval/run-hybrid.md`：混合检索（向量 + BM25 → RRF 融合）评估结果（32 题，与基线 / BM25 同口径，含每条命中的两路名次）
-- `eval/run-hybrid-rerank.json` + `eval/run-hybrid-rerank.md`：混合检索 + Reranker 精排评估结果（32 题，与前述同口径，含每条命中的重排前融合名次与重排分数）
-- `eval/run-e2e-vector.json` + `eval/run-e2e-vector.md`：E1 端到端评估结果（32 题：逐题答案全文与引用编号 + Prompt token + 检索 / 生成两段延迟）
-- `eval/run-e2e-hybrid_rerank.json` + `eval/run-e2e-hybrid_rerank.md`：E4 端到端评估结果（32 题，另含融合 / 精排分段延迟与重排 token）
+- `raw/`：9 份 Markdown 与 1 份 6 页 PDF，共 10 份冻结语料。
+- `snapshots/corpus-v2.md`：v2/v2.5 使用的语料文件指纹与 800/150 切分统计。
+- `eval/regression.jsonl`：32 题开发回归集，可反复运行。
+- `eval/holdout.jsonl`：15 题独立保留集，只在版本候选冻结后运行一次。
+- `eval/evidence-anchors.json`：与 chunk 参数无关的必要事实文本锚点。评估时映射到当前切分，避免 600/800/1000 参数下复用序号 ID 造成假结论。
+- `eval/results/v2/`：v2.0 历史原始结果。
+- `eval/results/v2.5/`：v2.5 原始结果；人工结论位于 `docs/experiments/` 与 `docs/reports/`。
 
-## 推荐用法
+## 冻结身份
 
-1. 资料位于 `data/raw/`，直接加载使用；Markdown 按纯文本读取，`10-faq.pdf` 需 PDF 文本解析（每页一条记录）。
-2. 首轮参数建议 `chunk_size=800`、`chunk_overlap=150`、`top_k=5`（与 rag-one 当前配置一致）。
-3. 建立索引后，用仓库 `evaluation/evaluate_retrieval.py` 逐题跑检索评估（或直接对照 `eval/run-*.json`），再用 `evaluation/evaluate_e2e.py` 跑端到端问答，最后按 `eval/eval-report.md` 的判定口径走查答案与引用。
-4. 调试时同时输出召回片段、相似度、来源文件和最终答案。
+截至 v2.5 工程候选版：
 
-## 建议的元数据
+| 文件 | SHA256 |
+|---|---|
+| `regression.jsonl` | `eda951adb529df41f89326bc3ff735e39306d70b1c8a98efd9a0d34018a12a63` |
+| `holdout.jsonl` | `6aa31eeb8c37c91600111386e63849bba83028cd4770b0a1eccd90ada4c2e1e2` |
+| `evidence-anchors.json` | `779de058ba81312e77fcf08eaadde30f5185f42b444e029ea06bb9720f372e49` |
 
-```json
-{
-  "source": "04-leave-policy.md",
-  "title": "休假与请假制度",
-  "section": "病假",
-  "version": "2026.1",
-  "effective_date": "2026-01-01"
-}
+如后续修正标注，必须记录理由并重新运行所有对照，不可静默覆盖结果。
+
+## 校验与使用
+
+```powershell
+python -m scripts.freeze_corpus
+python -m evaluation.validate_dataset data/eval/regression.jsonl data/eval/holdout.jsonl
+python -m evaluation.evaluate_chunk_offline
 ```
 
-## 数据集设计
-
-文档故意包含一些容易混淆的规则：
-
-- 普通报销期限是 30 个自然日，差旅报销期限是返程后 15 个自然日。
-- 国内酒店标准按城市类别和职级变化。
-- 正式员工与试用期员工的远程办公规则不同。
-- 病假、事假和年假的申请时限、证明材料不同。
-- IT 服务台与安全事件的报告渠道不同。
-
-2026.1 版语料在正式条款后追加了约 130 行扩展说明（办理口径、角色责任、常见场景），且各文件的通用段落表述高度相似；常见问题改以 `10-faq.pdf` 形式提供。这些差异与安排可以用于观察文本切分、召回和引用是否准确，也便于观察相似段落干扰与 PDF 解析的影响。
-
-## 使用限制
-
-本数据集可自由用于个人学习、演示和测试。不要将其中制度用于现实组织。
+chunk 调优只能读取 regression。holdout 不得用于选择 chunk、检索参数或 Prompt。

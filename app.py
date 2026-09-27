@@ -1,8 +1,8 @@
 """Streamlit 界面：知识库管理 / 四链路问答 / 全过程追踪。
 
-只调用 src 与 ingest 模块，不写核心逻辑：
-- 检索与生成：src.pipeline.run_chain（vector / bm25 / hybrid / hybrid_rerank 四条链路）；
-- 索引重建：src.indexer.build_index（先建后切）+ ingest_bm25.rebuild_bm25_index（原子替换）。
+只调用 rag_one 应用层，不写核心逻辑：
+- 检索与生成：rag_one.pipeline.run_chain；
+- 索引重建：rag_one.indexing.indexer.build_and_publish_indexes。
 
 运行：
     python -X utf8 -m streamlit run app.py
@@ -12,12 +12,10 @@ from pathlib import Path
 
 import streamlit as st
 
-from ingest_bm25 import rebuild_bm25_index
-from src import vector_store
-from src.bm25_store import load_index
-from src.config import COLLECTION_NAME, DATA_RAW_DIR, PROJECT_ROOT
-from src.indexer import build_index
-from src.pipeline import run_chain
+from rag_one.config import DATA_RAW_DIR
+from rag_one.indexing.indexer import build_and_publish_indexes
+from rag_one.pipeline import run_chain
+from rag_one.state import verify_project_state
 
 MODE_LABELS = {
     "混合重排（融合 + Reranker 精排）": "hybrid_rerank",
@@ -88,49 +86,32 @@ with st.sidebar:
     if st.button("重建索引"):
         with st.spinner("正在重建索引（先写新索引 → 校验 → 成功后切换）..."):
             try:
-                stats = build_index()
+                stats = build_and_publish_indexes()
                 st.success(
-                    f"向量索引：{stats['docs']} 篇 / {stats['chunks']} chunk / "
-                    f"集合内 {stats['collection_count']} 条向量"
+                    f"双索引版本 {stats['index_version']} 已发布："
+                    f"{stats['docs']} 篇 / {stats['chunks']} chunk / "
+                    f"{stats['bm25_terms']} BM25 词项"
                 )
             except Exception as exc:
-                st.error(f"向量索引重建失败：{exc}（旧索引未受影响，可直接重试）")
-            try:
-                bm_stats = rebuild_bm25_index()
-                st.success(f"BM25 索引：{bm_stats['chunks']} chunk / {bm_stats['terms']} 词项")
-            except Exception as exc:
-                st.error(f"BM25 索引重建失败：{exc}（旧索引未受影响，可直接重试）")
+                st.error(f"双索引重建失败：{exc}（active version 未切换，可直接重试）")
 
-    st.caption("重建为全量重建，两套索引都采用「先建后切 / 原子替换」：任一步失败都会保留旧索引。")
+    st.caption("向量与 BM25 先构建为同一不可变版本；全部校验通过后才原子切换 active pointer。")
 
     st.header("索引状态")
     try:
-        client = vector_store.get_client()
-        vector_count = vector_store.count(vector_store.get_collection(client))
-        st.markdown(f"- 向量库 `{COLLECTION_NAME}`：{vector_count} 条向量")
-    except Exception as exc:  # 库打不开也不让页面崩，给出提示即可
-        st.markdown(f"- 向量库 `{COLLECTION_NAME}`：读取失败（{exc}）")
-
-    try:
-        bm_meta = load_index()["meta"]
+        index_state = verify_project_state()
+        short_version = index_state["index_version"]
         st.markdown(
-            f"- BM25 索引：{bm_meta['chunk_count']} chunk / {bm_meta['term_count']} 词项"
-            f"（构建于 {bm_meta['built_at']}）"
+            f"- Active：`{short_version}`\n"
+            f"- 双索引：{index_state['chunk_count']} chunk / "
+            f"{index_state['bm25']['term_count']} BM25 词项\n"
+            f"- 切分：{index_state['chunk_size']} / {index_state['chunk_overlap']}"
         )
-    except FileNotFoundError:
-        st.markdown("- BM25 索引：不存在（点上方“重建索引”生成）")
+    except Exception as exc:  # 状态不一致也不让页面崩，明确要求重建
+        st.markdown(f"- 索引状态：不可用或不一致（{exc}）")
 
     doc_files = [p for p in DATA_RAW_DIR.iterdir() if p.is_file()] if DATA_RAW_DIR.exists() else []
     st.markdown(f"- 文档：data/raw 下 {len(doc_files)} 个文件")
-
-    corpus_file = PROJECT_ROOT / "data" / "eval" / "corpus-version.md"
-    if corpus_file.exists():
-        date = ""
-        for line in corpus_file.read_text(encoding="utf-8").splitlines():
-            if "生成日期" in line:
-                date = line.split("：", 1)[-1].strip()
-                break
-        st.markdown(f"- 语料版本：v2.0 冻结快照（{date}）")
 
     st.header("检索设置")
     mode_label = st.selectbox("检索模式", list(MODE_LABELS))
@@ -161,7 +142,7 @@ if st.button("提问"):
                     candidate_k=candidate_k,
                 )
             except FileNotFoundError:
-                st.error("BM25 索引不存在：请先点侧边栏「重建索引」，或运行 python -X utf8 ingest_bm25.py")
+                st.error("向量或 BM25 索引不存在：请先点侧边栏「重建索引」，或运行 python -m scripts.rebuild_indexes")
             except Exception as exc:
                 st.error(f"问答失败：{exc}")
 
@@ -175,11 +156,20 @@ else:
 
     st.subheader("回答")
     st.markdown(result["answer"])
+    citation_validation = result.get("citation_validation") or {}
+    if citation_validation.get("invalid_citations"):
+        st.error(f"回答含越界引用编号：{citation_validation['invalid_citations']}")
+    if citation_validation.get("refusal_has_citations"):
+        st.warning("回答已拒答但仍附带引用，请人工复核是否为无关引用。")
     usage = result["usage"]
     token_text = f'prompt={usage["prompt_tokens"]}, completion={usage["completion_tokens"]}'
     if result["rerank_tokens"]:
         token_text += f', rerank={result["rerank_tokens"]}'
-    st.caption(f'模式：{result["mode"]} · 问题：{result["question"]}（tokens: {token_text}）')
+    prompt_version = result.get("prompt_version") or "unknown"
+    st.caption(
+        f'模式：{result["mode"]} · Prompt：{prompt_version} · '
+        f'问题：{result["question"]}（tokens: {token_text}）'
+    )
 
     stage_text = " → ".join(f'{s["name"]} {s["elapsed_ms"]}ms' for s in result["stages"])
     st.markdown(f"**分阶段耗时**：{stage_text} · 合计 {result['total_ms']} ms")

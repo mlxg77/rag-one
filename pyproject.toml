@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rag-one"
+version = "2.5.0"
+description = "A transparent learning project for retrieval-augmented generation"
+requires-python = ">=3.11"
+dependencies = [
+  "python-dotenv==1.2.3",
+  "openai==3.19.2",
+  "httpx==0.28.1",
+  "chromadb==1.5.9",
+  "pymupdf==1.28.2",
+  "streamlit==1.64.0",
+  "jieba==0.42.1",
+]
+
+[project.optional-dependencies]
+test = ["pytest==9.1.1"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
