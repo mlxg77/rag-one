@@ -40,6 +40,13 @@ LLM 生成带引用的回答
 | 六 | 实现答案生成 | `src/generator.py` / `src/rag.py` | 已完成并验收 |
 | 七 | 增加简单界面 | `app.py`（Streamlit） | 已完成并验收 |
 
+**v2.0（进行中）**：在 v1.0 基础上学习“召回与排序”——BM25、RRF 融合、Reranker；规划见 `RAG-v2.0学习规划.md`（共 7 个阶段）。
+
+| 阶段 | 内容 | 状态 |
+|---|---|---|
+| 一 | 冻结现有语料并完善评估标注 | 已完成并验收 |
+| 二 ~ 七 | 基线评估 / BM25 / RRF 融合 / Reranker / 对照实验 / 工程化 | 未开始 |
+
 ---
 
 ## 环境与运行方式
@@ -105,13 +112,14 @@ pip install -r requirements.txt
 ```text
 rag-one/
 ├── data/
-│   ├── raw/                  # 10 篇制度手册（知识库）
+│   ├── raw/                  # 9 篇制度手册 + 10-faq.pdf（v2.0 冻结语料，指纹见 corpus-version.md）
 │   ├── eval/
-│   │   ├── questions.jsonl   # 25 题评估集（JSONL，一行一题）
-│   │   └── eval-report.md    # 人工评估表（收尾：25 题逐题走查记录）
+│   │   ├── questions.jsonl   # 32 题评估集（含 relevant_chunk_ids chunk 级标注）
+│   │   ├── corpus-version.md # v2.0 语料版本快照（指纹 / 切分参数 / chunk 统计）
+│   │   └── eval-report.md    # 人工评估表（v2.0：32 题逐题走查记录）
 │   └── README.md             # 数据集说明
 ├── storage/
-│   └── chroma/               # ChromaDB 持久化索引（git 忽略，可用 ingest.py 重建）
+│   └── chroma/               # ChromaDB 持久化索引（git 忽略，可用 ingest.py 重建；当前 111 条 = v2.0 语料）
 ├── src/
 │   ├── __init__.py
 │   ├── config.py             # 阶段四：集中配置读取（已完成）
@@ -125,8 +133,11 @@ rag-one/
 │   └── rag.py                # 阶段六：检索→生成主流程（已完成）
 ├── ingest.py                 # 阶段四：索引入口（已完成）
 ├── app.py                    # 阶段七：Streamlit 界面（已完成）
+├── tools/
+│   └── freeze_corpus.py      # v2.0：语料冻结脚本（生成 data/eval/corpus-version.md）
 ├── .env.example              # 环境变量模板（.env 含密钥，被 git 忽略）
 ├── RAG-MVP学习规划.md         # 总规划：目标、技术栈、七阶段验收清单
+├── RAG-v2.0学习规划.md        # v2.0 规划：冻结语料、BM25 / RRF / Reranker 与对照实验
 ├── readme.md                 # 本文件
 ├── requirements.txt          # 纯 ASCII 英文注释（见"踩坑记录"）
 └── .gitignore                # 忽略 .venv/ __pycache__/ .env storage/chroma/
@@ -138,7 +149,9 @@ rag-one/
 
 ### 阶段一：知识库与评估集（已完成并验收）
 
-**知识库** `data/raw/`：虚构的"星云科技公司制度手册"共 10 篇 Markdown（版本 2026.1，生效日期 2026-01-01）：
+> v2.0 注：以下为 v1.0 当时的语料状态；v2.0 阶段一已将语料更新为 9 篇扩写版 Markdown + `10-faq.pdf`（原 `10-faq.md` 删除），现状以 `data/eval/corpus-version.md` 为准。
+
+**知识库** `data/raw/`：虚构的“星云科技公司制度手册”共 10 篇 Markdown（版本 2026.1，生效日期 2026-01-01）：
 
 ```text
 01-company-overview.md   02-onboarding.md     03-attendance.md
@@ -393,6 +406,43 @@ E:\Anaconda_envs\envs\rag-one\python.exe -X utf8 -m streamlit run app.py
 | 9 | README 记录关键参数及其作用 | 本文件"关键参数"（8 项） |
 | 10 | 核心流程不依赖 LangChain 或 LangGraph | 全部模块手写，无框架依赖（阶段二~七） |
 
+### v2.0 阶段一：冻结语料与评估标注（已完成并验收）
+
+**目标**（v2.0 规划第 5 节）：把更新后的资料冻结为固定实验语料，评估集扩充到 ≥30 题并补到 chunk 级，为 BM25 / 融合 / 重排的对照实验建立共同基准。
+
+**语料冻结**：新增 `tools/freeze_corpus.py`（运行 `python -X utf8 -m tools.freeze_corpus` 复查），逐文件记录字节数与 SHA256 前 16 位指纹，连同切分参数与实际统计生成 `data/eval/corpus-version.md`——v2.0 全部实验共用的语料版本快照，冻结期内不得新增、重写或替换 `data/raw/` 文件：
+
+```text
+文档 10 篇（记录 15 条 = 9 篇 Markdown + PDF 6 页）→ chunk 111 个，平均 717.7 字符
+（01 篇 12 块，其余各 11 块）
+```
+
+**评估集扩充**：25 → 32 题（q26~q32：关键词 5 / 易混 1 / 语义 1），题型分布：
+
+```text
+direct 9 / keyword 5 / multi_source 5 / confusable 4 / unanswerable 3 / reasoning 2 / trap 2 / table 1 / semantic 1
+```
+
+**chunk 级标注**：31 道可答题标注 `relevant_chunk_ids`（共 103 个“题 × 块”对）；q24（食堂午餐）为空——语料零命中，与拒答答案一致。口径：排除各文档高频复用的模板扩写段（“执行要点 / 常见误区”等），只标含支撑答案的具体陈述的块。
+
+**索引重建**：`python -X utf8 ingest.py` 全量重建（此前库内仍是 v1.0 时期的 10 条旧索引）：
+
+```text
+文档数: 10
+chunk 数: 111
+集合内向量数: 111
+```
+
+**验收结果**：总验收脚本 384/384 断言通过，覆盖规划“阶段一验收清单”8 项：
+
+- 语料：10 份文件可加载，指纹与 `corpus-version.md` 逐一独立重算一致；
+- 切分：111 块、平均 717.7 字符、每篇分布吻合；
+- 库对齐：库内 id 集合 == 切分结果，111 条文本 / `content_hash` / metadata / 1024 维向量逐条一致；
+- 评估集：32 题 id 连续唯一；31 题有来源、31 题有 chunk 标注（均 ≥ 20 要求）；题型含关键词 / 语义 / 多片段 / 拒答四类；
+- 检索 smoke：9 类题型各抽 1 题实测，相关块均进入 Top-5（如 q26 [keyword] Rank1 = `09-it-support.md:chunk-2`，2/2 命中）。
+
+遗留决定：9 题的 `relevant_chunk_ids` 包含 `expected_sources` 之外的来源（FAQ 等冗余覆盖，方向均为“多”）；经复核，`expected_sources` **维持不变**——其语义是“必须命中的来源”，chunk 级公平性由 `relevant_chunk_ids` 保证。
+
 ---
 
 ## 附录
@@ -494,7 +544,7 @@ python -X utf8 -m src.retriever
 
 | 参数 | 当前值 | 位置 | 说明 |
 |---|---|---|---|
-| CHUNK_SIZE | 800 | `src/splitter.py` | 目标块大小（字符）。T1 已对比 400 更优（见调优实验 T1），第二轮实验后已恢复基线并重建索引 |
+| CHUNK_SIZE | 800 | `src/splitter.py` | 目标块大小（字符）。T1 对比过 400（更差，见调优实验 T1），维持基线；v2.0 阶段一已按 800/150 重建索引（库内 111 条） |
 | CHUNK_OVERLAP | 150 | `src/splitter.py` | 相邻块重叠字符数。太小跨边界信息丢失，太大重复与存储成本增加 |
 | EMBEDDING_MODEL | BAAI/bge-m3 | `.env`（默认值在 `src/config.py`） | Embedding 模型（硅基流动），输出 1024 维 |
 | EMBED_BATCH_SIZE | 32 | `src/config.py` | 单次 Embedding 请求的最大文本条数 |
@@ -521,18 +571,22 @@ python -X utf8 -m src.retriever
 12. **切分粒度不是越细越好（有对比数据，详见调优实验 T1）**：同一知识库把 CHUNK_SIZE 从 800 降到 400（重叠同 150），chunk 数 10 → 32，25 题的来源级 Recall@5 反而从 100% 降到 93.5%，且 q01 首位命中从《差旅制度》变成《FAQ》。当前手册均为 800 字符内短文，"每篇整切"最优，维持 800/150。
 13. **Qwen3-8B 默认开启思考模式（生成时必须关闭）**：不传 `extra_body={"enable_thinking": False}` 时，一次最小问答耗时约 14.7s、completion 399 token（其中思考链 397）；关闭后 0.5s、1 token。RAG 照资料答题用不到思考链，`generator.py` 已默认关闭（返回结构详见附录知识笔记）。
 14. **界面启动走 `python -m streamlit`**：streamlit 装好后可执行文件在环境的 `Scripts\` 目录（不在 PATH），直接敲 `streamlit run` 会提示无法识别命令；统一用 `python -X utf8 -m streamlit run app.py` 启动界面。
+15. **语料扩写段是刻意保留的干扰项（v2.0）**：9 篇 Markdown 各自追加的模板化“扩展使用说明”段（规则说明 / 执行要点 / 常见误区等）跨文档高度相似，是混合检索实验的 hard negative 与“多副本”观察点，不是数据事故；chunk 级标注对这类段落从严判定（仅含支撑答案的具体陈述才标）。
 
 ---
 
 ## 下一步
 
-- 七个阶段已全部完成；MVP 完成定义 10 项已逐条核对（见"工作记录 → 收尾"）。最后一项收尾正在进行：
-  - **人工评估表**：模板已生成在 `data/eval/eval-report.md`（25 题预填题面与参考），在界面里逐题走查后填 4 个判定列（正确片段进入 Top-5 / 答案正确 / 引用正确 / 是否出现幻觉），并在文末汇总四项指标，对照 Recall@5 ≥ 80%、答案正确率 ≥ 70%、引用准确率 ≥ 80% 的目标。
-- 后续迭代方向（多轮对话、Reranker、混合检索等）见规划第 10 节。
+- v1.0 七个阶段已全部完成（MVP 完成定义 10/10，见“工作记录 → 收尾”）。
+- **v2.0 进行中**（规划见 `RAG-v2.0学习规划.md`）：
+  - 阶段一“冻结语料与评估标注”已完成并验收（见“工作记录 → v2.0 阶段一”）；
+  - 下一环节：阶段二“建立 v1.0 可重复评估基线”——一条命令跑完全部 32 题的纯向量检索评估（不调用 LLM），产出机器可读 JSON + 人类可读报告，保存为不可被覆盖的 v1.0 基线；
+  - 人工评估表 `data/eval/eval-report.md` 已同步为 32 题 v2.0 版（目标以 v2.0 规划第 5 节阶段六为准），待阶段六端到端时逐题填写。
 
 ---
 
 ## 参考资料
 
 - [RAG-MVP学习规划.md](./RAG-MVP学习规划.md)：总规划、技术栈、七阶段验收清单、评估指标（Recall@5 ≥ 80% 等）
+- [RAG-v2.0学习规划.md](./RAG-v2.0学习规划.md)：v2.0 规划——语料冻结、BM25 / RRF / Reranker、四方案对照实验与成功标准
 - [data/README.md](./data/README.md)：知识库数据集说明

@@ -4,14 +4,15 @@
 
 ## 数据集内容
 
-- `knowledge_base/`：10 个 Markdown 知识库文件
-- `eval/questions.jsonl`：25 条评估问题，包含期望答案、来源和问题类型
+- `raw/`：10 份知识库文件——9 份 Markdown 专项制度（`01`～`09`）与 1 份 PDF 版常见问题（`10-faq.pdf`，6 页）
+- `eval/questions.jsonl`：32 条评估问题（25 条原题 + 7 条新增），字段为 `id / question / expected_answer / expected_sources / type`
+- `eval/eval-report.md`：32 题人工评估表，用于逐题走查检索与生成质量并汇总指标
 
 ## 推荐用法
 
-1. 将 `knowledge_base/` 下的文件放进项目的 `data/raw/`。
-2. 第一轮使用 `chunk_size=600`、`chunk_overlap=100`、`top_k=5`。
-3. 建立索引后，用 `eval/questions.jsonl` 逐条测试。
+1. 资料位于 `data/raw/`，直接加载使用；Markdown 按纯文本读取，`10-faq.pdf` 需 PDF 文本解析（每页一条记录）。
+2. 首轮参数建议 `chunk_size=800`、`chunk_overlap=150`、`top_k=5`（与 rag-one 当前配置一致）。
+3. 建立索引后，用 `eval/questions.jsonl` 逐条做检索评估，再按 `eval/eval-report.md` 走查端到端答案。
 4. 调试时同时输出召回片段、相似度、来源文件和最终答案。
 
 ## 建议的元数据
@@ -36,7 +37,7 @@
 - 病假、事假和年假的申请时限、证明材料不同。
 - IT 服务台与安全事件的报告渠道不同。
 
-这些差异可以用于观察文本切分、召回和引用是否准确。
+2026.1 版语料在正式条款后追加了约 130 行扩展说明（办理口径、角色责任、常见场景），且各文件的通用段落表述高度相似；常见问题改以 `10-faq.pdf` 形式提供。这些差异与安排可以用于观察文本切分、召回和引用是否准确，也便于观察相似段落干扰与 PDF 解析的影响。
 
 ## 使用限制
 
