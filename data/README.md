@@ -6,18 +6,20 @@
 
 - `raw/`：10 份知识库文件——9 份 Markdown 专项制度（`01`～`09`）与 1 份 PDF 版常见问题（`10-faq.pdf`，6 页）
 - `eval/questions.jsonl`：32 条评估问题（25 条原题 + 7 条新增），字段为 `id / question / expected_answer / expected_sources / relevant_chunk_ids / type`
-- `eval/eval-report.md`：32 题人工评估表，用于逐题走查检索与生成质量并汇总指标
+- `eval/eval-report.md`：端到端人工评估表（E1 vector / E4 hybrid_rerank 双链路，32 题 × 4 判定列），逐题走查检索与生成质量并汇总指标
 - `eval/corpus-version.md`：v2.0 语料版本快照（文件指纹 / 切分参数 / chunk 统计）
 - `eval/baseline-v1.json` + `eval/baseline-v1.md`：v1.0 向量检索基线结果（32 题；机器可读 JSON + 可读报告，配套评估脚本见仓库 `evaluation/`）
 - `eval/run-bm25.json` + `eval/run-bm25.md`：BM25 关键词检索评估结果（32 题，与向量基线同口径，可直接对照）
 - `eval/run-hybrid.json` + `eval/run-hybrid.md`：混合检索（向量 + BM25 → RRF 融合）评估结果（32 题，与基线 / BM25 同口径，含每条命中的两路名次）
 - `eval/run-hybrid-rerank.json` + `eval/run-hybrid-rerank.md`：混合检索 + Reranker 精排评估结果（32 题，与前述同口径，含每条命中的重排前融合名次与重排分数）
+- `eval/run-e2e-vector.json` + `eval/run-e2e-vector.md`：E1 端到端评估结果（32 题：逐题答案全文与引用编号 + Prompt token + 检索 / 生成两段延迟）
+- `eval/run-e2e-hybrid_rerank.json` + `eval/run-e2e-hybrid_rerank.md`：E4 端到端评估结果（32 题，另含融合 / 精排分段延迟与重排 token）
 
 ## 推荐用法
 
 1. 资料位于 `data/raw/`，直接加载使用；Markdown 按纯文本读取，`10-faq.pdf` 需 PDF 文本解析（每页一条记录）。
 2. 首轮参数建议 `chunk_size=800`、`chunk_overlap=150`、`top_k=5`（与 rag-one 当前配置一致）。
-3. 建立索引后，用 `eval/questions.jsonl` 逐条做检索评估，再按 `eval/eval-report.md` 走查端到端答案。
+3. 建立索引后，用仓库 `evaluation/evaluate_retrieval.py` 逐题跑检索评估（或直接对照 `eval/run-*.json`），再用 `evaluation/evaluate_e2e.py` 跑端到端问答，最后按 `eval/eval-report.md` 的判定口径走查答案与引用。
 4. 调试时同时输出召回片段、相似度、来源文件和最终答案。
 
 ## 建议的元数据
