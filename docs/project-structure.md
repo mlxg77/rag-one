@@ -125,7 +125,7 @@ tests/
 - `unit/` 使用替身验证纯逻辑、API异常、参数边界和评估口径；
 - `integration/` 验证界面、完整数据集和双索引发布/回滚；
 - 离线测试不得依赖真实 API Key 或网络；
-- 当前全量测试为 113 项。
+- 当前全量测试为 115 项。
 
 ## 6. 数据 `data/`
 
@@ -138,7 +138,8 @@ data/
 │   └── eval-v2.5.md             # v2.5评估集冻结信息
 └── eval/
     ├── regression.jsonl         # 32题开发/回归集，可重复运行
-    ├── holdout.jsonl            # 15题v2.5终验集，已经消费
+    ├── holdout.jsonl            # 原15题v2.5终验集，已经消费
+    ├── blind-v2.5.jsonl         # C4冻结后的20题新盲测，已经消费
     ├── evidence-anchors.json     # 跨chunk配置的稳定文本证据锚点
     └── results/
         ├── v2/                  # v2四模式与E1/E4历史结果
@@ -149,7 +150,7 @@ data/
 
 - `raw/` 是当前知识库输入；改变语料后必须重建索引并更新快照；
 - regression 用于开发、修复和重复验证；
-- v2.5 holdout 已执行一次，不能用于调参后再次宣称独立终验；
+- 原 v2.5 Holdout 与新 20 题盲测均已执行，不能用于调参后再次宣称独立终验；
 - chunk 参数变化时使用 `evidence-anchors.json` 重新映射证据，不能直接复用旧序号 ID；
 - `results/` 保存原始实验产物，不能只保留手工摘录的汇总数字。
 
@@ -168,7 +169,7 @@ docs/
 │   └── v2.5.md                  # v2.5唯一版本报告，含复盘与学习验收
 ├── experiments/
 │   ├── chunk-v2.5.md            # 分块大小/重叠实验过程与结论
-│   └── citation-v2.5.md         # C0/C1引用与生成实验
+│   └── citation-v2.5.md         # C0—C4生成、引用与新盲测实验
 ├── decisions/
 │   ├── 001-versioned-dual-index.md
 │   ├── 002-package-layout.md

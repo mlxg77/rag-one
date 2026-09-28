@@ -1,5 +1,13 @@
 # 检索评估报告：baseline-v1
 
+## 文件说明
+
+- v2.0 检索层评估基线段：v1.0 口径纯向量链（内部名 `baseline-v1`）；同名 `.json` 为权威原始数据，本报告为其渲染（本说明为归档补注）。
+- 实验内容：bge-m3 向量 + Chroma 余弦，仅按相似度返回 Top-K。
+- 实验角色：四组对照起点——**baseline-vector（本组）** → run-bm25 → run-hybrid → run-hybrid-rerank。
+- 生成与状态：2026-09-27 由 `evaluation/evaluate_retrieval.py` 生成；属 v2.0 冻结快照。
+- 读者：人读 md，程序读 JSON。
+
 ## 运行信息
 
 | 项 | 值 |

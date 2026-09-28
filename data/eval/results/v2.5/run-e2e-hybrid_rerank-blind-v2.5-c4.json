@@ -1,0 +1,2251 @@
+{
+  "run": {
+    "name": "run-e2e-hybrid_rerank-blind-v2.5-c4",
+    "mode": "hybrid_rerank",
+    "dataset": "data/eval/blind-v2.5.jsonl",
+    "dataset_sha256": "92524f614d42b79b519c1ea606e27c573a7462b901c848d36b11919105717da1",
+    "evidence_anchors_sha256": "4a7e4b3ee8e7f858f4bd41df35e9e0ba46e9b5f425397aff6aeacfc731722938",
+    "top_k": 5,
+    "recall_ks": [
+      5,
+      10
+    ],
+    "mrr_k": 10,
+    "index": {
+      "index_version": "legacy-v2-51fb439d",
+      "corpus_sha256": "51fb439d938f25c4efe0a366b6135f7bd60d1f0f149053802cf2c49cd488e1b0",
+      "chunk_ids_sha256": "da18939dbbae47d0b560baaf746aafc887d7873e82fb86cf6fcdf728cffe8a91",
+      "chunk_size": 800,
+      "chunk_overlap": 150,
+      "chunk_count": 111,
+      "vector_collection": "rag_mvp_docs",
+      "bm25_file": "storage/bm25/index.json",
+      "embedding_model": "BAAI/bge-m3",
+      "bm25": {
+        "tokenizer": "jieba",
+        "k1": 1.5,
+        "b": 0.75,
+        "term_count": 1515
+      }
+    },
+    "retrieval": {
+      "vector_candidates": 20,
+      "bm25_candidates": 20,
+      "rrf_k": 60,
+      "rerank_candidates": 20,
+      "rerank_model": "BAAI/bge-reranker-v2-m3",
+      "bm25_k1": 1.5,
+      "bm25_b": 0.75
+    },
+    "generation": {
+      "model": "Qwen/Qwen3-8B",
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "temperature": 0.2,
+      "enable_thinking": false
+    },
+    "warmup": false,
+    "runtime": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "packages": {
+        "chromadb": "1.5.9",
+        "jieba": "0.42.1",
+        "openai": "3.19.2",
+        "httpx": "0.28.1",
+        "pymupdf": "1.28.2",
+        "streamlit": "1.64.0"
+      },
+      "git": {
+        "commit": "87348c92b884c39ee6a3dbd15d9bc7fac01da58b",
+        "dirty": true
+      }
+    },
+    "created_at": "2026-09-28T07:30:15+00:00",
+    "question_count": 20,
+    "limit": null,
+    "evaluation_duration_ms": 59942
+  },
+  "summary": {
+    "scored_count": 18,
+    "recall_at_5": 0.944444,
+    "evidence_group_recall_at_5": 0.944444,
+    "complete_evidence_at_5": 0.944444,
+    "prompt_tokens": {
+      "avg": 2992.4,
+      "p50": 3019,
+      "p95": 3087
+    },
+    "completion_tokens": {
+      "avg": 31.8,
+      "p50": 28,
+      "p95": 51
+    },
+    "invalid_citation_answers": 0,
+    "refusal_with_citations": 0,
+    "latency_ms": {
+      "fuse": {
+        "avg": 333.2,
+        "p50": 159,
+        "p95": 656
+      },
+      "rerank": {
+        "avg": 669.7,
+        "p50": 659,
+        "p95": 736
+      },
+      "generate": {
+        "avg": 1993.9,
+        "p50": 2045,
+        "p95": 2919
+      },
+      "total": {
+        "avg": 2996.9,
+        "p50": 2925,
+        "p95": 3793
+      }
+    },
+    "rerank_input_tokens": {
+      "avg": 9502.3,
+      "p50": 9591,
+      "p95": 9966
+    },
+    "fallback_count": 0
+  },
+  "questions": [
+    {
+      "question_id": "b01",
+      "question": "入职前一直没收到报到通知，正常应在什么时候收到，还要核对哪些信息？",
+      "type": "semantic",
+      "expected_answer": "通常应在入职日前两个工作日收到；应核对办公地点、报到时间和联系人。",
+      "relevant_chunk_ids": [
+        "02-onboarding.md:chunk-2"
+      ],
+      "evidence_groups": [
+        [
+          "02-onboarding.md:chunk-2"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "02-onboarding.md:chunk-2",
+          "source": "02-onboarding.md",
+          "score": 0.032266,
+          "vector_rank": 1,
+          "vector_score": 0.7028537392616272,
+          "bm25_rank": 3,
+          "bm25_score": 7.064630487099198,
+          "rrf_rank": 2,
+          "rerank_score": 0.576679
+        },
+        {
+          "rank": 2,
+          "chunk_id": "02-onboarding.md:chunk-0",
+          "source": "02-onboarding.md",
+          "score": 0.032522,
+          "vector_rank": 2,
+          "vector_score": 0.6910474896430969,
+          "bm25_rank": 1,
+          "bm25_score": 15.336807354608384,
+          "rrf_rank": 1,
+          "rerank_score": 0.376179
+        },
+        {
+          "rank": 3,
+          "chunk_id": "02-onboarding.md:chunk-1",
+          "source": "02-onboarding.md",
+          "score": 0.030366,
+          "vector_rank": 3,
+          "vector_score": 0.6669691801071167,
+          "bm25_rank": 9,
+          "bm25_score": 4.301304989109862,
+          "rrf_rank": 3,
+          "rerank_score": 0.072982
+        },
+        {
+          "rank": 4,
+          "chunk_id": "02-onboarding.md:chunk-8",
+          "source": "02-onboarding.md",
+          "score": 0.015385,
+          "vector_rank": 5,
+          "vector_score": 0.6441171169281006,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 8,
+          "rerank_score": 0.068094
+        },
+        {
+          "rank": 5,
+          "chunk_id": "10-faq.pdf:page-5:chunk-2",
+          "source": "10-faq.pdf",
+          "score": 0.015152,
+          "vector_rank": 6,
+          "vector_score": 0.6280845403671265,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 11,
+          "rerank_score": 0.01913
+        }
+      ],
+      "hit_rank": 1,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "根据资料，新员工应在入职日前两个工作日收到报到通知。报到通知应包含办公地点、联系人和入职时间。核对信息时，应核对办公地点、报到时间和联系人。[1]",
+      "citations": [
+        1
+      ],
+      "citation_validation": {
+        "citations": [
+          1
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 2628,
+        "completion_tokens": 50
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 2418,
+        "rerank": 721,
+        "generate": 2919,
+        "total": 6059
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9006
+    },
+    {
+      "question_id": "b02",
+      "question": "公司电脑还没到，可以先用个人电脑处理工作吗？",
+      "type": "trap",
+      "expected_answer": "不可以自动这样做；必须先取得岗位负责人和信息安全负责人的共同书面批准，设备未到不会自动形成例外。",
+      "relevant_chunk_ids": [
+        "02-onboarding.md:chunk-3"
+      ],
+      "evidence_groups": [
+        [
+          "02-onboarding.md:chunk-3"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "10-faq.pdf:page-4:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.032266,
+          "vector_rank": 1,
+          "vector_score": 0.6852450370788574,
+          "bm25_rank": 3,
+          "bm25_score": 6.583224976541611,
+          "rrf_rank": 1,
+          "rerank_score": 0.698628
+        },
+        {
+          "rank": 2,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.031319,
+          "vector_rank": 7,
+          "vector_score": 0.6132474541664124,
+          "bm25_rank": 1,
+          "bm25_score": 20.44365814574321,
+          "rrf_rank": 2,
+          "rerank_score": 0.689175
+        },
+        {
+          "rank": 3,
+          "chunk_id": "02-onboarding.md:chunk-0",
+          "source": "02-onboarding.md",
+          "score": 0.030018,
+          "vector_rank": 12,
+          "vector_score": 0.5994031429290771,
+          "bm25_rank": 2,
+          "bm25_score": 6.938656050437823,
+          "rrf_rank": 3,
+          "rerank_score": 0.340907
+        },
+        {
+          "rank": 4,
+          "chunk_id": "07-remote-work.md:chunk-6",
+          "source": "07-remote-work.md",
+          "score": 0.02837,
+          "vector_rank": 11,
+          "vector_score": 0.6018469333648682,
+          "bm25_rank": 10,
+          "bm25_score": 4.650312534563528,
+          "rrf_rank": 7,
+          "rerank_score": 0.0706
+        },
+        {
+          "rank": 5,
+          "chunk_id": "08-information-security.md:chunk-7",
+          "source": "08-information-security.md",
+          "score": 0.015152,
+          "vector_rank": null,
+          "vector_score": null,
+          "bm25_rank": 6,
+          "bm25_score": 5.256704093732493,
+          "rrf_rank": 15,
+          "rerank_score": 0.043312
+        }
+      ],
+      "hit_rank": null,
+      "recall_at_5": 0,
+      "evidence_group_recall_at_5": 0.0,
+      "complete_evidence_at_5": 0,
+      "answer": "不能。使用个人电脑处理公司业务需要岗位负责人和信息安全负责人共同书面批准 [1]。",
+      "citations": [
+        1
+      ],
+      "citation_validation": {
+        "citations": [
+          1
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 2852,
+        "completion_tokens": 21
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 398,
+        "rerank": 661,
+        "generate": 1534,
+        "total": 2593
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9551
+    },
+    {
+      "question_id": "b03",
+      "question": "新员工的四门必修课多久内完成？信息安全考试没通过又要多久内补考？",
+      "type": "multi_evidence",
+      "expected_answer": "四门必修课应在入职后十个工作日内完成；信息安全考试未通过者应在五个工作日内重新学习并补考。",
+      "relevant_chunk_ids": [
+        "02-onboarding.md:chunk-6",
+        "02-onboarding.md:chunk-0",
+        "02-onboarding.md:chunk-1"
+      ],
+      "evidence_groups": [
+        [
+          "02-onboarding.md:chunk-6"
+        ],
+        [
+          "02-onboarding.md:chunk-0",
+          "02-onboarding.md:chunk-1",
+          "02-onboarding.md:chunk-6"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "02-onboarding.md:chunk-6",
+          "source": "02-onboarding.md",
+          "score": 0.032522,
+          "vector_rank": 1,
+          "vector_score": 0.7194657921791077,
+          "bm25_rank": 2,
+          "bm25_score": 8.51328695973005,
+          "rrf_rank": 2,
+          "rerank_score": 0.877091
+        },
+        {
+          "rank": 2,
+          "chunk_id": "02-onboarding.md:chunk-0",
+          "source": "02-onboarding.md",
+          "score": 0.032522,
+          "vector_rank": 2,
+          "vector_score": 0.7082586288452148,
+          "bm25_rank": 1,
+          "bm25_score": 10.139670130479345,
+          "rrf_rank": 1,
+          "rerank_score": 0.722114
+        },
+        {
+          "rank": 3,
+          "chunk_id": "02-onboarding.md:chunk-1",
+          "source": "02-onboarding.md",
+          "score": 0.031746,
+          "vector_rank": 3,
+          "vector_score": 0.6571146249771118,
+          "bm25_rank": 3,
+          "bm25_score": 7.783154234233318,
+          "rrf_rank": 3,
+          "rerank_score": 0.667317
+        },
+        {
+          "rank": 4,
+          "chunk_id": "02-onboarding.md:chunk-7",
+          "source": "02-onboarding.md",
+          "score": 0.03125,
+          "vector_rank": 4,
+          "vector_score": 0.648622989654541,
+          "bm25_rank": 4,
+          "bm25_score": 6.946557092506752,
+          "rrf_rank": 4,
+          "rerank_score": 0.216852
+        },
+        {
+          "rank": 5,
+          "chunk_id": "02-onboarding.md:chunk-4",
+          "source": "02-onboarding.md",
+          "score": 0.028006,
+          "vector_rank": 14,
+          "vector_score": 0.599155068397522,
+          "bm25_rank": 9,
+          "bm25_score": 4.1238372686201314,
+          "rrf_rank": 7,
+          "rerank_score": 0.058438
+        }
+      ],
+      "hit_rank": 1,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "新员工的四门必修课程应在入职后十个工作日内完成 [1]。信息安全基础课程测验未通过者应在五个工作日内重新学习并补考 [3]。",
+      "citations": [
+        1,
+        3
+      ],
+      "citation_validation": {
+        "citations": [
+          1,
+          3
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 2975,
+        "completion_tokens": 40
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 210,
+        "rerank": 689,
+        "generate": 2025,
+        "total": 2924
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9364
+    },
+    {
+      "question_id": "b04",
+      "question": "门禁卡丢了，除了领临时凭证还要做什么？",
+      "type": "multi_fact",
+      "expected_answer": "联系前台核验身份并领取临时凭证，同时及时报告以停用旧卡。",
+      "relevant_chunk_ids": [
+        "01-company-overview.md:chunk-4"
+      ],
+      "evidence_groups": [
+        [
+          "01-company-overview.md:chunk-4"
+        ],
+        [
+          "01-company-overview.md:chunk-4"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "01-company-overview.md:chunk-4",
+          "source": "01-company-overview.md",
+          "score": 0.032266,
+          "vector_rank": 1,
+          "vector_score": 0.6085057854652405,
+          "bm25_rank": 3,
+          "bm25_score": 7.172735261410114,
+          "rrf_rank": 1,
+          "rerank_score": 0.692925
+        },
+        {
+          "rank": 2,
+          "chunk_id": "10-faq.pdf:page-3:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.030214,
+          "vector_rank": 11,
+          "vector_score": 0.564598560333252,
+          "bm25_rank": 2,
+          "bm25_score": 8.757406743570646,
+          "rrf_rank": 3,
+          "rerank_score": 0.680956
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.016393,
+          "vector_rank": null,
+          "vector_score": null,
+          "bm25_rank": 1,
+          "bm25_score": 11.789326053026253,
+          "rrf_rank": 8,
+          "rerank_score": 0.355928
+        },
+        {
+          "rank": 4,
+          "chunk_id": "09-it-support.md:chunk-1",
+          "source": "09-it-support.md",
+          "score": 0.028543,
+          "vector_rank": 5,
+          "vector_score": 0.5843787789344788,
+          "bm25_rank": 16,
+          "bm25_score": 2.5170153104661352,
+          "rrf_rank": 5,
+          "rerank_score": 0.241943
+        },
+        {
+          "rank": 5,
+          "chunk_id": "09-it-support.md:chunk-7",
+          "source": "09-it-support.md",
+          "score": 0.014493,
+          "vector_rank": null,
+          "vector_score": null,
+          "bm25_rank": 9,
+          "bm25_score": 3.79190829871405,
+          "rrf_rank": 17,
+          "rerank_score": 0.160136
+        }
+      ],
+      "hit_rank": 1,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "门禁卡丢了，除了联系前台核验身份并领取临时凭证外，还应及时报告以便停用旧卡 [2]。",
+      "citations": [
+        2
+      ],
+      "citation_validation": {
+        "citations": [
+          2
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 3037,
+        "completion_tokens": 29
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 421,
+        "rerank": 714,
+        "generate": 1710,
+        "total": 2846
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9840
+    },
+    {
+      "question_id": "b05",
+      "question": "接待外部访客前和访问期间，接待员工分别有什么责任？",
+      "type": "multi_fact",
+      "expected_answer": "提前在访客系统登记来访目的、时间和联系人；访问期间全程陪同，并只允许访客进入与来访目的相符的区域。",
+      "relevant_chunk_ids": [
+        "01-company-overview.md:chunk-4",
+        "01-company-overview.md:chunk-5"
+      ],
+      "evidence_groups": [
+        [
+          "01-company-overview.md:chunk-4",
+          "01-company-overview.md:chunk-5"
+        ],
+        [
+          "01-company-overview.md:chunk-4",
+          "01-company-overview.md:chunk-5"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "01-company-overview.md:chunk-5",
+          "source": "01-company-overview.md",
+          "score": 0.032522,
+          "vector_rank": 1,
+          "vector_score": 0.6103116273880005,
+          "bm25_rank": 2,
+          "bm25_score": 14.172090302879186,
+          "rrf_rank": 1,
+          "rerank_score": 0.949308
+        },
+        {
+          "rank": 2,
+          "chunk_id": "01-company-overview.md:chunk-4",
+          "source": "01-company-overview.md",
+          "score": 0.031778,
+          "vector_rank": 5,
+          "vector_score": 0.5627469420433044,
+          "bm25_rank": 1,
+          "bm25_score": 16.16459262427522,
+          "rrf_rank": 2,
+          "rerank_score": 0.942015
+        },
+        {
+          "rank": 3,
+          "chunk_id": "01-company-overview.md:chunk-0",
+          "source": "01-company-overview.md",
+          "score": 0.015873,
+          "vector_rank": null,
+          "vector_score": null,
+          "bm25_rank": 3,
+          "bm25_score": 8.460359007642438,
+          "rrf_rank": 9,
+          "rerank_score": 0.053645
+        },
+        {
+          "rank": 4,
+          "chunk_id": "01-company-overview.md:chunk-3",
+          "source": "01-company-overview.md",
+          "score": 0.015873,
+          "vector_rank": 3,
+          "vector_score": 0.5909485220909119,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 10,
+          "rerank_score": 0.032226
+        },
+        {
+          "rank": 5,
+          "chunk_id": "01-company-overview.md:chunk-2",
+          "source": "01-company-overview.md",
+          "score": 0.014493,
+          "vector_rank": 9,
+          "vector_score": 0.5600237250328064,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 14,
+          "rerank_score": 0.023922
+        }
+      ],
+      "hit_rank": 1,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "接待外部访客前，接待员工的责任包括提前在访客系统登记来访目的、时间和联系人，并确保访客只可进入与来访目的相符的区域 [1]。访问期间，接待员工需承担陪同责任，确保访客不得在无人陪同的情况下接触办公设备或资料 [1]。",
+      "citations": [
+        1
+      ],
+      "citation_validation": {
+        "citations": [
+          1
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 2997,
+        "completion_tokens": 66
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 137,
+        "rerank": 627,
+        "generate": 3029,
+        "total": 3793
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 8948
+    },
+    {
+      "question_id": "b06",
+      "question": "全体员工每天必须保持可联系的两个核心协作时段是什么？",
+      "type": "keyword",
+      "expected_answer": "10:00—12:00 和 14:00—16:00。",
+      "relevant_chunk_ids": [
+        "03-attendance.md:chunk-2"
+      ],
+      "evidence_groups": [
+        [
+          "03-attendance.md:chunk-2"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.032787,
+          "vector_rank": 1,
+          "vector_score": 0.6203606724739075,
+          "bm25_rank": 1,
+          "bm25_score": 20.436772136452642,
+          "rrf_rank": 1,
+          "rerank_score": 0.966091
+        },
+        {
+          "rank": 2,
+          "chunk_id": "03-attendance.md:chunk-2",
+          "source": "03-attendance.md",
+          "score": 0.032258,
+          "vector_rank": 2,
+          "vector_score": 0.6162738800048828,
+          "bm25_rank": 2,
+          "bm25_score": 19.264479495897948,
+          "rrf_rank": 2,
+          "rerank_score": 0.955118
+        },
+        {
+          "rank": 3,
+          "chunk_id": "07-remote-work.md:chunk-5",
+          "source": "07-remote-work.md",
+          "score": 0.031258,
+          "vector_rank": 5,
+          "vector_score": 0.5523148775100708,
+          "bm25_rank": 3,
+          "bm25_score": 14.964893863832803,
+          "rrf_rank": 3,
+          "rerank_score": 0.849861
+        },
+        {
+          "rank": 4,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.030118,
+          "vector_rank": 9,
+          "vector_score": 0.5339377522468567,
+          "bm25_rank": 4,
+          "bm25_score": 13.088169978059463,
+          "rrf_rank": 5,
+          "rerank_score": 0.351426
+        },
+        {
+          "rank": 5,
+          "chunk_id": "03-attendance.md:chunk-8",
+          "source": "03-attendance.md",
+          "score": 0.030579,
+          "vector_rank": 3,
+          "vector_score": 0.564262866973877,
+          "bm25_rank": 8,
+          "bm25_score": 6.426238775428002,
+          "rrf_rank": 4,
+          "rerank_score": 0.116379
+        }
+      ],
+      "hit_rank": 2,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "全体员工每天必须保持可联系的两个核心协作时段是 10:00—12:00 和 14:00—16:00 [1]。",
+      "citations": [
+        1
+      ],
+      "citation_validation": {
+        "citations": [
+          1
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 3036,
+        "completion_tokens": 41
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 153,
+        "rerank": 626,
+        "generate": 2096,
+        "total": 2876
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9714
+    },
+    {
+      "question_id": "b07",
+      "question": "员工自己晚上多工作两小时，就自动算获批加班吗？",
+      "type": "trap",
+      "expected_answer": "不算。业务需要加班应事先取得直属经理书面批准，自行延长工作时间不会自动成为获批加班。",
+      "relevant_chunk_ids": [
+        "03-attendance.md:chunk-6"
+      ],
+      "evidence_groups": [
+        [
+          "03-attendance.md:chunk-6"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "03-attendance.md:chunk-6",
+          "source": "03-attendance.md",
+          "score": 0.031778,
+          "vector_rank": 1,
+          "vector_score": 0.6431465148925781,
+          "bm25_rank": 5,
+          "bm25_score": 8.672214842960697,
+          "rrf_rank": 1,
+          "rerank_score": 0.953242
+        },
+        {
+          "rank": 2,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.031498,
+          "vector_rank": 4,
+          "vector_score": 0.6172264218330383,
+          "bm25_rank": 3,
+          "bm25_score": 9.033347282266341,
+          "rrf_rank": 2,
+          "rerank_score": 0.879631
+        },
+        {
+          "rank": 3,
+          "chunk_id": "03-attendance.md:chunk-5",
+          "source": "03-attendance.md",
+          "score": 0.030303,
+          "vector_rank": 6,
+          "vector_score": 0.6087726354598999,
+          "bm25_rank": 6,
+          "bm25_score": 6.656842039328168,
+          "rrf_rank": 3,
+          "rerank_score": 0.360953
+        },
+        {
+          "rank": 4,
+          "chunk_id": "03-attendance.md:chunk-2",
+          "source": "03-attendance.md",
+          "score": 0.016129,
+          "vector_rank": 2,
+          "vector_score": 0.6225957870483398,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 7,
+          "rerank_score": 0.214243
+        },
+        {
+          "rank": 5,
+          "chunk_id": "05-expense-policy.md:chunk-7",
+          "source": "05-expense-policy.md",
+          "score": 0.015873,
+          "vector_rank": 3,
+          "vector_score": 0.6183686256408691,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 8,
+          "rerank_score": 0.196448
+        }
+      ],
+      "hit_rank": 1,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "不能。员工自行延长工作时间不自动构成经批准加班 [1]。",
+      "citations": [
+        1
+      ],
+      "citation_validation": {
+        "citations": [
+          1
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 3072,
+        "completion_tokens": 17
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 158,
+        "rerank": 612,
+        "generate": 1560,
+        "total": 2330
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9584
+    },
+    {
+      "question_id": "b08",
+      "question": "加班形成的调休通常多久内要使用，想延期由谁确认？",
+      "type": "multi_fact",
+      "expected_answer": "原则上在产生之日起三个月内使用；是否延期由人力资源部门结合业务和适用规则确认。",
+      "relevant_chunk_ids": [
+        "03-attendance.md:chunk-6"
+      ],
+      "evidence_groups": [
+        [
+          "03-attendance.md:chunk-6"
+        ],
+        [
+          "03-attendance.md:chunk-6"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "03-attendance.md:chunk-1",
+          "source": "03-attendance.md",
+          "score": 0.032002,
+          "vector_rank": 2,
+          "vector_score": 0.6940377950668335,
+          "bm25_rank": 3,
+          "bm25_score": 9.294948782284088,
+          "rrf_rank": 2,
+          "rerank_score": 0.969486
+        },
+        {
+          "rank": 2,
+          "chunk_id": "03-attendance.md:chunk-6",
+          "source": "03-attendance.md",
+          "score": 0.032787,
+          "vector_rank": 1,
+          "vector_score": 0.7286535501480103,
+          "bm25_rank": 1,
+          "bm25_score": 18.310334394908317,
+          "rrf_rank": 1,
+          "rerank_score": 0.967374
+        },
+        {
+          "rank": 3,
+          "chunk_id": "03-attendance.md:chunk-0",
+          "source": "03-attendance.md",
+          "score": 0.031754,
+          "vector_rank": 4,
+          "vector_score": 0.6718634366989136,
+          "bm25_rank": 2,
+          "bm25_score": 13.772045967995957,
+          "rrf_rank": 3,
+          "rerank_score": 0.515461
+        },
+        {
+          "rank": 4,
+          "chunk_id": "10-faq.pdf:page-2:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.014493,
+          "vector_rank": null,
+          "vector_score": null,
+          "bm25_rank": 9,
+          "bm25_score": 3.8229305933270536,
+          "rrf_rank": 13,
+          "rerank_score": 0.069562
+        },
+        {
+          "rank": 5,
+          "chunk_id": "03-attendance.md:chunk-5",
+          "source": "03-attendance.md",
+          "score": 0.030777,
+          "vector_rank": 6,
+          "vector_score": 0.6613240242004395,
+          "bm25_rank": 4,
+          "bm25_score": 6.77899848513187,
+          "rrf_rank": 4,
+          "rerank_score": 0.02156
+        }
+      ],
+      "hit_rank": 2,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "加班形成的调休原则上应在产生之日起三个月内使用，逾期是否延长由人力资源部门根据业务和适用规则确认 [1]。",
+      "citations": [
+        1
+      ],
+      "citation_validation": {
+        "citations": [
+          1
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 3086,
+        "completion_tokens": 28
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 162,
+        "rerank": 659,
+        "generate": 2111,
+        "total": 2932
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9607
+    },
+    {
+      "question_id": "b09",
+      "question": "业务餐饮报销除了普通票据，还需要补充哪些参与信息？",
+      "type": "direct",
+      "expected_answer": "填写参与人员及所属单位，并说明与业务目的的关系。",
+      "relevant_chunk_ids": [
+        "05-expense-policy.md:chunk-3"
+      ],
+      "evidence_groups": [
+        [
+          "05-expense-policy.md:chunk-3"
+        ],
+        [
+          "05-expense-policy.md:chunk-3"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "05-expense-policy.md:chunk-3",
+          "source": "05-expense-policy.md",
+          "score": 0.032522,
+          "vector_rank": 1,
+          "vector_score": 0.693770170211792,
+          "bm25_rank": 2,
+          "bm25_score": 14.60656418872952,
+          "rrf_rank": 2,
+          "rerank_score": 0.951994
+        },
+        {
+          "rank": 2,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.032522,
+          "vector_rank": 2,
+          "vector_score": 0.6770836710929871,
+          "bm25_rank": 1,
+          "bm25_score": 17.631687609644366,
+          "rrf_rank": 1,
+          "rerank_score": 0.646403
+        },
+        {
+          "rank": 3,
+          "chunk_id": "05-expense-policy.md:chunk-1",
+          "source": "05-expense-policy.md",
+          "score": 0.030777,
+          "vector_rank": 6,
+          "vector_score": 0.6149915456771851,
+          "bm25_rank": 4,
+          "bm25_score": 7.297105370788824,
+          "rrf_rank": 4,
+          "rerank_score": 0.077659
+        },
+        {
+          "rank": 4,
+          "chunk_id": "05-expense-policy.md:chunk-8",
+          "source": "05-expense-policy.md",
+          "score": 0.03101,
+          "vector_rank": 4,
+          "vector_score": 0.6238090991973877,
+          "bm25_rank": 5,
+          "bm25_score": 6.850610789247229,
+          "rrf_rank": 3,
+          "rerank_score": 0.04651
+        },
+        {
+          "rank": 5,
+          "chunk_id": "06-travel-policy.md:chunk-7",
+          "source": "06-travel-policy.md",
+          "score": 0.028309,
+          "vector_rank": 16,
+          "vector_score": 0.5974283218383789,
+          "bm25_rank": 6,
+          "bm25_score": 6.7230472977993685,
+          "rrf_rank": 7,
+          "rerank_score": 0.042832
+        }
+      ],
+      "hit_rank": 1,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "业务餐饮报销除了普通票据，还需要补充参与人员及所属单位信息，并说明与业务目的的关系。[2]",
+      "citations": [
+        2
+      ],
+      "citation_validation": {
+        "citations": [
+          2
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 3060,
+        "completion_tokens": 25
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 152,
+        "rerank": 699,
+        "generate": 1797,
+        "total": 2647
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 8430
+    },
+    {
+      "question_id": "b10",
+      "question": "正好 5000 元的日常费用需要财务负责人审批吗？",
+      "type": "boundary",
+      "expected_answer": "不需要。5000 元属于超过 500 元且不超过 5000 元这一档，需要直属经理和部门负责人审批。",
+      "relevant_chunk_ids": [
+        "05-expense-policy.md:chunk-5"
+      ],
+      "evidence_groups": [
+        [
+          "05-expense-policy.md:chunk-5"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.032002,
+          "vector_rank": 3,
+          "vector_score": 0.6971772909164429,
+          "bm25_rank": 2,
+          "bm25_score": 17.614089293505025,
+          "rrf_rank": 2,
+          "rerank_score": 0.963256
+        },
+        {
+          "rank": 2,
+          "chunk_id": "05-expense-policy.md:chunk-5",
+          "source": "05-expense-policy.md",
+          "score": 0.032018,
+          "vector_rank": 1,
+          "vector_score": 0.7358915209770203,
+          "bm25_rank": 4,
+          "bm25_score": 11.03321408708887,
+          "rrf_rank": 1,
+          "rerank_score": 0.937933
+        },
+        {
+          "rank": 3,
+          "chunk_id": "05-expense-policy.md:chunk-4",
+          "source": "05-expense-policy.md",
+          "score": 0.030622,
+          "vector_rank": 2,
+          "vector_score": 0.726694643497467,
+          "bm25_rank": 9,
+          "bm25_score": 5.287017293385732,
+          "rrf_rank": 4,
+          "rerank_score": 0.289481
+        },
+        {
+          "rank": 4,
+          "chunk_id": "06-travel-policy.md:chunk-0",
+          "source": "06-travel-policy.md",
+          "score": 0.015873,
+          "vector_rank": null,
+          "vector_score": null,
+          "bm25_rank": 3,
+          "bm25_score": 14.307496397870015,
+          "rrf_rank": 10,
+          "rerank_score": 0.265987
+        },
+        {
+          "rank": 5,
+          "chunk_id": "05-expense-policy.md:chunk-2",
+          "source": "05-expense-policy.md",
+          "score": 0.03101,
+          "vector_rank": 4,
+          "vector_score": 0.6944335103034973,
+          "bm25_rank": 5,
+          "bm25_score": 9.515569142478348,
+          "rrf_rank": 3,
+          "rerank_score": 0.254177
+        }
+      ],
+      "hit_rank": 2,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "根据资料，正好 5000 元的日常费用需要财务负责人审批 [1]。",
+      "citations": [
+        1
+      ],
+      "citation_validation": {
+        "citations": [
+          1
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 3041,
+        "completion_tokens": 22
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 145,
+        "rerank": 652,
+        "generate": 2128,
+        "total": 2925
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9897
+    },
+    {
+      "question_id": "b11",
+      "question": "员工想自行购买一件 350 元的办公用品，采购顺序和批准要求是什么？",
+      "type": "multi_fact",
+      "expected_answer": "应优先通过行政采购渠道领取；确需自行购买时，应在购买前取得直属经理批准。",
+      "relevant_chunk_ids": [
+        "05-expense-policy.md:chunk-7",
+        "05-expense-policy.md:chunk-0",
+        "05-expense-policy.md:chunk-1"
+      ],
+      "evidence_groups": [
+        [
+          "05-expense-policy.md:chunk-7"
+        ],
+        [
+          "05-expense-policy.md:chunk-0",
+          "05-expense-policy.md:chunk-1",
+          "05-expense-policy.md:chunk-7"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "05-expense-policy.md:chunk-1",
+          "source": "05-expense-policy.md",
+          "score": 0.032266,
+          "vector_rank": 1,
+          "vector_score": 0.6711048483848572,
+          "bm25_rank": 3,
+          "bm25_score": 12.565969490309293,
+          "rrf_rank": 1,
+          "rerank_score": 0.929402
+        },
+        {
+          "rank": 2,
+          "chunk_id": "05-expense-policy.md:chunk-7",
+          "source": "05-expense-policy.md",
+          "score": 0.032266,
+          "vector_rank": 3,
+          "vector_score": 0.6145330667495728,
+          "bm25_rank": 1,
+          "bm25_score": 17.137264307917228,
+          "rrf_rank": 2,
+          "rerank_score": 0.842537
+        },
+        {
+          "rank": 3,
+          "chunk_id": "05-expense-policy.md:chunk-0",
+          "source": "05-expense-policy.md",
+          "score": 0.032258,
+          "vector_rank": 2,
+          "vector_score": 0.6229562163352966,
+          "bm25_rank": 2,
+          "bm25_score": 14.899616590121843,
+          "rrf_rank": 3,
+          "rerank_score": 0.524063
+        },
+        {
+          "rank": 4,
+          "chunk_id": "02-onboarding.md:chunk-2",
+          "source": "02-onboarding.md",
+          "score": 0.013889,
+          "vector_rank": 12,
+          "vector_score": 0.5644770860671997,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 19,
+          "rerank_score": 0.353816
+        },
+        {
+          "rank": 5,
+          "chunk_id": "10-faq.pdf:page-2:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.02879,
+          "vector_rank": 8,
+          "vector_score": 0.5656251907348633,
+          "bm25_rank": 11,
+          "bm25_score": 4.661708065365001,
+          "rrf_rank": 5,
+          "rerank_score": 0.053066
+        }
+      ],
+      "hit_rank": 1,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "员工自行采购单价超过 300 元的办公用品前，应取得直属经理批准 [1]。采购顺序应优先通过行政采购渠道领取，若自行采购则需先获得直属经理的书面批准 [1]。",
+      "citations": [
+        1
+      ],
+      "citation_validation": {
+        "citations": [
+          1
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 2989,
+        "completion_tokens": 51
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 137,
+        "rerank": 584,
+        "generate": 2530,
+        "total": 3252
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9790
+    },
+    {
+      "question_id": "b12",
+      "question": "普通员工因医疗需要乘坐计划飞行超过八小时的国际航班并想订公务舱，需要谁事先批准？",
+      "type": "conditional",
+      "expected_answer": "需要部门负责人和人力资源部门事先批准。",
+      "relevant_chunk_ids": [
+        "06-travel-policy.md:chunk-3"
+      ],
+      "evidence_groups": [
+        [
+          "06-travel-policy.md:chunk-3"
+        ],
+        [
+          "06-travel-policy.md:chunk-3"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "06-travel-policy.md:chunk-3",
+          "source": "06-travel-policy.md",
+          "score": 0.032522,
+          "vector_rank": 1,
+          "vector_score": 0.6739130020141602,
+          "bm25_rank": 2,
+          "bm25_score": 29.01988959182843,
+          "rrf_rank": 2,
+          "rerank_score": 0.991322
+        },
+        {
+          "rank": 2,
+          "chunk_id": "06-travel-policy.md:chunk-0",
+          "source": "06-travel-policy.md",
+          "score": 0.032522,
+          "vector_rank": 2,
+          "vector_score": 0.6332578659057617,
+          "bm25_rank": 1,
+          "bm25_score": 31.337908455751847,
+          "rrf_rank": 1,
+          "rerank_score": 0.975065
+        },
+        {
+          "rank": 3,
+          "chunk_id": "06-travel-policy.md:chunk-2",
+          "source": "06-travel-policy.md",
+          "score": 0.015625,
+          "vector_rank": 4,
+          "vector_score": 0.6065258979797363,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 13,
+          "rerank_score": 0.443782
+        },
+        {
+          "rank": 4,
+          "chunk_id": "06-travel-policy.md:chunk-1",
+          "source": "06-travel-policy.md",
+          "score": 0.015873,
+          "vector_rank": 3,
+          "vector_score": 0.606627881526947,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 11,
+          "rerank_score": 0.292487
+        },
+        {
+          "rank": 5,
+          "chunk_id": "06-travel-policy.md:chunk-8",
+          "source": "06-travel-policy.md",
+          "score": 0.014925,
+          "vector_rank": 7,
+          "vector_score": 0.5816183090209961,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 15,
+          "rerank_score": 0.190991
+        }
+      ],
+      "hit_rank": 1,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "普通员工因医疗需要乘坐计划飞行超过八小时的国际航班并想订公务舱，需要事先取得部门负责人和人力资源部门批准 [2]。",
+      "citations": [
+        2
+      ],
+      "citation_validation": {
+        "citations": [
+          2
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 3062,
+        "completion_tokens": 33
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 396,
+        "rerank": 705,
+        "generate": 2184,
+        "total": 3285
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9966
+    },
+    {
+      "question_id": "b13",
+      "question": "展会期间找不到标准内酒店，想报销超标住宿应在什么时候取得谁的批准？",
+      "type": "conditional",
+      "expected_answer": "应在预订前取得部门负责人的书面批准；否则超标部分原则上由员工承担。",
+      "relevant_chunk_ids": [
+        "06-travel-policy.md:chunk-6"
+      ],
+      "evidence_groups": [
+        [
+          "06-travel-policy.md:chunk-6"
+        ],
+        [
+          "06-travel-policy.md:chunk-6"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "06-travel-policy.md:chunk-6",
+          "source": "06-travel-policy.md",
+          "score": 0.032002,
+          "vector_rank": 3,
+          "vector_score": 0.6259201765060425,
+          "bm25_rank": 2,
+          "bm25_score": 21.807997308532357,
+          "rrf_rank": 2,
+          "rerank_score": 0.95369
+        },
+        {
+          "rank": 2,
+          "chunk_id": "06-travel-policy.md:chunk-0",
+          "source": "06-travel-policy.md",
+          "score": 0.032522,
+          "vector_rank": 2,
+          "vector_score": 0.6472774744033813,
+          "bm25_rank": 1,
+          "bm25_score": 22.244784677903287,
+          "rrf_rank": 1,
+          "rerank_score": 0.781453
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-3:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.03101,
+          "vector_rank": 4,
+          "vector_score": 0.6227559447288513,
+          "bm25_rank": 5,
+          "bm25_score": 11.703479054405983,
+          "rrf_rank": 5,
+          "rerank_score": 0.396406
+        },
+        {
+          "rank": 4,
+          "chunk_id": "06-travel-policy.md:chunk-5",
+          "source": "06-travel-policy.md",
+          "score": 0.031545,
+          "vector_rank": 1,
+          "vector_score": 0.651692271232605,
+          "bm25_rank": 6,
+          "bm25_score": 11.664660507786836,
+          "rrf_rank": 3,
+          "rerank_score": 0.326408
+        },
+        {
+          "rank": 5,
+          "chunk_id": "06-travel-policy.md:chunk-1",
+          "source": "06-travel-policy.md",
+          "score": 0.02879,
+          "vector_rank": 8,
+          "vector_score": 0.5832229852676392,
+          "bm25_rank": 11,
+          "bm25_score": 8.107957159768965,
+          "rrf_rank": 10,
+          "rerank_score": 0.225309
+        }
+      ],
+      "hit_rank": 1,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "应在预订前取得部门负责人书面批准 [1]。",
+      "citations": [
+        1
+      ],
+      "citation_validation": {
+        "citations": [
+          1
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 3180,
+        "completion_tokens": 12
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 158,
+        "rerank": 607,
+        "generate": 1131,
+        "total": 1895
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9757
+    },
+    {
+      "question_id": "b14",
+      "question": "会议主办方已经免费提供午餐，还能按出差餐费再次申报吗？",
+      "type": "trap",
+      "expected_answer": "不能，已经由客户、会议主办方或酒店免费提供的餐食不得重复申报。",
+      "relevant_chunk_ids": [
+        "06-travel-policy.md:chunk-6"
+      ],
+      "evidence_groups": [
+        [
+          "06-travel-policy.md:chunk-6"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "06-travel-policy.md:chunk-6",
+          "source": "06-travel-policy.md",
+          "score": 0.032787,
+          "vector_rank": 1,
+          "vector_score": 0.6668799519538879,
+          "bm25_rank": 1,
+          "bm25_score": 28.66451090453102,
+          "rrf_rank": 1,
+          "rerank_score": 0.98822
+        },
+        {
+          "rank": 2,
+          "chunk_id": "06-travel-policy.md:chunk-0",
+          "source": "06-travel-policy.md",
+          "score": 0.032258,
+          "vector_rank": 2,
+          "vector_score": 0.6498626470565796,
+          "bm25_rank": 2,
+          "bm25_score": 25.53875089755354,
+          "rrf_rank": 2,
+          "rerank_score": 0.876605
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-5:chunk-2",
+          "source": "10-faq.pdf",
+          "score": 0.014493,
+          "vector_rank": 9,
+          "vector_score": 0.6116148233413696,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 15,
+          "rerank_score": 0.006575
+        },
+        {
+          "rank": 4,
+          "chunk_id": "06-travel-policy.md:chunk-1",
+          "source": "06-travel-policy.md",
+          "score": 0.015385,
+          "vector_rank": 5,
+          "vector_score": 0.6272410750389099,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 8,
+          "rerank_score": 0.004388
+        },
+        {
+          "rank": 5,
+          "chunk_id": "06-travel-policy.md:chunk-7",
+          "source": "06-travel-policy.md",
+          "score": 0.014706,
+          "vector_rank": 8,
+          "vector_score": 0.6122071743011475,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 13,
+          "rerank_score": 0.003923
+        }
+      ],
+      "hit_rank": 1,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "不能按出差餐费再次申报。已由客户、会议主办方或酒店免费提供的餐食不得重复申报 [1]。",
+      "citations": [
+        1
+      ],
+      "citation_validation": {
+        "citations": [
+          1
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 2789,
+        "completion_tokens": 27
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 149,
+        "rerank": 602,
+        "generate": 2230,
+        "total": 2982
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9554
+    },
+    {
+      "question_id": "b15",
+      "question": "把个人旅行接在出差后面需要什么批准，个人部分新增费用由谁承担？",
+      "type": "multi_fact",
+      "expected_answer": "需要直属经理批准；个人部分增加的交通、住宿、保险和改签费用由员工承担。",
+      "relevant_chunk_ids": [
+        "06-travel-policy.md:chunk-7",
+        "06-travel-policy.md:chunk-8"
+      ],
+      "evidence_groups": [
+        [
+          "06-travel-policy.md:chunk-7",
+          "06-travel-policy.md:chunk-8"
+        ],
+        [
+          "06-travel-policy.md:chunk-7",
+          "06-travel-policy.md:chunk-8"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "06-travel-policy.md:chunk-8",
+          "source": "06-travel-policy.md",
+          "score": 0.032002,
+          "vector_rank": 2,
+          "vector_score": 0.727768063545227,
+          "bm25_rank": 3,
+          "bm25_score": 11.38985146983458,
+          "rrf_rank": 3,
+          "rerank_score": 0.987772
+        },
+        {
+          "rank": 2,
+          "chunk_id": "06-travel-policy.md:chunk-7",
+          "source": "06-travel-policy.md",
+          "score": 0.032018,
+          "vector_rank": 4,
+          "vector_score": 0.6951846480369568,
+          "bm25_rank": 1,
+          "bm25_score": 14.342162167759232,
+          "rrf_rank": 1,
+          "rerank_score": 0.987663
+        },
+        {
+          "rank": 3,
+          "chunk_id": "06-travel-policy.md:chunk-1",
+          "source": "06-travel-policy.md",
+          "score": 0.031778,
+          "vector_rank": 1,
+          "vector_score": 0.740032434463501,
+          "bm25_rank": 5,
+          "bm25_score": 8.851730418023434,
+          "rrf_rank": 4,
+          "rerank_score": 0.96074
+        },
+        {
+          "rank": 4,
+          "chunk_id": "06-travel-policy.md:chunk-0",
+          "source": "06-travel-policy.md",
+          "score": 0.032002,
+          "vector_rank": 3,
+          "vector_score": 0.700965404510498,
+          "bm25_rank": 2,
+          "bm25_score": 13.760329624750545,
+          "rrf_rank": 2,
+          "rerank_score": 0.845351
+        },
+        {
+          "rank": 5,
+          "chunk_id": "06-travel-policy.md:chunk-6",
+          "source": "06-travel-policy.md",
+          "score": 0.03101,
+          "vector_rank": 5,
+          "vector_score": 0.6855326294898987,
+          "bm25_rank": 4,
+          "bm25_score": 11.175336550628774,
+          "rrf_rank": 5,
+          "rerank_score": 0.325162
+        }
+      ],
+      "hit_rank": 1,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "根据直属经理批准，员工可以在出差前后连接个人行程，个人部分新增的交通、住宿、保险和改签费用由员工承担 [1]。",
+      "citations": [
+        1
+      ],
+      "citation_validation": {
+        "citations": [
+          1
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 3087,
+        "completion_tokens": 33
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 166,
+        "rerank": 692,
+        "generate": 1590,
+        "total": 2448
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 10050
+    },
+    {
+      "question_id": "b16",
+      "question": "远程办公时可以在网吧电脑上处理敏感信息吗？",
+      "type": "direct",
+      "expected_answer": "不可以。网吧、开放式公共电脑或无法防止他人查看屏幕的场所不适合处理敏感信息。",
+      "relevant_chunk_ids": [
+        "07-remote-work.md:chunk-5"
+      ],
+      "evidence_groups": [
+        [
+          "07-remote-work.md:chunk-5"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "07-remote-work.md:chunk-0",
+          "source": "07-remote-work.md",
+          "score": 0.031281,
+          "vector_rank": 6,
+          "vector_score": 0.5955852270126343,
+          "bm25_rank": 2,
+          "bm25_score": 16.06137532344892,
+          "rrf_rank": 3,
+          "rerank_score": 0.969555
+        },
+        {
+          "rank": 2,
+          "chunk_id": "07-remote-work.md:chunk-5",
+          "source": "07-remote-work.md",
+          "score": 0.032266,
+          "vector_rank": 1,
+          "vector_score": 0.6436828970909119,
+          "bm25_rank": 3,
+          "bm25_score": 9.987154052425337,
+          "rrf_rank": 1,
+          "rerank_score": 0.925617
+        },
+        {
+          "rank": 3,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.030478,
+          "vector_rank": 11,
+          "vector_score": 0.5777117013931274,
+          "bm25_rank": 1,
+          "bm25_score": 16.27061781673838,
+          "rrf_rank": 5,
+          "rerank_score": 0.037718
+        },
+        {
+          "rank": 4,
+          "chunk_id": "07-remote-work.md:chunk-7",
+          "source": "07-remote-work.md",
+          "score": 0.029958,
+          "vector_rank": 3,
+          "vector_score": 0.6049520969390869,
+          "bm25_rank": 11,
+          "bm25_score": 5.6668348429381155,
+          "rrf_rank": 6,
+          "rerank_score": 0.035616
+        },
+        {
+          "rank": 5,
+          "chunk_id": "10-faq.pdf:page-4:chunk-1",
+          "source": "10-faq.pdf",
+          "score": 0.013514,
+          "vector_rank": 14,
+          "vector_score": 0.5675777196884155,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 20,
+          "rerank_score": 0.020041
+        }
+      ],
+      "hit_rank": 2,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "不可以。远程办公时不得在网吧、开放式公共电脑或无法防止他人查看屏幕的场所处理敏感信息 [1]。",
+      "citations": [
+        1
+      ],
+      "citation_validation": {
+        "citations": [
+          1
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 2896,
+        "completion_tokens": 27
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 159,
+        "rerank": 736,
+        "generate": 2045,
+        "total": 2940
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9607
+    },
+    {
+      "question_id": "b17",
+      "question": "捡到一个来源不明的 U 盘，可以插入公司电脑查看内容吗？",
+      "type": "security",
+      "expected_answer": "不可以，未知来源的 USB 存储设备不得接入公司电脑。",
+      "relevant_chunk_ids": [
+        "08-information-security.md:chunk-7",
+        "08-information-security.md:chunk-8"
+      ],
+      "evidence_groups": [
+        [
+          "08-information-security.md:chunk-7",
+          "08-information-security.md:chunk-8"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "08-information-security.md:chunk-1",
+          "source": "08-information-security.md",
+          "score": 0.032266,
+          "vector_rank": 1,
+          "vector_score": 0.6431065797805786,
+          "bm25_rank": 3,
+          "bm25_score": 6.779442045259912,
+          "rrf_rank": 1,
+          "rerank_score": 0.70095
+        },
+        {
+          "rank": 2,
+          "chunk_id": "08-information-security.md:chunk-7",
+          "source": "08-information-security.md",
+          "score": 0.02901,
+          "vector_rank": 7,
+          "vector_score": 0.530955970287323,
+          "bm25_rank": 11,
+          "bm25_score": 4.39285975739949,
+          "rrf_rank": 4,
+          "rerank_score": 0.548091
+        },
+        {
+          "rank": 3,
+          "chunk_id": "08-information-security.md:chunk-0",
+          "source": "08-information-security.md",
+          "score": 0.029572,
+          "vector_rank": 3,
+          "vector_score": 0.5594579577445984,
+          "bm25_rank": 13,
+          "bm25_score": 3.89588960114654,
+          "rrf_rank": 3,
+          "rerank_score": 0.51129
+        },
+        {
+          "rank": 4,
+          "chunk_id": "08-information-security.md:chunk-8",
+          "source": "08-information-security.md",
+          "score": 0.028125,
+          "vector_rank": 4,
+          "vector_score": 0.5390828847885132,
+          "bm25_rank": 20,
+          "bm25_score": 2.7568682112707834,
+          "rrf_rank": 6,
+          "rerank_score": 0.42021
+        },
+        {
+          "rank": 5,
+          "chunk_id": "08-information-security.md:chunk-5",
+          "source": "08-information-security.md",
+          "score": 0.028372,
+          "vector_rank": 5,
+          "vector_score": 0.5362898707389832,
+          "bm25_rank": 17,
+          "bm25_score": 3.042258986357875,
+          "rrf_rank": 5,
+          "rerank_score": 0.044853
+        }
+      ],
+      "hit_rank": 2,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "不可以插入公司电脑查看内容 [1]。未知来源的 USB 存储设备不得接入公司电脑 [3]。若已插入，应立即联系信息安全团队并如实说明操作，不得自行删除日志 [5]。",
+      "citations": [
+        1,
+        3,
+        5
+      ],
+      "citation_validation": {
+        "citations": [
+          1,
+          3,
+          5
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 3032,
+        "completion_tokens": 49
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 154,
+        "rerank": 654,
+        "generate": 2689,
+        "total": 3497
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9591
+    },
+    {
+      "question_id": "b18",
+      "question": "工作文件只放在公司电脑桌面，电脑坏了 IT 是否保证找回？",
+      "type": "trap",
+      "expected_answer": "不保证。工作文件应保存到公司批准的云盘或代码仓库，只存在桌面、下载目录或本地磁盘的文件可能无法恢复。",
+      "relevant_chunk_ids": [
+        "09-it-support.md:chunk-7",
+        "09-it-support.md:chunk-8"
+      ],
+      "evidence_groups": [
+        [
+          "09-it-support.md:chunk-7",
+          "09-it-support.md:chunk-8"
+        ]
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "09-it-support.md:chunk-7",
+          "source": "09-it-support.md",
+          "score": 0.029958,
+          "vector_rank": 11,
+          "vector_score": 0.5583963394165039,
+          "bm25_rank": 3,
+          "bm25_score": 13.520275241009115,
+          "rrf_rank": 5,
+          "rerank_score": 0.988785
+        },
+        {
+          "rank": 2,
+          "chunk_id": "09-it-support.md:chunk-1",
+          "source": "09-it-support.md",
+          "score": 0.032522,
+          "vector_rank": 1,
+          "vector_score": 0.6511826515197754,
+          "bm25_rank": 2,
+          "bm25_score": 14.356571898223807,
+          "rrf_rank": 1,
+          "rerank_score": 0.987827
+        },
+        {
+          "rank": 3,
+          "chunk_id": "09-it-support.md:chunk-8",
+          "source": "09-it-support.md",
+          "score": 0.029911,
+          "vector_rank": 10,
+          "vector_score": 0.5729209780693054,
+          "bm25_rank": 4,
+          "bm25_score": 11.888239608744925,
+          "rrf_rank": 6,
+          "rerank_score": 0.983728
+        },
+        {
+          "rank": 4,
+          "chunk_id": "09-it-support.md:chunk-0",
+          "source": "09-it-support.md",
+          "score": 0.032266,
+          "vector_rank": 3,
+          "vector_score": 0.6104687452316284,
+          "bm25_rank": 1,
+          "bm25_score": 16.164906811985638,
+          "rrf_rank": 2,
+          "rerank_score": 0.979629
+        },
+        {
+          "rank": 5,
+          "chunk_id": "08-information-security.md:chunk-7",
+          "source": "08-information-security.md",
+          "score": 0.027984,
+          "vector_rank": 13,
+          "vector_score": 0.5510753989219666,
+          "bm25_rank": 10,
+          "bm25_score": 4.267049061621417,
+          "rrf_rank": 10,
+          "rerank_score": 0.070298
+        }
+      ],
+      "hit_rank": 1,
+      "recall_at_5": 1,
+      "evidence_group_recall_at_5": 1.0,
+      "complete_evidence_at_5": 1,
+      "answer": "根据资料，工作文件只放在公司电脑桌面，IT 不保证找回 [4]。",
+      "citations": [
+        4
+      ],
+      "citation_validation": {
+        "citations": [
+          4
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 3019,
+        "completion_tokens": 19
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 656,
+        "rerank": 812,
+        "generate": 1626,
+        "total": 3094
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9729
+    },
+    {
+      "question_id": "b19",
+      "question": "公司每年给员工多少生日礼金？",
+      "type": "unanswerable",
+      "expected_answer": "现有资料没有提供生日礼金金额。",
+      "relevant_chunk_ids": [],
+      "evidence_groups": [],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "10-faq.pdf:page-1:chunk-0",
+          "source": "10-faq.pdf",
+          "score": 0.032787,
+          "vector_rank": 1,
+          "vector_score": 0.49563539028167725,
+          "bm25_rank": 1,
+          "bm25_score": 4.650583399418632,
+          "rrf_rank": 1,
+          "rerank_score": 0.004002
+        },
+        {
+          "rank": 2,
+          "chunk_id": "05-expense-policy.md:chunk-5",
+          "source": "05-expense-policy.md",
+          "score": 0.014925,
+          "vector_rank": 7,
+          "vector_score": 0.46500730514526367,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 13,
+          "rerank_score": 0.003114
+        },
+        {
+          "rank": 3,
+          "chunk_id": "04-leave-policy.md:chunk-0",
+          "source": "04-leave-policy.md",
+          "score": 0.015873,
+          "vector_rank": 3,
+          "vector_score": 0.47917407751083374,
+          "bm25_rank": null,
+          "bm25_score": null,
+          "rrf_rank": 4,
+          "rerank_score": 0.002013
+        },
+        {
+          "rank": 4,
+          "chunk_id": "07-remote-work.md:chunk-2",
+          "source": "07-remote-work.md",
+          "score": 0.015152,
+          "vector_rank": null,
+          "vector_score": null,
+          "bm25_rank": 6,
+          "bm25_score": 1.1619215121280084,
+          "rrf_rank": 11,
+          "rerank_score": 0.001952
+        },
+        {
+          "rank": 5,
+          "chunk_id": "03-attendance.md:chunk-2",
+          "source": "03-attendance.md",
+          "score": 0.015385,
+          "vector_rank": null,
+          "vector_score": null,
+          "bm25_rank": 5,
+          "bm25_score": 1.1629860973176276,
+          "rrf_rank": 9,
+          "rerank_score": 0.001507
+        }
+      ],
+      "hit_rank": null,
+      "recall_at_5": null,
+      "evidence_group_recall_at_5": null,
+      "complete_evidence_at_5": null,
+      "answer": "根据现有资料无法确定。公司员工手册未规定生日礼金的具体金额，员工应向人力资源部门确认，不能根据本手册推断存在或不存在该福利 [1]。",
+      "citations": [
+        1
+      ],
+      "citation_validation": {
+        "citations": [
+          1
+        ],
+        "invalid_citations": [],
+        "refused": false,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 3011,
+        "completion_tokens": 39
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 163,
+        "rerank": 713,
+        "generate": 2097,
+        "total": 2973
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 8559
+    },
+    {
+      "question_id": "b20",
+      "question": "成都办公室健身房周末几点开放？",
+      "type": "unanswerable",
+      "expected_answer": "现有资料没有提供成都办公室健身房或其开放时间。",
+      "relevant_chunk_ids": [],
+      "evidence_groups": [],
+      "hits": [
+        {
+          "rank": 1,
+          "chunk_id": "01-company-overview.md:chunk-4",
+          "source": "01-company-overview.md",
+          "score": 0.032266,
+          "vector_rank": 1,
+          "vector_score": 0.5967438220977783,
+          "bm25_rank": 3,
+          "bm25_score": 11.354449048967057,
+          "rrf_rank": 1,
+          "rerank_score": 0.213855
+        },
+        {
+          "rank": 2,
+          "chunk_id": "01-company-overview.md:chunk-3",
+          "source": "01-company-overview.md",
+          "score": 0.032258,
+          "vector_rank": 2,
+          "vector_score": 0.5654821395874023,
+          "bm25_rank": 2,
+          "bm25_score": 14.619022438803547,
+          "rrf_rank": 2,
+          "rerank_score": 0.129288
+        },
+        {
+          "rank": 3,
+          "chunk_id": "01-company-overview.md:chunk-0",
+          "source": "01-company-overview.md",
+          "score": 0.031319,
+          "vector_rank": 7,
+          "vector_score": 0.5067347884178162,
+          "bm25_rank": 1,
+          "bm25_score": 15.987331010563034,
+          "rrf_rank": 3,
+          "rerank_score": 0.128063
+        },
+        {
+          "rank": 4,
+          "chunk_id": "03-attendance.md:chunk-2",
+          "source": "03-attendance.md",
+          "score": 0.028219,
+          "vector_rank": 8,
+          "vector_score": 0.5027855634689331,
+          "bm25_rank": 14,
+          "bm25_score": 2.3107395281304655,
+          "rrf_rank": 8,
+          "rerank_score": 0.002239
+        },
+        {
+          "rank": 5,
+          "chunk_id": "01-company-overview.md:chunk-2",
+          "source": "01-company-overview.md",
+          "score": 0.015385,
+          "vector_rank": null,
+          "vector_score": null,
+          "bm25_rank": 5,
+          "bm25_score": 4.227511779420046,
+          "rrf_rank": 13,
+          "rerank_score": 0.001742
+        }
+      ],
+      "hit_rank": null,
+      "recall_at_5": null,
+      "evidence_group_recall_at_5": null,
+      "complete_evidence_at_5": null,
+      "answer": "根据现有资料无法确定。",
+      "citations": [],
+      "citation_validation": {
+        "citations": [],
+        "invalid_citations": [],
+        "refused": true,
+        "refusal_has_citations": false
+      },
+      "usage": {
+        "prompt_tokens": 2999,
+        "completion_tokens": 6
+      },
+      "prompt_version": "v2.5-c4-focused-completeness",
+      "latency_ms": {
+        "fuse": 173,
+        "rerank": 629,
+        "generate": 847,
+        "total": 1648
+      },
+      "rerank_fallback": false,
+      "rerank_input_tokens": 9502
+    }
+  ]
+}

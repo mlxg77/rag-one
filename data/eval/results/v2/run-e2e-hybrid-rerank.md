@@ -1,5 +1,13 @@
 # 端到端评估报告：run-e2e-hybrid_rerank
 
+## 文件说明
+
+- v2.0 端到端评估 E4 链路报告；同名 `.json` 为权威原始数据，本报告为其渲染（本说明为归档补注）。
+- 实验内容：hybrid + RRF + 重排 Top-5 + Qwen3-8B 生成。
+- 实验角色：双链路对照最终链路（E4），与 E1 成对；结论见 `docs/reports/v2.0.md` 第 8 节。
+- 生成与状态：2026-09-27 由 `evaluation/evaluate_e2e.py` 生成；属 v2.0 冻结快照。
+- 读者：人读 md；程序经 `evaluation/review_e2e.py` 读同名 JSON。
+
 ## 运行信息
 
 | 项 | 值 |

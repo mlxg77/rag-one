@@ -1,0 +1,10 @@
+{
+  "question_count": 20,
+  "answer_accuracy": 0.95,
+  "strict_citation_accuracy": 0.8421052631578947,
+  "citation_block_precision": 0.8636363636363636,
+  "refusal_accuracy": 1.0,
+  "hallucination_count": 1,
+  "citation_scored_count": 19,
+  "refusal_scored_count": 2
+}

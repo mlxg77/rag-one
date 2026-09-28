@@ -38,7 +38,24 @@ def test_build_prompt_structure():
     assert "[2] 来源：10-faq.pdf，第 3 页" in prompt  # PDF 带页码
     assert "内容一" in prompt and "内容二" in prompt
     assert "<问题>\n怎么报销？\n</问题>" in prompt
-    assert "只引用直接支持最终结论的最少资料" in prompt
+    assert "逐项检查全部参考资料" in prompt
+    assert "证据分散在多个资料块时，应综合作答" in prompt
+    assert "相同或语义等价的规则、反例或场景说明" in prompt
+    assert "这本身就是可回答的结论" in prompt
+    assert "先明确回答能或不能、是或否" in prompt
+    assert "不得把这句话放在一个已有证据支持的答案前面" in prompt
+    assert "全部必要动作、明确禁止事项和报告渠道" in prompt
+    assert "删除与当前场景无关的通用办理" in prompt
+    assert "一个资料块不能支持该事实时" in prompt
+    assert "没有遗漏资料明确规定" in prompt
+    assert "使用足以支持全部关键事实的最少引用" in prompt
+
+
+def test_prompt_only_refuses_when_no_useful_conclusion_is_supported():
+    prompt = build_prompt("需要哪些批准？", make_hits())
+    assert "只有所有参考资料都无法支持任何有用结论时" in prompt
+    assert "先回答有依据的部分" in prompt
+    assert "不要整体拒答" in prompt
 
 
 def test_build_prompt_uses_hit_rank():
@@ -103,5 +120,13 @@ def test_invalid_citation_number_is_reported():
 
 def test_refusal_with_citation_is_reported_separately():
     validation = validate_citations("根据现有资料无法确定 [1]", make_hits())
-    assert validation["refused"] is True
-    assert validation["refusal_has_citations"] is True
+    assert validation["refused"] is False
+    assert validation["refusal_has_citations"] is False
+
+
+def test_exact_refusal_is_detected_but_supported_uncertainty_is_not():
+    refusal = validate_citations("根据现有资料无法确定。", make_hits())
+    partial = validate_citations("根据现有资料无法确定金额；请联系 HR [1]。", make_hits())
+    assert refusal["refused"] is True
+    assert refusal["refusal_has_citations"] is False
+    assert partial["refused"] is False

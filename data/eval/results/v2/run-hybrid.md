@@ -1,5 +1,13 @@
 # 检索评估报告：run-hybrid
 
+## 文件说明
+
+- v2.0 检索层评估 hybrid 混合检索实验；同名 `.json` 为权威原始数据，本报告为其渲染（本说明为归档补注）。
+- 实验内容：向量与 BM25 两路各 20 候选 + RRF（k=60）融合。
+- 实验角色：四组对照第三组——baseline-vector → run-bm25 → **run-hybrid（本组）** → run-hybrid-rerank。
+- 生成与状态：2026-09-27 由 `evaluation/evaluate_retrieval.py` 生成；属 v2.0 冻结快照。
+- 读者：人读 md，程序读 JSON。
+
 ## 运行信息
 
 | 项 | 值 |

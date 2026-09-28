@@ -1,5 +1,13 @@
 # 检索评估报告：run-bm25
 
+## 文件说明
+
+- v2.0 检索层评估单路 BM25 实验；同名 `.json` 为权威原始数据，本报告为其渲染（本说明为归档补注）。
+- 实验内容：jieba 分词 + BM25（k1=1.5 / b=0.75），不走向量。
+- 实验角色：四组对照第二组——baseline-vector → **run-bm25（本组）** → run-hybrid → run-hybrid-rerank。
+- 生成与状态：2026-09-27 由 `evaluation/evaluate_retrieval.py` 生成；属 v2.0 冻结快照。
+- 读者：人读 md，程序读 JSON。
+
 ## 运行信息
 
 | 项 | 值 |
